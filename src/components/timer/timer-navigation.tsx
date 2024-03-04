@@ -10,7 +10,7 @@ import ToggleFullScreen from "../global/toggle-fullscreen";
 
 const TimerNavigation = () => {
   return (
-    <nav className="p-4 flex items-center justify-between border shadow">
+    <nav className="py-4 px-8 flex items-center justify-between border-b">
       <div>
         <Image src={Logo} width={120} height={60} alt="logo" />
       </div>

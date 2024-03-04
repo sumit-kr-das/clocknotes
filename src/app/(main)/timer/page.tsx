@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserPage = () => {
+const TimerPage = () => {
   return (
     <div>
       <h1>User Page</h1>
@@ -8,4 +8,4 @@ const UserPage = () => {
   );
 };
 
-export default UserPage;
+export default TimerPage;

@@ -1,25 +1,21 @@
 "use client";
-import React from "react";
-import TimerNav from "./timer-nav";
+import { cn } from "@/lib/utils";
 import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
+  Calendar,
   ChevronLeft,
   ChevronRight,
-  File,
-  Inbox,
-  MessagesSquare,
-  PenBox,
-  Search,
-  Send,
-  ShoppingCart,
-  Trash2,
+  CircleUser,
+  ClipboardMinus,
+  Clock,
+  GanttChartSquare,
+  Settings2,
+  Tags,
   Users2,
 } from "lucide-react";
-import { Separator } from "../ui/separator";
+import React from "react";
+import Nav from "../global/nav";
 import { Button } from "../ui/button";
-import { cn } from "@/lib/utils";
+import { Separator } from "../ui/separator";
 
 const TimerSidebar = () => {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
@@ -44,89 +40,74 @@ const TimerSidebar = () => {
           {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
         </Button>
       </div>
-      <TimerNav
+      <Nav
         isCollapsed={isCollapsed}
         links={[
           {
             title: "Timer",
-            label: "128",
-            icon: Inbox,
+            label: "",
+            icon: Clock,
             variant: "default",
             href: "/timer",
           },
           {
             title: "Calender",
-            label: "9",
-            icon: File,
+            label: "",
+            icon: Calendar,
             variant: "ghost",
             href: "/calender",
           },
+        ]}
+      />
+      <Separator />
+      <Nav
+        isCollapsed={isCollapsed}
+        links={[
           {
-            title: "Sent",
+            title: "Reports",
             label: "",
-            icon: Send,
+            icon: ClipboardMinus,
             variant: "ghost",
             href: "/",
           },
           {
-            title: "Junk",
-            label: "23",
-            icon: ArchiveX,
-            variant: "ghost",
-            href: "/",
-          },
-          {
-            title: "Trash",
+            title: "Clients",
             label: "",
-            icon: Trash2,
-            variant: "ghost",
-            href: "/",
-          },
-          {
-            title: "Archive",
-            label: "",
-            icon: Archive,
+            icon: CircleUser,
             variant: "ghost",
             href: "/",
           },
         ]}
       />
       <Separator />
-      <TimerNav
+      <Nav
         isCollapsed={isCollapsed}
         links={[
           {
-            title: "Social",
-            label: "972",
+            title: "Team",
+            label: "",
             icon: Users2,
             variant: "ghost",
             href: "/",
           },
           {
-            title: "Updates",
-            label: "342",
-            icon: AlertCircle,
+            title: "Projects",
+            label: "",
+            icon: GanttChartSquare,
             variant: "ghost",
             href: "/",
           },
           {
-            title: "Forums",
-            label: "128",
-            icon: MessagesSquare,
+            title: "Tags",
+            label: "",
+            icon: Tags,
             variant: "ghost",
             href: "/",
           },
           {
-            title: "Shopping",
-            label: "8",
-            icon: ShoppingCart,
-            variant: "ghost",
-            href: "/",
-          },
-          {
-            title: "Promotions",
-            label: "21",
-            icon: Archive,
+            title: "Settings",
+            label: "",
+            icon: Settings2,
             variant: "ghost",
             href: "/",
           },

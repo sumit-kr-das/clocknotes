@@ -24,7 +24,7 @@ interface NavProps {
   }[];
 }
 
-const TimerNav = ({ links, isCollapsed }: NavProps) => {
+const Nav = ({ links, isCollapsed }: NavProps) => {
   const path = usePathname();
 
   return (
@@ -102,4 +102,4 @@ const TimerNav = ({ links, isCollapsed }: NavProps) => {
   );
 };
 
-export default TimerNav;
+export default Nav;

@@ -18,7 +18,7 @@ import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
 const TimerSidebar = () => {
-  const [isCollapsed, setIsCollapsed] = React.useState(false);
+  const [isCollapsed, setIsCollapsed] = React.useState(true);
 
   const toggleSidebar = () => {
     setIsCollapsed(!isCollapsed);

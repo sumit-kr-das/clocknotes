@@ -1,5 +1,5 @@
 "use client";
-import TimerActivity from "@/components/timer/timer-activity";
+import TimerActivity from "@/app/(main)/timer/__components/timer-activity";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { GanttChartSquare, Tag } from "lucide-react";

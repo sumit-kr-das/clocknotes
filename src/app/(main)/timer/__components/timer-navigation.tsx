@@ -2,12 +2,16 @@ import Image from "next/image";
 import React from "react";
 import Logo from "@/assets/logo.svg";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Button } from "../ui/button";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "../../../../components/ui/avatar";
+import { Button } from "../../../../components/ui/button";
 import { Expand, Settings } from "lucide-react";
-import { ModeToggle } from "../global/mode-toggle";
-import ToggleFullScreen from "../global/toggle-fullscreen";
-import { TooltipProvider } from "../ui/tooltip";
+import { ModeToggle } from "../../../../components/global/mode-toggle";
+import ToggleFullScreen from "../../../../components/global/toggle-fullscreen";
+import { TooltipProvider } from "../../../../components/ui/tooltip";
 import UserNav from "@/app/(main)/timer/__components/user-nav";
 
 const TimerNavigation = () => {

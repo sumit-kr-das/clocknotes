@@ -27,15 +27,15 @@ const TimerSidebar = () => {
   return (
     <div
       className={cn(
-        "relative  border-r px-3 pb-10 pt-24",
+        "relative border-r px-3 pb-10 pt-24",
         isCollapsed ? "min-w-[80px]" : "min-w-[240px]"
       )}
     >
       <div className="absolute -right-[20px] top-7">
         <Button
           className="rounded-full p-2"
-          variant="secondary"
           onClick={toggleSidebar}
+          variant={"secondary"}
         >
           {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
         </Button>

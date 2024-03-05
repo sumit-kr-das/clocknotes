@@ -9,7 +9,7 @@ const Navigation = () => {
         {/* <Image src={Logo} width={120} height={60} alt="logo" /> */}
         <span className="text-xl font-bold"> TimeTrack</span>
       </aside>
-      <nav className="hidden md:block absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%]">
+      <nav className="hidden md:block absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] bg-muted px-6 py-3 rounded-full border">
         <ul className="flex items-center justify-center gap-8">
           <Link href={"/timer"}>Timer</Link>
           <Link href={"#"}>Pricing</Link>

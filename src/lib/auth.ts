@@ -46,10 +46,31 @@ export const authOptions: NextAuthOptions = {
           id: isExist.id + "",
           name: isExist.name,
           email: isExist.email,
+          avatar: isExist.avatar,
         };
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          avatar: user.avatar,
+        };
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          avatar: token.avatar,
+        },
+      };
+    },
+  },
 };
 
 export default NextAuth(authOptions);

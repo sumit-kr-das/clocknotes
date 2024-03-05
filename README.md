@@ -1,26 +1,36 @@
 ## Getting Started
 
-- First, clone the repo
+### Clone the repo
+
+First, clone the repo
 
 ```bash
 git clone https://github.com/sumit-kr-das/time-track.git
 ```
 
-- create a `.env` file and copy the environment variables from `.env.example`
+### Setup environment variables
 
-- Migrate the database
+Create a `.env` file and copy the environment variables from `.env.example`
+
+### Database migration
+
+Migrate the database
 
 ```bash
  npx prisma migrate dev --name init
 ```
 
-- Install all the dependencies
+### Installation
+
+Install all the dependencies
 
 ```bash
 yarn install
 ```
 
-- First, run the development server:
+### Start the project
+
+Run the development server:
 
 ```bash
 yarn dev

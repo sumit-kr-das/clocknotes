@@ -1,6 +1,6 @@
 import React from "react";
-import TimerNavigation from "@/components/timer/timer-navigation";
-import TimerSidebar from "@/components/timer/timer-sidebar";
+import TimerNavigation from "@/app/(main)/timer/__components/timer-navigation";
+import TimerSidebar from "@/app/(main)/timer/__components/timer-sidebar";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -13,9 +13,9 @@ import {
   Users2,
 } from "lucide-react";
 import React from "react";
-import Nav from "../global/nav";
-import { Button } from "../ui/button";
-import { Separator } from "../ui/separator";
+import Nav from "../../../../components/global/nav";
+import { Button } from "../../../../components/ui/button";
+import { Separator } from "../../../../components/ui/separator";
 
 const TimerSidebar = () => {
   const [isCollapsed, setIsCollapsed] = React.useState(true);

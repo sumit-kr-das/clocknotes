@@ -1,4 +1,4 @@
-import Navigation from "@/components/site/navigation";
+import Navigation from "@/app/(site)/__components/navigation";
 import React from "react";
 
 const HomeLayout = ({ children }: { children: React.ReactNode }) => {

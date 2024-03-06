@@ -18,7 +18,7 @@ const Navigation = () => {
         </ul>
       </nav>
       <aside className="flex gap-2 items-center">
-        <Link href={"/sign-in"}>
+        <Link href={"/auth/sign-in"}>
           <Button>Login</Button>
         </Link>
         <ModeToggle />

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 
 type props = {
@@ -23,7 +24,7 @@ const TimerActivity = ({ startAt }: props) => {
   const seconds = Math.floor((elapsed / 1000) % 60);
 
   return (
-    <div className="slashed-zero tabular-nums text-lg font-bold w-[200px]">
+    <div className="slashed-zero tabular-nums text-lg font-bold">
       {pad(hours)} : {pad(minutes)} : {pad(seconds)}
     </div>
   );

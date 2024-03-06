@@ -19,37 +19,33 @@ enum Plan {
 }
 
 enum Role {
-  USER
-  COMPANY
+  OWNER
   ADMIN
+  BILLING
+  USER
+  TRACKER
+  VIEWER
 }
 
 model Tenant {
-  id               String     @id @default(dbgenerated("concat('tnt_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name             String?
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
-  stripeCustomerId String?
-  plan             Plan       @default(FREE)
-  expirationDate   DateTime?
-  inviteKey        String     @unique @default(dbgenerated("replace(cast(gen_random_uuid() as text), '-', '')")) @db.Text
-  users            User[]
-  activities       Activity[]
-  clients          Client[]
-  projects         Project[]
+  id         String     @id @default(dbgenerated("concat('tnt_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name       String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  users      User[]
+  activities Activity[]
 }
 
 model User {
   id         String     @id @default(dbgenerated("concat('usr_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
   email      String     @unique
   name       String?
-  avatar     String?
   password   String?
-  role       Role       @default(USER)
+  avatar     String?
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  tenantId   String
-  tenant     Tenant     @relation(fields: [tenantId], references: [id])
+  tenantId   String?
+  tenant     Tenant?    @relation(fields: [tenantId], references: [id])
   activities Activity[]
 }
 
@@ -60,37 +56,8 @@ model Activity {
   endAt     DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  tenantId  String
-  tenant    Tenant    @relation(fields: [tenantId], references: [id])
+  tenantId  String?
+  tenant    Tenant?   @relation(fields: [tenantId], references: [id])
   userId    String
-  user      User      @relation(fields: [userId], references: [id])
-  clientId  String?   @db.Text
-  client    Client?   @relation(fields: [clientId], references: [id])
-  projectId String?   @db.Text
-  project   Project?  @relation(fields: [projectId], references: [id])
-}
-
-model Client {
-  id         String     @id @default(dbgenerated("concat('cli_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name       String
-  color      String?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  tenantId   String
-  tenant     Tenant     @relation(fields: [tenantId], references: [id])
-  activities Activity[]
-  projects   Project[]
-}
-
-model Project {
-  id         String     @id @default(dbgenerated("concat('prj_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name       String
-  color      String?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  tenantId   String
-  tenant     Tenant     @relation(fields: [tenantId], references: [id])
-  clientId   String?
-  client     Client?    @relation(fields: [clientId], references: [id])
-  activities Activity[]
+  user      User?     @relation(fields: [userId], references: [id])
 }

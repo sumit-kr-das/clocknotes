@@ -23,7 +23,9 @@ const UserNav = async () => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage
+              src={userSession?.user?.image || "https://github.com/shadcn.png"}
+            />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <Settings className="w-5 h-5" />

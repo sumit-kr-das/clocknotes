@@ -1,74 +1,71 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import GoogleProvider from "next-auth/providers/google";
+import { session } from "@/lib/get-session";
 import db from "./db";
-import { compare } from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXTAUTH_SECRET,
-  debug: process.env.NODE_ENV === "development",
   pages: {
-    signIn: "/sign-in",
+    signIn: "/auth/sign-in",
   },
   providers: [
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email", placeholder: "jsmith" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
-        const isExist = await db.user.findUnique({
-          where: { email: credentials?.email },
-        });
-        if (!isExist) {
-          return null;
-        }
-
-        if (isExist.password) {
-          const passwordMatch = await compare(
-            credentials.password,
-            isExist.password
-          );
-          if (!passwordMatch) {
-            return null;
-          }
-        }
-
-        return {
-          id: isExist.id + "",
-          name: isExist.name,
-          email: isExist.email,
-          avatar: isExist.avatar,
-        };
-      },
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
+    async signIn({ profile }) {
+      if (!profile?.email) {
+        throw new Error("No profile found");
+      }
+      try {
+        await db.user.upsert({
+          where: {
+            email: profile.email,
+          },
+          create: {
+            email: profile.email,
+            name: profile.name,
+            avatar: (profile as any).picture,
+            tenant: {
+              create: {},
+            },
+          },
+          update: {
+            name: profile.name,
+            avatar: (profile as any).picture,
+          },
+        });
+      } catch (err) {
+        console.log("error from google signin", err);
+      }
+
+      return true;
+    },
+    session,
+    async jwt({ token, profile }) {
+      if (profile) {
+        const user = await db.user.findUnique({
+          where: {
+            email: profile.email,
+          },
+        });
+
+        if (!user) {
+          throw new Error("No user found");
+        }
         return {
           ...token,
-          avatar: user.avatar,
+          id: user.id,
+          tenant: {
+            id: user.tenantId,
+          },
         };
       }
       return token;
-    },
-    async session({ session, token }) {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          avatar: token.avatar,
-        },
-      };
     },
   },
 };

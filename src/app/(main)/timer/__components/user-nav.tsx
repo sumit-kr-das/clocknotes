@@ -23,10 +23,12 @@ const UserNav = async () => {
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-10 w-10">
-            <AvatarImage
-              src={userSession?.user?.image || "https://github.com/shadcn.png"}
-            />
-            <AvatarFallback>CN</AvatarFallback>
+            {userSession?.user?.image && (
+              <AvatarImage src={userSession?.user?.image} />
+            )}
+            <AvatarFallback>
+              {userSession?.user?.name?.split("")[0]}
+            </AvatarFallback>
           </Avatar>
           <Settings className="w-5 h-5" />
         </Button>

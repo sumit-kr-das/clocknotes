@@ -1,11 +1,9 @@
 import TimerActivity from "@/app/(main)/timer/__components/timer-activity";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import db from "@/lib/db";
-import { getUserSession } from "@/lib/get-session";
+import { authOptions } from "@/lib/auth";
 import { GanttChartSquare, Tag } from "lucide-react";
 import { getServerSession } from "next-auth";
-import React from "react";
 
 const NewActivity = () => {
   return (
@@ -33,7 +31,7 @@ const NewActivity = () => {
 const DailyActivities = () => {};
 
 const TimerPage = async () => {
-  const sessions = await getUserSession();
+  const sessions = await getServerSession(authOptions);
   console.log("sess", sessions);
 
   // const currentActivity = await db.activity.findFirst({

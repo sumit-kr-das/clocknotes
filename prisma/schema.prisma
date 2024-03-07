@@ -39,13 +39,13 @@ model Tenant {
 model User {
   id         String     @id @default(dbgenerated("concat('usr_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
   email      String     @unique
-  name       String?
+  name       String
   password   String?
   avatar     String?
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
-  tenantId   String?
-  tenant     Tenant?    @relation(fields: [tenantId], references: [id])
+  tenantId   String
+  tenant     Tenant     @relation(fields: [tenantId], references: [id])
   activities Activity[]
 }
 
@@ -56,8 +56,8 @@ model Activity {
   endAt     DateTime?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  tenantId  String?
-  tenant    Tenant?   @relation(fields: [tenantId], references: [id])
+  tenantId  String
+  tenant    Tenant    @relation(fields: [tenantId], references: [id])
   userId    String
-  user      User?     @relation(fields: [userId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
 }

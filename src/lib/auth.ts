@@ -41,7 +41,6 @@ export const authOptions: NextAuthOptions = {
       } catch (err) {
         throw new Error("User update error");
       }
-
       return true;
     },
     async jwt({ token, profile }) {
@@ -54,9 +53,8 @@ export const authOptions: NextAuthOptions = {
             },
           });
         } catch (err) {
-          throw new Error("User not found");
+          throw new Error("User search error");
         }
-
         if (!user) {
           throw new Error("No user found");
         }
@@ -77,7 +75,6 @@ export const authOptions: NextAuthOptions = {
           tenantId: token.tenantId,
         },
       };
-
       return session;
     },
   },

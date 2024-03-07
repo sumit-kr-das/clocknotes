@@ -11,24 +11,18 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { authOptions } from "@/lib/auth";
+import getSession from "@/lib/get-session";
 import { Settings } from "lucide-react";
-import { getServerSession } from "next-auth";
 
 const UserNav = async () => {
-  const userSession = await getServerSession(authOptions);
-
+  const user = await getSession();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-10 w-10">
-            {userSession?.user?.image && (
-              <AvatarImage src={userSession?.user?.image} />
-            )}
-            <AvatarFallback>
-              {userSession?.user?.name?.split("")[0]}
-            </AvatarFallback>
+            {user?.image && <AvatarImage src={user?.image} />}
+            <AvatarFallback>{user?.name?.split("")[0]}</AvatarFallback>
           </Avatar>
           <Settings className="w-5 h-5" />
         </Button>
@@ -36,11 +30,9 @@ const UserNav = async () => {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {userSession?.user?.name}
-            </p>
+            <p className="text-sm font-medium leading-none">{user?.name}</p>
             <p className="text-xs leading-none text-muted-foreground">
-              {userSession?.user?.email}
+              {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>

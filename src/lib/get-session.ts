@@ -1,17 +1,10 @@
-import { User, getServerSession } from "next-auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth";
 
-export const session = async ({ session, token }: any) => {
-  session.user.id = token.id;
-  session.user.tenant = token.tenant;
-  return session;
+const getSession = async () => {
+  const getUsersSession = await getServerSession(authOptions);
+  if (!getUsersSession) throw new Error("unauthorized");
+  return getUsersSession.user;
 };
 
-export const getUserSession = async (): Promise<User> => {
-  const authUserSession = await getServerSession({
-    callbacks: {
-      session,
-    },
-  });
-  if (!authUserSession) throw new Error("unauthorized");
-  return authUserSession.user;
-};
+export default getSession;

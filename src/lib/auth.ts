@@ -1,6 +1,5 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { session } from "@/lib/get-session";
 import db from "./db";
 
 export const authOptions: NextAuthOptions = {
@@ -40,32 +39,43 @@ export const authOptions: NextAuthOptions = {
           },
         });
       } catch (err) {
-        console.log("error from google signin", err);
+        throw new Error("User update error");
       }
-
       return true;
     },
-    session,
     async jwt({ token, profile }) {
       if (profile) {
-        const user = await db.user.findUnique({
-          where: {
-            email: profile.email,
-          },
-        });
-
+        let user;
+        try {
+          user = await db.user.findUnique({
+            where: {
+              email: profile.email,
+            },
+          });
+        } catch (err) {
+          throw new Error("User search error");
+        }
         if (!user) {
           throw new Error("No user found");
         }
         return {
           ...token,
           id: user.id,
-          tenant: {
-            id: user.tenantId,
-          },
+          tenantId: user.tenantId,
         };
       }
       return token;
+    },
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          tenantId: token.tenantId,
+        },
+      };
+      return session;
     },
   },
 };

@@ -39,18 +39,23 @@ export const authOptions: NextAuthOptions = {
           },
         });
       } catch (err) {
-        console.log("error from google signin", err);
+        throw new Error("User update error");
       }
 
       return true;
     },
     async jwt({ token, profile }) {
       if (profile) {
-        const user = await db.user.findUnique({
-          where: {
-            email: profile.email,
-          },
-        });
+        let user;
+        try {
+          user = await db.user.findUnique({
+            where: {
+              email: profile.email,
+            },
+          });
+        } catch (err) {
+          throw new Error("User not found");
+        }
 
         if (!user) {
           throw new Error("No user found");

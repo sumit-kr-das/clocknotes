@@ -14,10 +14,10 @@ type NewActivityProps = {
 };
 
 const NewActivity = ({ activity }: NewActivityProps) => {
-  const createActivity = async (data: FormData) => {
+  const startActivity = async (data: FormData) => {
     "use server";
     const user = await getSession();
-    const activity = await db.activity.create({
+    await db.activity.create({
       data: {
         user: { connect: { id: user.id } },
         tenant: { connect: { id: user.tenantId } },
@@ -27,10 +27,21 @@ const NewActivity = ({ activity }: NewActivityProps) => {
     });
     revalidatePath("/timer");
   };
-
+  const stopActivity = async (data: FormData) => {
+    "use server";
+    await db.activity.update({
+      where: {
+        id: data.get("id") as string,
+      },
+      data: {
+        endAt: new Date(),
+      },
+    });
+    revalidatePath("/timer");
+  };
   return (
     <form
-      action={createActivity}
+      action={activity ? stopActivity : startActivity}
       className="w-full flex items-center justidy-between gap-4 border p-4 bg-accent rounded-md"
     >
       <Input
@@ -40,6 +51,12 @@ const NewActivity = ({ activity }: NewActivityProps) => {
         type="text"
         placeholder="What are you working on?"
       />
+      <Input
+        name="id"
+        defaultValue={activity?.id || ""}
+        className="w-[70%] block"
+        type="text"
+      />
       <div className="flex items-center gap-4">
         <Button variant="outline" size="icon">
           <GanttChartSquare />
@@ -48,7 +65,7 @@ const NewActivity = ({ activity }: NewActivityProps) => {
           <Tag />
         </Button>
         <div>{activity && <TimerActivity startAt={activity.startAt} />}</div>
-        <Button type="submit">Start</Button>
+        <Button type="submit">{activity ? "Stop" : "Start"}</Button>
       </div>
     </form>
   );

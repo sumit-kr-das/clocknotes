@@ -2,7 +2,7 @@
 import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import React from "react";
 import { Activity } from "@prisma/client";
-import { ArrowRight, CalendarIcon } from "lucide-react";
+import { ArrowRight, CalendarIcon, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -25,25 +25,29 @@ const ActivityDate = ({ date }: { date: Date }) => {
           {new Intl.DateTimeFormat(undefined, {
             hour: "numeric",
             minute: "numeric",
-          }).format(date)}
+          })
+            .format(date)
+            .toUpperCase()}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="grid gap-4">
-          <div className="space-y-2">
-            <h4 className="font-medium leading-none">
-              Update task date & time
-            </h4>
-          </div>
           <div className="grid gap-4">
             <div className="grid grid-cols-3 items-center gap-4">
-              <Label htmlFor="width">Time</Label>
+              <Label htmlFor="time">Time</Label>
               <Input
                 value={`${pad(newDate.getHours())}:${pad(newDate.getMinutes())}`}
+                onChange={(e) => {
+                  const [hours, minutes] = e.target.value.split(":");
+                  const time = new Date(newDate);
+                  time.setHours(parseInt(hours) || 0);
+                  time.setMinutes(parseInt(minutes) || 0);
+                  setNewDate(time);
+                }}
+                onFocus={(e) => e.preventDefault()}
                 id="width"
-                defaultValue="100%"
                 className="col-span-2 h-8"
-                type={"time"}
+                type="time"
               />
             </div>
             <div className="grid grid-cols-3 items-center gap-4">
@@ -83,6 +87,27 @@ const ActivityDate = ({ date }: { date: Date }) => {
   );
 };
 
+const ActivityTitle = ({ title }: { title: string }) => {
+  return (
+    <>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button variant="outline">
+            <h2 className="text-lg font-semibold">{title}</h2>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-96 p-4 flex items-center gap-4"
+          align="start"
+        >
+          <Input />
+          <Button>Save</Button>
+        </PopoverContent>
+      </Popover>
+    </>
+  );
+};
+
 type DailyActivitiesProp = {
   activities: Activity[];
 };
@@ -99,7 +124,7 @@ const DailyActivities = ({ activities }: DailyActivitiesProp) => {
           className="mt-4 p-4 flex items-center justify-between"
         >
           <div className="w-1/2">
-            <CardTitle>{activity.name}</CardTitle>
+            <ActivityTitle title={activity.name} />
           </div>
           <div className="flex items-center justify-center gap-2">
             <ActivityDate date={activity.startAt} />
@@ -107,8 +132,9 @@ const DailyActivities = ({ activities }: DailyActivitiesProp) => {
             <ActivityDate date={activity.endAt || new Date()} />
           </div>
           <div className="flex items-center justify-center gap-2">
-            <Button variant="secondary">Edit</Button>
-            <Button variant="destructive">Delete</Button>
+            <Button variant="destructive" size="icon">
+              <Trash2 />
+            </Button>
           </div>
         </Card>
       ))}

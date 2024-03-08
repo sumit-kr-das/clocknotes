@@ -5,7 +5,7 @@ type props = {
   startAt: Date;
 };
 
-const pad = (n: number) => n.toString().padStart(2, "0");
+export const pad = (n: number) => n.toString().padStart(2, "0");
 
 const TimerActivity = ({ startAt }: props) => {
   const [elapsed, setElapsed] = React.useState<number>(0);

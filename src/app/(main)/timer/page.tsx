@@ -7,7 +7,7 @@ import { Activity } from "@prisma/client";
 import { GanttChartSquare, Tag } from "lucide-react";
 import { revalidatePath } from "next/cache";
 import React from "react";
-import DailyActivities from "@/app/(main)/timer/__components/timer-daily-activities";
+import DailyActivities from "@/app/(main)/timer/__components/timerActivity/timer-daily-activities";
 
 type NewActivityProps = {
   activity?: Activity | null;

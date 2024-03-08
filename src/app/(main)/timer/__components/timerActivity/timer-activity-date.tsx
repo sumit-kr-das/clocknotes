@@ -1,23 +1,34 @@
-"use client";
-import { Card, CardDescription, CardTitle } from "@/components/ui/card";
 import React from "react";
-import { Activity } from "@prisma/client";
-import { ArrowRight, CalendarIcon, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import {
   Popover,
-  PopoverTrigger,
   PopoverContent,
+  PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { format } from "date-fns";
 import { pad } from "@/app/(main)/timer/__components/timer-activity";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { format } from "date-fns";
+import { Calendar } from "@/components/ui/calendar";
 
-const ActivityDate = ({ date }: { date: Date }) => {
+type ActivityDateProps = {
+  id: string;
+  name?: string;
+  date: Date;
+};
+
+const ActivityDate = ({ id, date }: ActivityDateProps) => {
   const [newDate, setNewDate] = React.useState<Date>(date);
+  const onDate = (d: Date | undefined) => {
+    if (!d) return;
+    d.setHours(date.getHours());
+    d.setMinutes(date.getMinutes());
+    d.setSeconds(date.getSeconds());
+    setNewDate(d);
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -34,6 +45,7 @@ const ActivityDate = ({ date }: { date: Date }) => {
         <div className="grid gap-4">
           <div className="grid gap-4">
             <div className="grid grid-cols-3 items-center gap-4">
+              <input type="hidden" name="id" defaultValue={id} />
               <Label htmlFor="time">Time</Label>
               <Input
                 value={`${pad(newDate.getHours())}:${pad(newDate.getMinutes())}`}
@@ -44,7 +56,7 @@ const ActivityDate = ({ date }: { date: Date }) => {
                   time.setMinutes(parseInt(minutes) || 0);
                   setNewDate(time);
                 }}
-                onFocus={(e) => e.preventDefault()}
+                name=""
                 id="width"
                 className="col-span-2 h-8"
                 type="time"
@@ -73,73 +85,18 @@ const ActivityDate = ({ date }: { date: Date }) => {
                   <Calendar
                     mode="single"
                     selected={newDate}
-                    onSelect={setNewDate}
+                    onSelect={onDate}
                     initialFocus
                   />
                 </PopoverContent>
               </Popover>
             </div>
           </div>
-          <Button>Save</Button>
+          <Button type="submit">Save</Button>
         </div>
       </PopoverContent>
     </Popover>
   );
 };
 
-const ActivityTitle = ({ title }: { title: string }) => {
-  return (
-    <>
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline">
-            <h2 className="text-lg font-semibold">{title}</h2>
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent
-          className="w-96 p-4 flex items-center gap-4"
-          align="start"
-        >
-          <Input />
-          <Button>Save</Button>
-        </PopoverContent>
-      </Popover>
-    </>
-  );
-};
-
-type DailyActivitiesProp = {
-  activities: Activity[];
-};
-
-const DailyActivities = ({ activities }: DailyActivitiesProp) => {
-  return (
-    <div className="mt-10">
-      <div>
-        <h1>What you have done today</h1>
-      </div>
-      {activities?.map((activity) => (
-        <Card
-          key={activity.id}
-          className="mt-4 p-4 flex items-center justify-between"
-        >
-          <div className="w-1/2">
-            <ActivityTitle title={activity.name} />
-          </div>
-          <div className="flex items-center justify-center gap-2">
-            <ActivityDate date={activity.startAt} />
-            <ArrowRight size={16} />
-            <ActivityDate date={activity.endAt || new Date()} />
-          </div>
-          <div className="flex items-center justify-center gap-2">
-            <Button variant="destructive" size="icon">
-              <Trash2 />
-            </Button>
-          </div>
-        </Card>
-      ))}
-    </div>
-  );
-};
-
-export default DailyActivities;
+export default ActivityDate;

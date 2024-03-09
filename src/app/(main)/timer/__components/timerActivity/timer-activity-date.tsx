@@ -12,14 +12,18 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  updateEndDate,
+  updateStartDate,
+} from "@/app/(main)/timer/__components/timerActivity/activity-action";
 
 type ActivityDateProps = {
   id: string;
-  name?: string;
+  name: string;
   date: Date;
 };
 
-const ActivityDate = ({ id, date }: ActivityDateProps) => {
+const ActivityDate = ({ id, date, name }: ActivityDateProps) => {
   const [newDate, setNewDate] = React.useState<Date>(date);
   const onDate = (d: Date | undefined) => {
     if (!d) return;
@@ -28,7 +32,6 @@ const ActivityDate = ({ id, date }: ActivityDateProps) => {
     d.setSeconds(date.getSeconds());
     setNewDate(d);
   };
-
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -56,7 +59,7 @@ const ActivityDate = ({ id, date }: ActivityDateProps) => {
                   time.setMinutes(parseInt(minutes) || 0);
                   setNewDate(time);
                 }}
-                name=""
+                name={name}
                 id="width"
                 className="col-span-2 h-8"
                 type="time"
@@ -92,7 +95,16 @@ const ActivityDate = ({ id, date }: ActivityDateProps) => {
               </Popover>
             </div>
           </div>
-          <Button type="submit">Save</Button>
+          <Button
+            type="submit"
+            onClick={
+              name === "startAt"
+                ? async () => updateStartDate(id, newDate)
+                : async () => updateEndDate(id, newDate)
+            }
+          >
+            Save
+          </Button>
         </div>
       </PopoverContent>
     </Popover>

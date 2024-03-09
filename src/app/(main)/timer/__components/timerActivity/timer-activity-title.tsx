@@ -10,7 +10,7 @@ import React from "react";
 
 type ActivityTitle = {
   id: string;
-  title: string;
+  title: string | null;
 };
 
 const ActivityTitle = ({ id, title }: ActivityTitle) => {
@@ -27,7 +27,11 @@ const ActivityTitle = ({ id, title }: ActivityTitle) => {
           className="flex items-center gap-4"
         >
           <input type="hidden" name="id" defaultValue={id} />
-          <Input name="name" defaultValue={title} placeholder="Update title" />
+          <Input
+            name="name"
+            defaultValue={title || ""}
+            placeholder="Update title"
+          />
           <Button type="submit">Save</Button>
         </form>
       </PopoverContent>

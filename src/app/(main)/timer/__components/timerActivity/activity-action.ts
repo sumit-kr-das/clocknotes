@@ -16,14 +16,26 @@ export async function updateTitle(data: FormData) {
   revalidatePath("/track");
 }
 
-export async function updateDate(data: FormData) {
+export async function updateStartDate(id: string, date: Date) {
   await db.activity.update({
     where: {
-      id: data.get("id") as string,
+      id,
     },
     data: {
-      startAt: data.get("startAt") as string,
-      endAt: data.get("endAt") as string,
+      startAt: date,
+    },
+  });
+
+  revalidatePath("/track");
+}
+
+export async function updateEndDate(id: string, date: Date) {
+  await db.activity.update({
+    where: {
+      id,
+    },
+    data: {
+      endAt: date,
     },
   });
 

@@ -4,10 +4,7 @@ import React from "react";
 import { Activity } from "@prisma/client";
 import { ArrowRight, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  deleteActivity,
-  updateDate,
-} from "@/app/(main)/timer/__components/timerActivity/activity-action";
+import { deleteActivity } from "@/app/(main)/timer/__components/timerActivity/activity-action";
 import ActivityDate from "@/app/(main)/timer/__components/timerActivity/timer-activity-date";
 import ActivityTitle from "@/app/(main)/timer/__components/timerActivity/timer-activity-title";
 
@@ -29,22 +26,18 @@ const DailyActivities = ({ activities }: DailyActivitiesProp) => {
           <div className="w-1/2">
             <ActivityTitle id={activity.id} title={activity.name} />
           </div>
-          <form
-            action={async (data) => await updateDate(data)}
-            className="flex items-center justify-center gap-2"
-          >
-            <ActivityDate
-              name="startAt"
-              id={activity.id}
-              date={activity.startAt}
-            />
-            <ArrowRight size={16} />
-            <ActivityDate
-              name="endAt"
-              id={activity.id}
-              date={activity.endAt || new Date()}
-            />
-          </form>
+
+          <ActivityDate
+            name="startAt"
+            id={activity.id}
+            date={activity.startAt}
+          />
+          <ArrowRight size={16} />
+          <ActivityDate
+            name="endAt"
+            id={activity.id}
+            date={activity.endAt || new Date()}
+          />
           <div className="flex items-center justify-center gap-2">
             <Button
               variant="destructive"

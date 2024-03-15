@@ -73,6 +73,10 @@ model Client {
   name       String
   color      String?
   avatar     String?
+  email      String?
+  address    String?
+  note       String?
+  currency   String
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   tenantId   String

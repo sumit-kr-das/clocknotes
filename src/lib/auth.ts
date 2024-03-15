@@ -17,30 +17,27 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ profile }) {
-      if (!profile?.email) {
+      if (!profile?.email || !profile?.name) {
         throw new Error("No profile found");
       }
-      try {
-        await db.user.upsert({
-          where: {
-            email: profile.email,
+      await db.user.upsert({
+        where: {
+          email: profile.email,
+        },
+        create: {
+          email: profile.email,
+          name: profile.name,
+          avatar: (profile as any).picture,
+          tenant: {
+            create: {},
           },
-          create: {
-            email: profile.email,
-            name: profile.name,
-            avatar: (profile as any).picture,
-            tenant: {
-              create: {},
-            },
-          },
-          update: {
-            name: profile.name,
-            avatar: (profile as any).picture,
-          },
-        });
-      } catch (err) {
-        throw new Error("User update error");
-      }
+        },
+        update: {
+          name: profile.name,
+          avatar: (profile as any).picture,
+        },
+      });
+
       return true;
     },
     async jwt({ token, profile }) {

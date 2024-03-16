@@ -12,6 +12,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal, Pen, Trash } from "lucide-react";
 import { TClient } from "@/type/client/TClient";
+import EditClient from "@/app/(main)/client/_components/EditClient";
+import { useState } from "react";
+import ClientActions from "@/app/(main)/client/_components/ClientActions";
 
 export const columns: ColumnDef<TClient>[] = [
   {
@@ -59,26 +62,11 @@ export const columns: ColumnDef<TClient>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
-
+      const client = row.original;
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => console.log(payment.id)}>
-              <Pen /> <span className="ml-4">Edit</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => console.log(payment.id)}>
-              <Trash /> <span className="ml-4">Delete</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <ClientActions client={client} />
+        </>
       );
     },
   },

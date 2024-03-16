@@ -76,7 +76,7 @@ model Client {
   email      String?
   address    String?
   note       String?
-  currency   String
+  currency   String     @default("USD")
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   tenantId   String

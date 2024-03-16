@@ -1,6 +1,15 @@
 "use client";
 import * as React from "react";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -19,19 +28,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import { Payment } from "@/app/(main)/client/_components/columns";
+import { Button } from "@/components/ui/button";
+import AddClient from "@/app/(main)/client/_components/AddClient";
+import { TClient } from "@/type/client/TClient";
 
-type TData = {
-  id: string;
-  name: string;
-  address: string;
-  currency: string;
-};
-interface DataTableProps<TData> {
-  columns: ColumnDef<TData[], Payment>[];
-  data: TData[];
+interface DataTableProps {
+  columns: ColumnDef<TClient, any>[];
+  data: TClient[];
 }
-const ClientTable = ({ data, columns }: DataTableProps<TData>) => {
+const ClientTable = ({ data, columns }: DataTableProps) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     [],
@@ -51,7 +56,7 @@ const ClientTable = ({ data, columns }: DataTableProps<TData>) => {
   });
   return (
     <>
-      <div className="flex items-center py-4">
+      <div className="flex justify-between items-center py-4">
         <Input
           placeholder={`Filter names`}
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
@@ -60,6 +65,7 @@ const ClientTable = ({ data, columns }: DataTableProps<TData>) => {
           }
           className="max-w-sm"
         />
+        <AddClient />
       </div>
       <div className="rounded-md border">
         <Table>

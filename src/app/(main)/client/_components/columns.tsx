@@ -11,17 +11,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal, Pen, Trash } from "lucide-react";
+import { TClient } from "@/type/client/TClient";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
-export type Payment = {
-  id: string;
-  name: string;
-  address: string;
-  currency: string;
-};
-
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<TClient>[] = [
   {
     accessorKey: "name",
     header: ({ column }) => {
@@ -52,7 +44,17 @@ export const columns: ColumnDef<Payment>[] = [
   },
   {
     accessorKey: "currency",
-    header: "Currency",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Currency
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
   },
   {
     id: "actions",

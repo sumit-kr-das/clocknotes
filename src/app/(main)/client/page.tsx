@@ -1,4 +1,4 @@
-import ClientTable from "@/app/(main)/client/_components/ClientTable";
+import ClientTable from "@/app/(main)/client/_components/client-table";
 import { columns } from "@/app/(main)/client/_components/columns";
 import { getClients } from "@/app/api/client/client.actions";
 const Client = async () => {

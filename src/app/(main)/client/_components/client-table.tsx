@@ -1,14 +1,6 @@
 "use client";
 import * as React from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+
 import {
   ColumnDef,
   flexRender,
@@ -29,7 +21,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import AddClient from "@/app/(main)/client/_components/AddClient";
+import AddClient from "@/app/(main)/client/_components/add-client";
 import { TClient } from "@/type/client/TClient";
 
 interface DataTableProps {

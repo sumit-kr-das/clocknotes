@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { MoreHorizontal, Trash } from "lucide-react";
 import { TClient } from "@/type/client/TClient";
-import EditClient from "@/app/(main)/client/_components/EditClient";
+import EditClient from "@/app/(main)/client/_components/edit-client";
 import { useState } from "react";
 import { Pencil } from "lucide-react";
 import { deleteClient } from "@/app/api/client/client.actions";

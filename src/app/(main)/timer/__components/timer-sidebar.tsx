@@ -28,7 +28,7 @@ const TimerSidebar = () => {
     <div
       className={cn(
         "relative border-r px-3 pb-10 pt-24",
-        isCollapsed ? "min-w-[80px]" : "min-w-[240px]"
+        isCollapsed ? "min-w-[80px]" : "min-w-[240px]",
       )}
     >
       <div className="absolute -right-[20px] top-7">
@@ -75,7 +75,7 @@ const TimerSidebar = () => {
             label: "",
             icon: CircleUser,
             variant: "ghost",
-            href: "/",
+            href: "/client",
           },
         ]}
       />

@@ -1,21 +1,9 @@
 "use client";
-
 import { ColumnDef } from "@tanstack/react-table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, MoreHorizontal, Pen, Trash } from "lucide-react";
 import { TClient } from "@/type/client/TClient";
-import EditClient from "@/app/(main)/client/_components/EditClient";
-import { useState } from "react";
-import ClientActions from "@/app/(main)/client/_components/ClientActions";
-
+import ClientActions from "@/app/(main)/client/_components/client-actions";
 export const columns: ColumnDef<TClient>[] = [
   {
     accessorKey: "name",

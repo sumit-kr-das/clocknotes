@@ -95,7 +95,7 @@ const TimerSidebar = () => {
             label: "",
             icon: GanttChartSquare,
             variant: "ghost",
-            href: "/",
+            href: "/project",
           },
           {
             title: "Tags",

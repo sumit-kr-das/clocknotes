@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/provider/theme-provider";
-import {Toaster} from 'react-hot-toast'
+import { Toaster } from "react-hot-toast";
 
 const font = DM_Sans({ subsets: ["latin"] });
 
@@ -25,10 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Toaster
-              position="top-right"
-              reverseOrder={true}
-          />
+          <Toaster position="bottom-right" reverseOrder={true} />
           {children}
         </ThemeProvider>
       </body>

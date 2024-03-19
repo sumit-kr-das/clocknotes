@@ -86,18 +86,19 @@ model Client {
 }
 
 model Project {
-  id          String     @id @default(dbgenerated("concat('prj_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name        String
-  color       String?
-  accessType  String     @default("public")
-  totalAmount Int        @default(000)
-  isBillable  Boolean    @default(false)
-  rate        Int        @default(000)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  tenantId    String
-  tenant      Tenant     @relation(fields: [tenantId], references: [id])
-  clientId    String?
-  client      Client?    @relation(fields: [clientId], references: [id])
-  activities  Activity[]
+  id           String     @id @default(dbgenerated("concat('prj_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name         String
+  color        String?
+  accessType   String     @default("public")
+  totalAmount  Int        @default(000)
+  isBillable   Boolean    @default(false)
+  currencyType String     @default("USD")
+  rate         Int        @default(000)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  tenantId     String
+  tenant       Tenant     @relation(fields: [tenantId], references: [id])
+  clientId     String?
+  client       Client?    @relation(fields: [clientId], references: [id])
+  activities   Activity[]
 }

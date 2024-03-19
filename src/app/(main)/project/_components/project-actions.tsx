@@ -3,29 +3,39 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { MoreHorizontal, Pencil, Trash } from "lucide-react";
+import {
+  LayoutList,
+  MoreHorizontal,
+  Pencil,
+  Settings,
+  Trash,
+} from "lucide-react";
 import { TClient } from "@/type/client/TClient";
 import EditClient from "@/app/(main)/client/_components/edit-client";
 import { useState } from "react";
 import { deleteClient } from "@/app/api/client/client.actions";
 import toast from "react-hot-toast";
+import { TProject } from "@/type/project/TProject";
+import { deleteProject } from "@/app/api/project/project.actions";
+import SettingProject from "@/app/(main)/project/_components/setting-project";
 
-const ClientActions = ({ client }: { client: TClient }) => {
+const ProjectActions = ({ project }: { project: TProject }) => {
   const [open, setOpen] = useState(false);
-  const removeClient = async () => {
+  const removeProject = async (id: string) => {
     try {
-      await deleteClient(client.id);
-      toast.success("Client deleted successfully");
+      await deleteProject(id);
+      toast.success("Project deleted successfull");
     } catch (e) {
       toast.error("Something gone wrong");
     }
   };
   return (
     <>
-      <EditClient client={client} open={open} setOpen={setOpen} />
+      <SettingProject project={project} open={open} setOpen={setOpen} />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-8 w-8 p-0">
@@ -36,10 +46,14 @@ const ClientActions = ({ client }: { client: TClient }) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem onClick={() => setOpen(!open)}>
-            <Pencil /> <span className="ml-4">Edit</span>
+            <Settings /> <span className="ml-4">Settings</span>
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={() => removeClient()}>
+          <DropdownMenuItem onClick={() => removeProject(project?.id)}>
             <Trash /> <span className="ml-4">Delete</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            <LayoutList /> <span className="ml-4">Tasks</span>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -47,4 +61,4 @@ const ClientActions = ({ client }: { client: TClient }) => {
   );
 };
 
-export default ClientActions;
+export default ProjectActions;

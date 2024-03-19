@@ -4,12 +4,7 @@ import { getProject } from "@/app/api/project/project.actions";
 
 const Project = async () => {
   const projects = await getProject();
-  console.log(projects);
-  return (
-    <>
-      <ProjectTable data={projects} columns={columns} />
-    </>
-  );
+  return <>{projects && <ProjectTable data={projects} columns={columns} />}</>;
 };
 
 export default Project;

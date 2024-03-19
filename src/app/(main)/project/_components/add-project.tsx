@@ -40,7 +40,7 @@ import {
 import { useEffect, useState } from "react";
 import { TClient } from "@/type/client/TClient";
 import { addProject } from "@/app/api/project/project.actions";
-import { toast } from "@/components/ui/use-toast";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(4, {
@@ -63,12 +63,10 @@ const AddProject = () => {
   async function submitProject(data: z.infer<typeof formSchema>) {
     try {
       await addProject({ data, path: "/project" });
-      toast({
-        description: "Project added successfully",
-      });
+      toast.success("Project added successfully");
       setOpen(false);
     } catch (e) {
-      console.log(e);
+      toast.error("Something gone wrong");
     }
   }
 

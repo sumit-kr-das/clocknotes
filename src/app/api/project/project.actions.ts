@@ -44,3 +44,62 @@ export const getProject = async () => {
     console.log(e);
   }
 };
+export const getProjectDetails = async (id: string) => {
+  try {
+    const project = await db.project.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    return project;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const deleteProject = async (id: string) => {
+  try {
+    await db.project.delete({
+      where: {
+        id: id,
+      },
+    });
+    revalidatePath("/project");
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const editProject = async ({
+  projectId,
+  data,
+}: {
+  projectId: string;
+  data: {
+    name: string;
+    client: string;
+    isBillable: boolean;
+    rate: number;
+    currencyType: string;
+    color: string;
+  };
+}) => {
+  try {
+    await db.project.update({
+      where: {
+        id: projectId,
+      },
+      data: {
+        name: data.name as string,
+        clientId: data.client as string,
+        isBillable: data.isBillable as boolean,
+        rate: data.rate as number,
+        currencyType: data.currencyType as string,
+        color: data.color as string,
+      },
+    });
+    revalidatePath("/project");
+  } catch (e) {
+    console.log(e);
+  }
+};

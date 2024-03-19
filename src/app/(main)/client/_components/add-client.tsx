@@ -17,6 +17,8 @@ const formSchema = z.object({
   }),
 });
 import { addClient } from "@/app/api/client/client.actions";
+import toast from "react-hot-toast";
+
 const AddClient = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -25,10 +27,15 @@ const AddClient = () => {
     },
   });
   async function addNewClient(data: z.infer<typeof formSchema>) {
-    await addClient({ data, path: "/client" });
-    form.reset({
-      name: "",
-    });
+    try {
+      await addClient({ data, path: "/client" });
+      toast.success("Client added successfully");
+      form.reset({
+        name: "",
+      });
+    } catch (e) {
+      toast.error("Something wrong happen when adding client");
+    }
   }
 
   return (

@@ -1,28 +1,27 @@
-import { DateTime } from "next-auth/providers/kakao";
-
 export type TProject = {
   id: string;
   name: string;
   color: string | null;
-  accessType?: boolean;
+  accessType?: string;
   totalAmount?: number;
   isBillable?: boolean;
+  currencyType?: string;
   rate?: number;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
   tenantId?: string;
-  clientId?: string;
+  clientId: string | null;
   client?: {
     id: string;
     name: string;
     color: string | null;
     avatar: string | null;
     email: string | null;
-    address?: string;
-    note?: string;
-    currency?: string;
-    createdAt: DateTime;
-    updatedAt: DateTime;
+    address: string | null;
+    note: string | null;
+    currency: string;
+    createdAt: Date;
+    updatedAt: Date;
     tenantId: string;
-  };
+  } | null;
 };

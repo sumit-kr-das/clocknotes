@@ -12,13 +12,11 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { addClient } from "@/app/api/client/client.actions";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -27,10 +25,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import Link from "next/link";
-import { editClient, getClientDetail } from "@/app/api/client/client.actions";
-import { useToast } from "@/components/ui/use-toast";
+import { editClient } from "@/app/api/client/client.actions";
 import { TClient } from "@/type/client/TClient";
+import toast from "react-hot-toast";
+
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Name is requied",
@@ -49,7 +47,6 @@ const EditClient = ({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
-  const { toast } = useToast();
   // const client = await getClientDetail(id);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -66,11 +63,9 @@ const EditClient = ({
     try {
       await editClient({ data, path: "/client", clientId: client.id });
       setOpen(false);
-      toast({
-        description: "Client updated successfully",
-      });
+      toast.success("Client edited successfull");
     } catch (e) {
-      console.log(e);
+      toast.error("Something gone wrong");
     }
   }
   return (

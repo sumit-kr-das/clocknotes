@@ -23,7 +23,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { getClients } from "@/app/api/client/client.actions";
+import { getClients } from "@/app/(main)/client/_components/action/client.actions";
 import { cn } from "@/lib/utils";
 import {
   Command,

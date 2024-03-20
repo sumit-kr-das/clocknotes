@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { editClient } from "@/app/api/client/client.actions";
+import { editClient } from "@/app/(main)/client/_components/action/client.actions";
 import { TClient } from "@/type/client/TClient";
 import toast from "react-hot-toast";
 

@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/command";
 import { useEffect, useState } from "react";
 import { TClient } from "@/type/client/TClient";
-import { getClients } from "@/app/api/client/client.actions";
+import { getClients } from "@/app/(main)/client/_components/action/client.actions";
 import { CheckIcon } from "lucide-react";
 import solids from "@/constants/solids";
 import toast from "react-hot-toast";

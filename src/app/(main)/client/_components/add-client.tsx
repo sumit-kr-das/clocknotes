@@ -16,7 +16,7 @@ const formSchema = z.object({
     message: "Please enter a client",
   }),
 });
-import { addClient } from "@/app/api/client/client.actions";
+import { addClient } from "@/app/(main)/client/_components/action/client.actions";
 import toast from "react-hot-toast";
 
 const AddClient = () => {

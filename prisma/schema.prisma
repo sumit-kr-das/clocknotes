@@ -37,6 +37,7 @@ model Tenant {
   Client     Client[]
   Project    Project[]
   Tag        Tag[]
+  Task       Task[]
 }
 
 model User {
@@ -102,6 +103,7 @@ model Project {
   clientId     String?
   client       Client?    @relation(fields: [clientId], references: [id])
   activities   Activity[]
+  Task         Task[]
 }
 
 model Tag {
@@ -111,4 +113,14 @@ model Tag {
   tenant    Tenant   @relation(fields: [tenantId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Task {
+  id        String  @id @default(dbgenerated("concat('task_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name      String  @unique
+  status    String  @default("Todo")
+  tenantId  String
+  tenant    Tenant  @relation(fields: [tenantId], references: [id])
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
 }

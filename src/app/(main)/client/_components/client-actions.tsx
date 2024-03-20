@@ -10,7 +10,7 @@ import { MoreHorizontal, Pencil, Trash } from "lucide-react";
 import { TClient } from "@/type/client/TClient";
 import EditClient from "@/app/(main)/client/_components/edit-client";
 import { useState } from "react";
-import { deleteClient } from "@/app/api/client/client.actions";
+import { deleteClient } from "@/app/(main)/client/_components/action/client.actions";
 import toast from "react-hot-toast";
 
 const ClientActions = ({ client }: { client: TClient }) => {

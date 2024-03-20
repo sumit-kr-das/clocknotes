@@ -100,7 +100,7 @@ const ProjectTable = ({ data, columns }: DataTableProps) => {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  No project found. Please create a project.
                 </TableCell>
               </TableRow>
             )}

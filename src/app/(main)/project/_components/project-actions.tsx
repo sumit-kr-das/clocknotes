@@ -7,21 +7,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import {
-  LayoutList,
-  MoreHorizontal,
-  Pencil,
-  Settings,
-  Trash,
-} from "lucide-react";
-import { TClient } from "@/type/client/TClient";
-import EditClient from "@/app/(main)/client/_components/edit-client";
+import { LayoutList, MoreHorizontal, Settings, Trash } from "lucide-react";
 import { useState } from "react";
-import { deleteClient } from "@/app/(main)/client/_components/action/client.actions";
 import toast from "react-hot-toast";
 import { TProject } from "@/type/project/TProject";
 import { deleteProject } from "@/app/api/project/project.actions";
 import SettingProject from "@/app/(main)/project/_components/setting-project";
+import { redirect } from "next/navigation";
 
 const ProjectActions = ({ project }: { project: TProject }) => {
   const [open, setOpen] = useState(false);
@@ -52,7 +44,7 @@ const ProjectActions = ({ project }: { project: TProject }) => {
             <Trash /> <span className="ml-4">Delete</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => redirect(`${project?.id}/task`)}>
             <LayoutList /> <span className="ml-4">Tasks</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

@@ -79,7 +79,7 @@ const AddProject = () => {
   }, []);
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button variant="outline" onClick={() => setOpen(true)}>
             Create New Project

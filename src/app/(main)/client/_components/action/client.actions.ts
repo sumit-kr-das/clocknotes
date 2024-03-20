@@ -41,7 +41,7 @@ export const addClient = async ({
 export const getClients = async () => {
   const user = await getSession();
   try {
-    const clients = await prisma?.client.findMany({
+    const clients = await db.client.findMany({
       where: {
         tenantId: user.tenantId,
       },

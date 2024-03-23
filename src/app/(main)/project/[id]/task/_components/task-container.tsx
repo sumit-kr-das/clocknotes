@@ -1,57 +1,117 @@
+"use client";
 import { Separator } from "@/components/ui/separator";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import TaskDropdown from "@/app/(main)/project/[id]/task/_components/TaskDropdown";
 import TaskCard from "@/app/(main)/project/[id]/task/_components/task-card";
-const TaskContainer = () => {
+import TTask from "@/type/task/task";
+import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
+import { useEffect, useState } from "react";
+import { editTaskStatus } from "@/app/(main)/project/[id]/task/_components/action/task.actions";
+import toast from "react-hot-toast";
+
+type TCard = {
+  id: string;
+  name: string;
+  status: string;
+  order: number;
+  description: string;
+  tenantId: string;
+  projectId: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+const reorder = (list: any, startIndex: number, endIndex: number) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  return result;
+};
+const TaskContainer = ({ tasks }: { tasks: TTask[] }) => {
+  const [orderedList, setOrderedList] = useState(tasks);
+  const [todo, setTodo] = useState(tasks[0].data);
+  useEffect(() => {
+    setOrderedList(tasks);
+  }, [tasks]);
+
+  const onDragEnd = async (result: DropResult) => {
+    const { source, destination, draggableId, type } = result;
+    console.log(result);
+    if (!destination) return;
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
+    let newOrderedData = [...orderedList];
+    console.log(newOrderedData, "ordered data");
+    const sourceList = newOrderedData.find(
+      (list) => list.status === source.droppableId,
+    );
+    const destList = newOrderedData.find(
+      (list) => list.status === destination.droppableId,
+    );
+    if (!sourceList || !destList) {
+      return;
+    }
+    if (!sourceList.data) {
+      sourceList.data = [];
+    }
+    if (!destList.data) {
+      destList.data = [];
+    }
+    if (source.droppableId === destination.droppableId) {
+      return;
+    } else {
+      const [moveCard] = sourceList.data.splice(source.index, 1);
+      moveCard.status = destination.droppableId;
+      destList.data.splice(destination.index, 0, moveCard);
+      sourceList.data.forEach((card, idx) => {
+        card.order = idx;
+      });
+
+      // Update the order for each card in the destination list
+      destList.data.forEach((card, idx) => {
+        card.order = idx;
+      });
+      setOrderedList(newOrderedData);
+      await editTaskStatus({
+        taskId: moveCard.id,
+        status: destination.droppableId,
+      });
+      toast.success("Task status chaged successfully");
+    }
+  };
   return (
     <>
-      <div className="w-full flex justify-between gap-4">
-        <div className="min-w-[300px]  rounded-[0.5rem] border bg-background shadow-md md:shadow-xl">
-          <h1 className="text-xl font-bold px-4 py-2">Todo</h1>
-          <Separator className="my-2" />
-          <div className="my-3">
-            <Card className="flex flex-col items-start gap-2 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent bg-muted m-3">
-              <div className="flex w-full flex-col gap-1">
-                <div className="flex items-center">
-                  <div className="font-semibold">Make Project Component</div>
-                  <div className="ml-auto text-xs flex flex-row">
-                    <div className="ml-auto text-xs text-foreground">
-                      5 month agos
-                    </div>
-                    <TaskDropdown />
+      <DragDropContext onDragEnd={onDragEnd}>
+        <div className="w-full grid justify-between gap-x-4 gap-y-8 grid-cols-[repeat(auto-fill,minmax(350px,1fr))] mt-4">
+          {orderedList?.map((list, index) => (
+            <div
+              className="w-[350px] min-h-[450px] overflow-hidden rounded-[0.5rem] border bg-background shadow-md md:shadow-xl"
+              key={index}
+            >
+              <h1 className="text-xl font-bold px-4 py-2">{list.status}</h1>
+              <Separator className="my-2" />
+              <Droppable droppableId={list.status} type="card">
+                {(provided) => (
+                  <div
+                    className="my-2"
+                    ref={provided.innerRef}
+                    {...provided.droppableProps}
+                  >
+                    {list?.data?.map((task, index) => (
+                      <TaskCard task={task} index={index} key={task.id} />
+                    ))}
+                    {provided.placeholder}
                   </div>
-                </div>
-                <div className="text-xs font-medium">
-                  Status:
-                  <Badge className="ml-2">Todo</Badge>
-                </div>
-              </div>
-              <div className="line-clamp-2 text-x5 text-muted-foreground">
-                Hi, let have a meeting tomorrow to discuss the project. I haves
-                been reviewing and make it fucking as you like.
-              </div>
-            </Card>
-            <TaskCard />
-          </div>
+                )}
+              </Droppable>
+            </div>
+          ))}
         </div>
-        <div className="min-w-[300px] overflow-hidden rounded-[0.5rem] border bg-background shadow-md md:shadow-xl">
-          <h1 className="text-xl font-bold px-4 py-2">Progress</h1>
-          <Separator className="my-2" />
-          <div className="my-2">
-            <TaskCard />
-            <TaskCard />
-          </div>
-        </div>
-        <div className="min-w-[300px] overflow-hidden rounded-[0.5rem] border bg-background shadow-md md:shadow-xl">
-          <h1 className="text-xl font-bold px-4 py-2">Done</h1>
-          <Separator className="my-2" />
-          <div className="my-2">
-            <TaskCard />
-            <TaskCard />
-          </div>
-        </div>
-      </div>
+      </DragDropContext>
     </>
   );
 };

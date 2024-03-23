@@ -34,6 +34,7 @@ const AddClient = () => {
         name: "",
       });
     } catch (e) {
+      console.log(e);
       toast.error("Something wrong happen when adding client");
     }
   }

@@ -17,6 +17,7 @@ import BaseTextarea from "@/components/global/customInputes/base-textarea";
 import { useParams } from "next/navigation";
 import { addTask } from "@/app/(main)/project/[id]/task/_components/action/task.actions";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 const formSchema = z.object({
   name: z
@@ -32,11 +33,12 @@ const formSchema = z.object({
     .min(1, {
       message: "Please enter description",
     })
-    .max(40, {
-      message: "Description should be under 40 characters",
+    .max(120, {
+      message: "Description should be under 120 characters",
     }),
 });
 const AddTask = () => {
+  const [open, setOpem] = useState(false);
   const params = useParams();
   const projectId = params.id;
   const form = useForm<z.infer<typeof formSchema>>({
@@ -48,14 +50,18 @@ const AddTask = () => {
   });
   async function createTask(data: z.infer<typeof formSchema>) {
     try {
+      console.log(data);
       await addTask({ data, projectId: projectId });
+      setOpem(false);
+      form.reset();
       toast.success("Task added successfully");
     } catch (e) {
+      setOpem(false);
       toast.error("Failed to create task");
     }
   }
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpem}>
       <DialogTrigger asChild>
         <Button>
           <Plus className="mr-2 h-4 w-4" />

@@ -105,3 +105,51 @@ export const editTaskStatus = async ({
     throw new Error("Something went wrong");
   }
 };
+
+export const taskUpdate = async ({
+  taskId,
+  projectId,
+  data,
+}: {
+  taskId: string;
+  projectId: any;
+  data: {
+    name: string;
+    description: string;
+  };
+}) => {
+  try {
+    await db.task.update({
+      where: {
+        id: taskId,
+      },
+      data: {
+        name: data.name,
+        description: data.description,
+      },
+    });
+    revalidatePath(`/project/${projectId}/task`);
+  } catch (e) {
+    throw new Error("Something went wrong");
+  }
+};
+
+export const deleteTask = async ({
+  taskId,
+  projectId,
+}: {
+  taskId: string;
+  projectId: any;
+}) => {
+  try {
+    await db.task.delete({
+      where: {
+        id: taskId,
+        projectId: projectId,
+      },
+    });
+    revalidatePath(`/project/${projectId}/task`);
+  } catch (e) {
+    throw new Error("Something went wrong");
+  }
+};

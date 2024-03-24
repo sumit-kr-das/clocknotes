@@ -5,7 +5,7 @@ import TTask from "@/type/task/task";
 import { convertDate } from "@/components/global/convert-date";
 import { Draggable } from "@hello-pangea/dnd";
 
-interface TTaskData {
+export type TTaskData = {
   id: string;
   name: string;
   status: string;
@@ -14,7 +14,7 @@ interface TTaskData {
   projectId: string;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 const TaskCard = ({ task, index }: { task: TTaskData; index: number }) => {
   return (
     <Draggable draggableId={task?.id} index={index}>
@@ -32,7 +32,7 @@ const TaskCard = ({ task, index }: { task: TTaskData; index: number }) => {
                 <div className="ml-auto text-xs text-foreground">
                   {convertDate(task?.createdAt)}
                 </div>
-                <TaskDropdown />
+                <TaskDropdown task={task} />
               </div>
             </div>
             <div className="text-xs font-medium">

@@ -18,6 +18,7 @@ import { useParams } from "next/navigation";
 import { addTask } from "@/app/(main)/project/[id]/task/_components/action/task.actions";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
 
 const formSchema = z.object({
   name: z
@@ -39,6 +40,7 @@ const formSchema = z.object({
 });
 const AddTask = () => {
   const [open, setOpem] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const projectId = params.id;
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,12 +52,14 @@ const AddTask = () => {
   });
   async function createTask(data: z.infer<typeof formSchema>) {
     try {
-      console.log(data);
+      setIsLoading(true);
       await addTask({ data, projectId: projectId });
       setOpem(false);
       form.reset();
       toast.success("Task added successfully");
+      setIsLoading(false);
     } catch (e) {
+      setIsLoading(false);
       setOpem(false);
       toast.error("Failed to create task");
     }
@@ -96,7 +100,7 @@ const AddTask = () => {
                 />
               )}
             />
-            <Button type="submit">Create</Button>
+            <SubmitBtn isLoading={isLoading} label="Create" />
           </form>
         </Form>
       </DialogContent>

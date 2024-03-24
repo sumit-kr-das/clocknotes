@@ -8,7 +8,6 @@ import {
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -28,6 +27,8 @@ import {
 import { editClient } from "@/app/(main)/client/_components/action/client.actions";
 import { TClient } from "@/type/client/TClient";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -47,7 +48,7 @@ const EditClient = ({
   open: boolean;
   setOpen: (open: boolean) => void;
 }) => {
-  // const client = await getClientDetail(id);
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -61,10 +62,13 @@ const EditClient = ({
 
   async function updateClient(data: z.infer<typeof formSchema>) {
     try {
+      setIsLoading(true);
       await editClient({ data, path: "/client", clientId: client.id });
       setOpen(false);
       toast.success("Client edited successfull");
+      setIsLoading(false);
     } catch (e) {
+      setIsLoading(false);
       toast.error("Something gone wrong");
     }
   }
@@ -149,9 +153,7 @@ const EditClient = ({
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="mt-3">
-                Update
-              </Button>
+              <SubmitBtn isLoading={isLoading} label="Update" />
             </form>
           </Form>
         </DialogContent>

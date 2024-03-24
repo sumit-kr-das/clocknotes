@@ -18,8 +18,11 @@ const formSchema = z.object({
 });
 import { addClient } from "@/app/(main)/client/_components/action/client.actions";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
 
 const AddClient = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -28,13 +31,15 @@ const AddClient = () => {
   });
   async function addNewClient(data: z.infer<typeof formSchema>) {
     try {
+      setIsLoading(true);
       await addClient({ data, path: "/client" });
       toast.success("Client added successfully");
       form.reset({
         name: "",
       });
+      setIsLoading(false);
     } catch (e) {
-      console.log(e);
+      setIsLoading(false);
       toast.error("Something wrong happen when adding client");
     }
   }
@@ -58,7 +63,7 @@ const AddClient = () => {
               </FormItem>
             )}
           />
-          <Button type="submit">Add</Button>
+          <SubmitBtn isLoading={isLoading} label="Add Client" />
         </form>
       </Form>
     </>

@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,7 +6,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Plus } from "lucide-react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,6 +18,7 @@ import { TTaskData } from "@/app/(main)/project/[id]/task/_components/task-card"
 import { useParams } from "next/navigation";
 import { taskUpdate } from "@/app/(main)/project/[id]/task/_components/action/task.actions";
 import toast from "react-hot-toast";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
 
 const formSchema = z.object({
   name: z
@@ -49,15 +48,19 @@ const EditTask = ({
   task: TTaskData;
 }) => {
   const [tasks, setTasks] = useState<TTask[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const projectId = params.id;
 
   async function updateTask(data: z.infer<typeof formSchema>) {
     try {
+      setIsLoading(true);
       await taskUpdate({ taskId: task?.id, projectId, data });
       toast.success("Task edited successfully");
       setOpen(false);
+      setIsLoading(false);
     } catch (e) {
+      setIsLoading(false);
       toast.error("Something went wrong");
     }
   }
@@ -99,7 +102,7 @@ const EditTask = ({
                 />
               )}
             />
-            <Button type="submit">Update Task</Button>
+            <SubmitBtn isLoading={isLoading} label="Edit Task" />
           </form>
         </Form>
       </DialogContent>

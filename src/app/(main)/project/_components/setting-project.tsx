@@ -45,6 +45,8 @@ import BaseSwitch from "@/components/global/customInputes/base-switch";
 import BaseSelect from "@/components/global/customInputes/base-select";
 import BaseCombobox from "@/components/global/customInputes/base-combobox";
 import ProjectEditSchema from "@/type/zod/ProjectEditSchema";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
+
 const SettingProject = ({
   project,
   open,
@@ -55,6 +57,7 @@ const SettingProject = ({
   setOpen: (open: boolean) => void;
 }) => {
   const [clients, setClients] = useState<TClient[]>();
+  const [isLoading, setIsLoading] = useState(false);
   const [color, setColor] = useState<string>(project?.color || "#ffff");
   const form = useForm<z.infer<typeof ProjectEditSchema>>({
     resolver: zodResolver(ProjectEditSchema),
@@ -87,15 +90,17 @@ const SettingProject = ({
     toast.success("Color selected");
   };
   const basicSetting = async (data: z.infer<typeof ProjectEditSchema>) => {
-    console.log(data);
     try {
+      setIsLoading(true);
       await editProject({
         data: { ...data, rate: parseInt(data?.rate) },
         projectId: project?.id,
       });
       setOpen(false);
       toast.success("Project settings updated successfully");
+      setIsLoading(false);
     } catch (e) {
+      setIsLoading(false);
       toast.error("An error occured while setting");
     }
   };
@@ -261,7 +266,7 @@ const SettingProject = ({
                       />
                     )}
                   />
-                  <Button type="submit">Update Setting</Button>
+                  <SubmitBtn isLoading={isLoading} label="Update Setting" />
                 </form>
               </Form>
             </TabsContent>

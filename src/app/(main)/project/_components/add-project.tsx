@@ -4,7 +4,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -17,7 +16,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -41,6 +39,7 @@ import { useEffect, useState } from "react";
 import { TClient } from "@/type/client/TClient";
 import { addProject } from "@/app/api/project/project.actions";
 import toast from "react-hot-toast";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
 
 const formSchema = z.object({
   name: z.string().min(4, {
@@ -52,6 +51,7 @@ const formSchema = z.object({
 });
 const AddProject = () => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [clients, setClients] = useState<TClient[]>();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -62,10 +62,13 @@ const AddProject = () => {
   });
   async function submitProject(data: z.infer<typeof formSchema>) {
     try {
+      setIsLoading(true);
       await addProject({ data, path: "/project" });
       toast.success("Project added successfully");
       setOpen(false);
+      setIsLoading(false);
     } catch (e) {
+      setIsLoading(false);
       toast.error("Something gone wrong");
     }
   }
@@ -174,7 +177,7 @@ const AddProject = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit">Submit</Button>
+              <SubmitBtn isLoading={isLoading} label="Create Project" />
             </form>
           </Form>
         </DialogContent>

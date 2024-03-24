@@ -1,26 +1,14 @@
 "use client";
 import { Separator } from "@/components/ui/separator";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import TaskDropdown from "@/app/(main)/project/[id]/task/_components/TaskDropdown";
 import TaskCard from "@/app/(main)/project/[id]/task/_components/task-card";
 import TTask from "@/type/task/task";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
 import { useEffect, useState } from "react";
 import { editTaskStatus } from "@/app/(main)/project/[id]/task/_components/action/task.actions";
 import toast from "react-hot-toast";
-
-type TCard = {
-  id: string;
-  name: string;
-  status: string;
-  order: number;
-  description: string;
-  tenantId: string;
-  projectId: string;
-  createdAt: Date;
-  updatedAt: Date;
-};
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import AddTask from "@/app/(main)/project/[id]/task/_components/add-task";
 
 const reorder = (list: any, startIndex: number, endIndex: number) => {
   const result = Array.from(list);
@@ -30,10 +18,22 @@ const reorder = (list: any, startIndex: number, endIndex: number) => {
 };
 const TaskContainer = ({ tasks }: { tasks: TTask[] }) => {
   const [orderedList, setOrderedList] = useState(tasks);
-  const [todo, setTodo] = useState(tasks[0].data);
+  const [search, setSearch] = useState("");
   useEffect(() => {
+    if (search !== "") {
+      const filteredTasks = tasks.map((statusGroup) => {
+        return {
+          status: statusGroup.status,
+          data: statusGroup.data.filter((task) =>
+            task.name.toLowerCase().includes(search.toLowerCase()),
+          ),
+        };
+      });
+      setOrderedList(filteredTasks);
+      return;
+    }
     setOrderedList(tasks);
-  }, [tasks]);
+  }, [tasks, search]);
 
   const onDragEnd = async (result: DropResult) => {
     const { source, destination, draggableId, type } = result;
@@ -85,6 +85,19 @@ const TaskContainer = ({ tasks }: { tasks: TTask[] }) => {
   };
   return (
     <>
+      <div className="w-full flex justify-between">
+        <div className="bg-background/95 py-4 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="relative min-w-[300px]">
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foregrounds" />
+            <Input
+              className="w-full rounded-md pl-8"
+              placeholder="Search Task"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </div>
+        <AddTask />
+      </div>
       <DragDropContext onDragEnd={onDragEnd}>
         <div className="w-full grid justify-between gap-x-4 gap-y-8 grid-cols-[repeat(auto-fill,minmax(350px,1fr))] mt-4">
           {orderedList?.map((list, index) => (

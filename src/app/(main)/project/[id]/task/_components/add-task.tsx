@@ -25,8 +25,8 @@ const formSchema = z.object({
     .min(1, {
       message: "Please enter name",
     })
-    .max(20, {
-      message: "Name should be under 20 characters",
+    .max(40, {
+      message: "Name should be under 40 characters",
     }),
   description: z
     .string()

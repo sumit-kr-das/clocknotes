@@ -102,7 +102,7 @@ const TimerSidebar = () => {
             label: "",
             icon: Tags,
             variant: "ghost",
-            href: "/",
+            href: "/tags",
           },
           {
             title: "Settings",

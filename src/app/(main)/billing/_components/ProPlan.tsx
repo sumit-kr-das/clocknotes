@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { CheckCheck, CheckCircle, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { createCheckoutSession } from "@/app/(main)/billing/_components/actions/billing.actions";
 
 const proPlan = [
   "All Free Plan Items",
@@ -18,12 +19,13 @@ const proPlan = [
   "Unlimited Notes",
   "Submit and Approve Time Sheets",
 ];
+
 const ProPlan = () => {
   return (
     <Card className="w-[380px]">
       <CardHeader>
         <CardTitle className="flex justify-between">
-          <span>Pro Plan</span> <span>$9.99/Mo</span>
+          <span>Pro Plan</span> <span>$7.99/Mo</span>
         </CardTitle>
         <CardDescription>
           Pro plan allows you access all the pro features. This is the monthly
@@ -44,9 +46,12 @@ const ProPlan = () => {
         ))}
       </CardContent>
       <CardFooter>
-        <Button className="w-full">
-          <CreditCard className="mr-2 h-4 w-4" /> Upgrade
-        </Button>
+        <form action={createCheckoutSession}>
+          <input type="hidden" name="lookup_key" value="pro-monthly" />
+          <Button className="w-full" type="submit">
+            <CreditCard className="mr-2 h-4 w-4" /> 15 Days Free Trail
+          </Button>
+        </form>
       </CardFooter>
     </Card>
   );

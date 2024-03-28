@@ -43,3 +43,18 @@ export const createPortalSession = async () => {
   });
   redirect(portalSession.url);
 };
+
+export const getAllInvoice = async () => {
+  try {
+    const user = await getSession();
+    const tenant = await db.tenant.findUnique({
+      where: { id: user.tenantId },
+    });
+    const invoices = await stripe.invoices.list({
+      customer: tenant?.stripeCustomerId || undefined,
+    });
+    console.log(invoices);
+  } catch (e) {
+    throw new Error("Something went wrong in invoice");
+  }
+};

@@ -12,8 +12,13 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileSliders } from "lucide-react";
-import { createPortalSession } from "@/app/(main)/billing/_components/actions/billing.actions";
+import {
+  createPortalSession,
+  getAllInvoice,
+} from "@/app/(main)/billing/_components/actions/billing.actions";
 const Billing = async () => {
+  const invoices = await getAllInvoice();
+  console.log(invoices);
   const subs = await hasSubscription();
   return (
     <div>

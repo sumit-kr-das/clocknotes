@@ -17,7 +17,6 @@ import {
 import React from "react";
 import Nav from "../../../../components/global/nav";
 import { Button } from "../../../../components/ui/button";
-import { Separator } from "../../../../components/ui/separator";
 import Image from "next/image";
 import Logo from "@/assets/logo.svg";
 import OnlyLogo from "@/assets/only-logo.svg";
@@ -26,11 +25,8 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const TimerSidebar = () => {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
@@ -55,9 +51,17 @@ const TimerSidebar = () => {
           {isCollapsed ? <ChevronRight /> : <ChevronLeft />}
         </Button>
       </div>
-      <Link href={"/timer"} className="p-4 flex items-center gap-2">
+      <Link
+        href={"/timer"}
+        className={cn(
+          "p-4 flex items-center gap-2",
+          isCollapsed && "justify-center",
+        )}
+      >
         <Image src={Logo} width={40} height={40} alt="logo" />
-        <h1 className="text-white font-bold text-2xl">Clocknotes</h1>
+        {!isCollapsed && (
+          <h1 className="text-white font-bold text-2xl">Clocknotes</h1>
+        )}
       </Link>
       <div className="mx-4 mt-2 mb-6 text-white rounded-lg p-2 ">
         <DropdownMenu>
@@ -66,14 +70,18 @@ const TimerSidebar = () => {
               <div>
                 <Image src={OnlyLogo} width={40} height={40} alt="logo" />
               </div>
-              <div className="text-left">
-                <p className="text-[#8a94a6] text-sm">Workspace</p>
-                <p className="text-sm font-semibold">Sumit's</p>
+              {!isCollapsed && (
+                <div className="text-left">
+                  <p className="text-[#8a94a6] text-sm">Workspace</p>
+                  <p className="text-sm font-semibold">Sumit's</p>
+                </div>
+              )}
+            </div>
+            {!isCollapsed && (
+              <div>
+                <ChevronsUpDown className="w-5 h-5" />
               </div>
-            </div>
-            <div>
-              <ChevronsUpDown />
-            </div>
+            )}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-[240px]">
             <DropdownMenuItem className="cursor-pointer">

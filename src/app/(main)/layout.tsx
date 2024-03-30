@@ -1,12 +1,14 @@
 import React from "react";
 import TimerNavigation from "@/app/(main)/timer/__components/timer-navigation";
 import TimerSidebar from "@/app/(main)/timer/__components/timer-sidebar";
+import getSession from "@/lib/get-session";
 
-const MainLayout = ({ children }: { children: React.ReactNode }) => {
+const MainLayout = async ({ children }: { children: React.ReactNode }) => {
+  const user = await getSession();
   return (
     <main className="min-h-screen w-full flex">
       {/* sidebar */}
-      <TimerSidebar />
+      <TimerSidebar userName={user?.name || "Default"} />
       {/* main */}
       <div className="w-full">
         <TimerNavigation />

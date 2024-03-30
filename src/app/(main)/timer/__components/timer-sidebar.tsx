@@ -27,8 +27,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import getSession from "@/lib/get-session";
 
-const TimerSidebar = () => {
+const TimerSidebar = ({ userName }: { userName: string }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
 
   const toggleSidebar = () => {
@@ -73,7 +74,9 @@ const TimerSidebar = () => {
               {!isCollapsed && (
                 <div className="text-left">
                   <p className="text-[#8a94a6] text-sm">Workspace</p>
-                  <p className="text-sm font-semibold">Sumit's</p>
+                  <p className="text-sm font-semibold">
+                    {userName?.split(" ")[0]}
+                  </p>
                 </div>
               )}
             </div>
@@ -87,13 +90,13 @@ const TimerSidebar = () => {
             <DropdownMenuItem className="cursor-pointer">
               <div className="text-left">
                 <p className="text-[#8a94a6] text-sm">Default</p>
-                <p className="text-sm font-semibold">Sumit's workspace</p>
+                <p className="text-sm font-semibold">Sumit&rsquo;s workspace</p>
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem className="cursor-pointer">
               <div className="text-left">
                 <p className="text-[#8a94a6] text-sm">Production</p>
-                <p className="text-sm font-semibold">Sk's workspace</p>
+                <p className="text-sm font-semibold">Sk&rsquo;s workspace</p>
               </div>
             </DropdownMenuItem>
             <DropdownMenuItem>

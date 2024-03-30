@@ -14,6 +14,7 @@ import { buttonVariants } from "../ui/button";
 import { usePathname } from "next/navigation";
 
 interface NavProps {
+  label?: string;
   isCollapsed: boolean;
   links: {
     title: string;
@@ -24,7 +25,7 @@ interface NavProps {
   }[];
 }
 
-const Nav = ({ links, isCollapsed }: NavProps) => {
+const Nav = ({ links, label, isCollapsed }: NavProps) => {
   const path = usePathname();
 
   return (
@@ -34,6 +35,7 @@ const Nav = ({ links, isCollapsed }: NavProps) => {
         className="group flex flex-col gap-4 py-2 data-[collapsed=true]:py-2"
       >
         <nav className="grid gap-1 px-2 group-[[data-collapsed=true]]:justify-center group-[[data-collapsed=true]]:px-2">
+          <p className="text-[#8a94a6] text-sm mb-2">{label && label}</p>
           {links.map((link, index) =>
             isCollapsed ? (
               <Tooltip key={index} delayDuration={0}>
@@ -47,7 +49,7 @@ const Nav = ({ links, isCollapsed }: NavProps) => {
                       }),
                       "h-9 w-9",
                       link.variant === "default" &&
-                        "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white"
+                        "dark:bg-muted dark:text-muted-foreground dark:hover:bg-muted dark:hover:text-white",
                     )}
                   >
                     <link.icon className="h-4 w-4" />
@@ -75,9 +77,10 @@ const Nav = ({ links, isCollapsed }: NavProps) => {
                     variant: link.href === path ? "default" : "ghost",
                     size: "sm",
                   }),
-                  link.variant === "default" &&
-                    "dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white",
-                  "justify-start"
+                  link.variant === "default"
+                    ? "text-white dark:bg-muted dark:text-white dark:hover:bg-muted dark:hover:text-white"
+                    : "text-[#b3b9c6]",
+                  "justify-start",
                 )}
               >
                 <link.icon className="mr-2 h-4 w-4" />
@@ -87,14 +90,14 @@ const Nav = ({ links, isCollapsed }: NavProps) => {
                     className={cn(
                       "ml-auto",
                       link.variant === "default" &&
-                        "text-background dark:text-white"
+                        "text-background dark:text-white",
                     )}
                   >
                     {link.label}
                   </span>
                 )}
               </Link>
-            )
+            ),
           )}
         </nav>
       </div>

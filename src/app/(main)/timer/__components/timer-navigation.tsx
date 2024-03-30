@@ -16,10 +16,8 @@ import UserNav from "@/app/(main)/timer/__components/user-nav";
 
 const TimerNavigation = () => {
   return (
-    <nav className="py-4 px-8 flex items-center justify-between border-b bg-white dark:bg-inherit">
-      <div>
-        <Image src={Logo} width={120} height={60} alt="logo" />
-      </div>
+    <nav className="py-4 px-8 h-20 flex items-center justify-between border-b bg-white dark:bg-inherit">
+      <div>{/*<Image src={Logo} width={120} height={60} alt="logo" />*/}</div>
       <TooltipProvider>
         <div className="flex items-center gap-4">
           <ToggleFullScreen />

@@ -15,8 +15,8 @@ import {
   Users2,
 } from "lucide-react";
 import React from "react";
-import Nav from "../../../../components/global/nav";
-import { Button } from "../../../../components/ui/button";
+import Nav from "@/components/global/nav";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Logo from "@/assets/logo.svg";
 import OnlyLogo from "@/assets/only-logo.svg";

@@ -6,8 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CheckCheck, CheckIcon, CheckCircle } from "lucide-react";
+import { CheckCheck, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
 const freeFeatures = [
   "Tracking Activity",
   "Timesheet & Calender",

@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { CheckCheck, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
 const proPlan = [
   "All Free Plan Items",
   "Unlimited Workspaces",

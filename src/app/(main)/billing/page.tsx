@@ -1,10 +1,8 @@
 import FreePlan from "@/app/(main)/billing/_components/FreePlan";
 import ProPlan from "@/app/(main)/billing/_components/ProPlan";
-import YearProPlan from "@/app/(main)/billing/_components/YearProPlan";
 import { hasSubscription } from "@/lib/stripe";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -16,9 +14,11 @@ import {
   createPortalSession,
   getAllInvoice,
 } from "@/app/(main)/billing/_components/actions/billing.actions";
+import Invoices from "@/app/(main)/billing/_components/Invoices";
+import { columns } from "@/app/(main)/billing/_components/invoice-columns";
+
 const Billing = async () => {
-  const invoices = await getAllInvoice();
-  console.log(invoices);
+  const bills: any = await getAllInvoice();
   const subs = await hasSubscription();
   return (
     <div>
@@ -49,6 +49,15 @@ const Billing = async () => {
           <ProPlan />
           {/*<YearProPlan />*/}
         </div>
+      )}
+
+      {bills && (
+        <>
+          <div className="mt-[100px]">
+            <h3 className="mb-5">Invoices</h3>
+            <Invoices data={bills?.data} columns={columns} />
+          </div>
+        </>
       )}
     </div>
   );

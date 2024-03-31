@@ -7,9 +7,14 @@ import { redirect } from "next/navigation";
 const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY), {
   apiVersion: "2023-10-16",
 });
+
 export const createCheckoutSession = async () => {
   const user = await getSession();
-
+  const tenant = await db.tenant.findUnique({
+    where: {
+      id: user?.tenantId,
+    },
+  });
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -17,8 +22,10 @@ export const createCheckoutSession = async () => {
         quantity: 1,
       },
     ],
+    customer: tenant?.stripeCustomerId || "",
     subscription_data: {
       metadata: {
+        id: tenant?.stripeCustomerId || "",
         tenantId: user.tenantId,
       },
     },
@@ -53,7 +60,7 @@ export const getAllInvoice = async () => {
     const invoices = await stripe.invoices.list({
       customer: tenant?.stripeCustomerId || undefined,
     });
-    console.log(invoices);
+    return invoices;
   } catch (e) {
     throw new Error("Something went wrong in invoice");
   }

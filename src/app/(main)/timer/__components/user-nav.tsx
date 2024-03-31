@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import getSession from "@/lib/get-session";
 import { Settings } from "lucide-react";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 const UserNav = async () => {
   const user = await getSession();
@@ -43,8 +45,10 @@ const UserNav = async () => {
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            Billing
-            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            <Link href={"/billing"} className="flex justify-between">
+              Billing
+              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             Settings

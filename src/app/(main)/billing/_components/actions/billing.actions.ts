@@ -22,7 +22,7 @@ export const createCheckoutSession = async () => {
         quantity: 1,
       },
     ],
-    customer: tenant?.stripeCustomerId || "",
+    customer: tenant?.stripeCustomerId || undefined,
     subscription_data: {
       metadata: {
         id: tenant?.stripeCustomerId || "",
@@ -57,10 +57,13 @@ export const getAllInvoice = async () => {
     const tenant = await db.tenant.findUnique({
       where: { id: user.tenantId },
     });
-    const invoices = await stripe.invoices.list({
-      customer: tenant?.stripeCustomerId || undefined,
-    });
-    return invoices;
+    if (tenant?.stripeCustomerId) {
+      const invoices = await stripe.invoices.list({
+        customer: tenant?.stripeCustomerId || undefined,
+      });
+      return invoices;
+    }
+    return null;
   } catch (e) {
     throw new Error("Something went wrong in invoice");
   }

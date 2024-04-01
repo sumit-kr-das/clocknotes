@@ -64,7 +64,7 @@ export const getAllInvoice = async () => {
       return invoices;
     }
     return null;
-  } catch (e) {
-    throw new Error("Something went wrong in invoice");
+  } catch (e: any) {
+    throw new Error(`Something went wrong in invoice ${e.message}`);
   }
 };

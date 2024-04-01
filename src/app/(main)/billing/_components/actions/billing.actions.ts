@@ -4,6 +4,8 @@ import db from "@/lib/db";
 import getSession from "@/lib/get-session";
 import Stripe from "stripe";
 import { redirect } from "next/navigation";
+
+console.log(process.env.STRIPE_SECRET_KEY, "api key");
 const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY), {
   apiVersion: "2023-10-16",
 });

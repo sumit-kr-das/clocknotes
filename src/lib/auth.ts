@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import db from "./db";
+import getSession from "@/lib/get-session";
 
 export const authOptions: NextAuthOptions = {
   session: {

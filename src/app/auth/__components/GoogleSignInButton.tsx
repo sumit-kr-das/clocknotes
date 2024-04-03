@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import GoogelLogo from "@/assets/site/logo-google.svg";
+import { createWorkspace } from "@/app/(main)/workspaces/actions/workspace.action";
 
 const GoogleSignInButton = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -10,6 +11,7 @@ const GoogleSignInButton = ({ children }: { children: React.ReactNode }) => {
     try {
       setLoading(true);
       await signIn("google", { callbackUrl: "http://localhost:3000/timer" });
+      const workspace = await createWorkspace({});
     } catch (err) {
       setLoading(false);
     } finally {

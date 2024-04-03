@@ -13,28 +13,28 @@ enum Plan {
 }
 
 enum Role {
-  OWNER
   ADMIN
-  BILLING
-  USER
-  TRACKER
-  VIEWER
+  MANAGER
+  MEMBER
+  LEAD
 }
 
 model Tenant {
-  id               String     @id @default(dbgenerated("concat('tnt_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  id               String      @id @default(dbgenerated("concat('tnt_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
   name             String?
   stripeCustomerId String?
   expirationDate   DateTime?
-  plan             Plan       @default(FREE)
-  createdAt        DateTime   @default(now())
-  updatedAt        DateTime   @updatedAt
+  plan             Plan        @default(FREE)
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
   users            User[]
   activities       Activity[]
   Client           Client[]
   Project          Project[]
   Tag              Tag[]
   Task             Task[]
+  Team             Team[]
+  Workspace        Workspace[]
 }
 
 model User {
@@ -46,43 +46,48 @@ model User {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
   tenantId   String
-  tenant     Tenant     @relation(fields: [tenantId], references: [id])
+  tenant     Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   activities Activity[]
+  Team       Team[]
 }
 
 model Activity {
-  id        String           @id @default(dbgenerated("concat('act_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name      String?
-  startAt   DateTime
-  endAt     DateTime?
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-  tenantId  String
-  tenant    Tenant           @relation(fields: [tenantId], references: [id])
-  userId    String
-  user      User             @relation(fields: [userId], references: [id])
-  Client    Client?          @relation(fields: [clientId], references: [id])
-  clientId  String?          @db.Text
-  Project   Project?         @relation(fields: [projectId], references: [id])
-  projectId String?          @db.Text
-  tag       TagsOfActivity[]
+  id          String           @id @default(dbgenerated("concat('act_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name        String?
+  startAt     DateTime
+  endAt       DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  tenantId    String
+  tenant      Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Client      Client?          @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId    String?          @db.Text
+  Project     Project?         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  workspaceId String
+  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  projectId   String?          @db.Text
+  tag         TagsOfActivity[]
 }
 
 model Client {
-  id         String     @id @default(dbgenerated("concat('cli_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name       String
-  color      String?
-  avatar     String?
-  email      String?
-  address    String?
-  note       String?
-  currency   String     @default("USD")
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  tenantId   String
-  tenant     Tenant     @relation(fields: [tenantId], references: [id])
-  activities Activity[]
-  projects   Project[]
+  id          String     @id @default(dbgenerated("concat('cli_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name        String
+  color       String?
+  avatar      String?
+  email       String?
+  address     String?
+  note        String?
+  currency    String     @default("USD")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  tenantId    String
+  tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workspaceId String
+  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  activities  Activity[]
+  projects    Project[]
 }
 
 model Project {
@@ -97,27 +102,31 @@ model Project {
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   tenantId     String
-  tenant       Tenant     @relation(fields: [tenantId], references: [id])
+  tenant       Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   clientId     String?
-  client       Client?    @relation(fields: [clientId], references: [id])
+  client       Client?    @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  workspaceId  String
+  workspace    Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   activities   Activity[]
   Task         Task[]
 }
 
 model Tag {
-  id        String           @id @default(dbgenerated("concat('tag_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name      String           @unique
-  tenantId  String
-  tenant    Tenant           @relation(fields: [tenantId], references: [id])
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-  activity  TagsOfActivity[]
+  id          String           @id @default(dbgenerated("concat('tag_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name        String           @unique
+  tenantId    String
+  tenant      Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workspaceId String
+  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  activity    TagsOfActivity[]
 }
 
 model TagsOfActivity {
-  activity   Activity @relation(fields: [activityId], references: [id])
+  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
   activityId String
-  tag        Tag      @relation(fields: [tagId], references: [id])
+  tag        Tag      @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId      String
   assignedAt DateTime @default(now())
 
@@ -125,15 +134,46 @@ model TagsOfActivity {
 }
 
 model Task {
-  id          String   @id @default(dbgenerated("concat('task_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name        String   @unique
-  status      String   @default("Todo")
+  id          String    @id @default(dbgenerated("concat('task_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name        String    @unique
+  status      String    @default("Todo")
   order       Int
   description String
   tenantId    String
-  tenant      Tenant   @relation(fields: [tenantId], references: [id])
+  tenant      Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   projectId   String
-  project     Project  @relation(fields: [projectId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Workspace {
+  id           String     @id @default(dbgenerated("concat('workspace_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name         String
+  Team         Team[]
+  inviteString String     @default(dbgenerated("concat('invite_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  tenantId     String
+  tenant       Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  Task         Task[]
+  Activity     Activity[]
+  Client       Client[]
+  Project      Project[]
+  Tag          Tag[]
+}
+
+model Team {
+  id          String    @id @default(dbgenerated("concat('team_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  tenantId    String
+  tenant      Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  role        Role      @default(MEMBER)
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  User        User?     @relation(fields: [userId], references: [id])
+  userId      String?   @db.Text
 }

@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -28,16 +22,19 @@ enum Role {
 }
 
 model Tenant {
-  id         String     @id @default(dbgenerated("concat('tnt_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name       String?
-  createdAt  DateTime   @default(now())
-  updatedAt  DateTime   @updatedAt
-  users      User[]
-  activities Activity[]
-  Client     Client[]
-  Project    Project[]
-  Tag        Tag[]
-  Task       Task[]
+  id               String     @id @default(dbgenerated("concat('tnt_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name             String?
+  stripeCustomerId String?
+  expirationDate   DateTime?
+  plan             Plan       @default(FREE)
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+  users            User[]
+  activities       Activity[]
+  Client           Client[]
+  Project          Project[]
+  Tag              Tag[]
+  Task             Task[]
 }
 
 model User {

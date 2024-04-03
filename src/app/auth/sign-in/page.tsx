@@ -16,10 +16,10 @@ const SignIn = () => {
   return (
     <Card className="border-2 border-primary rounded-xl w-[450px]">
       <CardHeader>
-        <div className="flex items-center justify-center">
-          <Image src={Logo} width={120} height={60} alt="logo" />
+        <div className="flex items-center justify-center mb-4">
+          <Image src={Logo} width={60} height={60} alt="logo" />
         </div>
-        <CardTitle className="mt-4 text-center">Sign in to TimeTrack</CardTitle>
+        <CardTitle className="text-center">Sign in to TimeTrack</CardTitle>
         <CardDescription className="mt-2 mb-6 text-center">
           Welcome back! Please sign in to continue
         </CardDescription>

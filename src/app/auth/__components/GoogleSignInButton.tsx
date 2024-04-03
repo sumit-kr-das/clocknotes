@@ -11,7 +11,7 @@ const GoogleSignInButton = ({ children }: { children: React.ReactNode }) => {
     try {
       setLoading(true);
       await signIn("google", { callbackUrl: "http://localhost:3000/timer" });
-      const workspace = await createWorkspace({});
+      // const workspace = await createWorkspace({});
     } catch (err) {
       setLoading(false);
     } finally {

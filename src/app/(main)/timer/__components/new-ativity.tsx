@@ -73,10 +73,14 @@ const NewActivity = ({ activity }: NewActivityProps) => {
         )}
       </div>
       <div className="mt-4">
-        <button
-          type="submit"
-          className={`play-btn ${activity ? "pause" : "play"}`}
-        ></button>
+        {activity ? (
+          <button type="submit" className={`pause-btn`}>
+            <div></div>
+            <div></div>
+          </button>
+        ) : (
+          <button type="submit" className="play-btn"></button>
+        )}
       </div>
       {/*<Button type="submit">{activity ? "Stop" : "Start"}</Button>*/}
     </form>

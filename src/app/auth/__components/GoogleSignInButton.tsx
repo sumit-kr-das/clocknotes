@@ -3,18 +3,31 @@ import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import GoogelLogo from "@/assets/site/logo-google.svg";
-import { createWorkspace } from "@/app/(main)/workspaces/actions/workspace.action";
+import {
+  createWorkspace,
+  hasWorkspace,
+} from "@/app/(main)/workspaces/actions/workspace.action";
+import { createTeam } from "@/app/(main)/teams/actions/teams.action";
+import { Role } from "@prisma/client";
+import { redirect } from "next/navigation";
 
 const GoogleSignInButton = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const handleClick = async () => {
     try {
       setLoading(true);
-      await signIn("google", { callbackUrl: "http://localhost:3000/timer" });
-      // const workspace = await createWorkspace({});
+      await signIn("google");
+      // console.log("working");
+      // if (!(await hasWorkspace())) {
+      //   const workspace = await createWorkspace({});
+      //   await createTeam({ workspaceId: workspace?.id, role: Role.ADMIN });
+      //   localStorage.setItem("w_id", workspace.id);
+      // }
+      redirect("http://localhost:3000/timer");
     } catch (err) {
       setLoading(false);
     } finally {
+      console.log("finnaly");
       setLoading(false);
     }
   };

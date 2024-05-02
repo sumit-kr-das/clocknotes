@@ -54,7 +54,6 @@ model User {
   tenantId   String
   tenant     Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   activities Activity[]
-  Team       Team[]
 }
 
 model Activity {
@@ -71,8 +70,8 @@ model Activity {
   Client      Client?          @relation(fields: [clientId], references: [id], onDelete: Cascade)
   clientId    String?          @db.Text
   Project     Project?         @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  workspaceId String
-  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String?
+  workspace   Workspace?       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   projectId   String?          @db.Text
   tag         TagsOfActivity[]
 }
@@ -90,8 +89,8 @@ model Client {
   updatedAt   DateTime   @updatedAt
   tenantId    String
   tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  workspaceId String
-  workspace   Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String?
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   activities  Activity[]
   projects    Project[]
 }
@@ -111,8 +110,8 @@ model Project {
   tenant       Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   clientId     String?
   client       Client?    @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  workspaceId  String
-  workspace    Workspace  @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId  String?
+  workspace    Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   activities   Activity[]
   Task         Task[]
 }
@@ -122,8 +121,8 @@ model Tag {
   name        String           @unique
   tenantId    String
   tenant      Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  workspaceId String
-  workspace   Workspace        @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  workspaceId String?
+  workspace   Workspace?       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   activity    TagsOfActivity[]
@@ -140,19 +139,19 @@ model TagsOfActivity {
 }
 
 model Task {
-  id          String    @id @default(dbgenerated("concat('task_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name        String    @unique
-  status      String    @default("Todo")
+  id          String     @id @default(dbgenerated("concat('task_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name        String     @unique
+  status      String     @default("Todo")
   order       Int
   description String
   tenantId    String
-  tenant      Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   projectId   String
-  project     Project   @relation(fields: [projectId], references: [id], onDelete: Cascade)
-  workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  project     Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  workspaceId String?
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model Workspace {
@@ -172,14 +171,12 @@ model Workspace {
 }
 
 model Team {
-  id          String    @id @default(dbgenerated("concat('team_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  id          String     @id @default(dbgenerated("concat('team_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
   tenantId    String
-  tenant      Tenant    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  role        Role      @default(MEMBER)
-  workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  User        User?     @relation(fields: [userId], references: [id])
-  userId      String?   @db.Text
+  tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  role        Role       @default(MEMBER)
+  workspaceId String?
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }

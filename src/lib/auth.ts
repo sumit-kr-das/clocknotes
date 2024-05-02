@@ -2,6 +2,14 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import db from "./db";
 import getSession from "@/lib/get-session";
+import {
+  createWorkspace,
+  createWorkspaceOnSignIn,
+  getWorkspaces,
+  hasWorkspace,
+} from "@/app/(main)/workspaces/actions/workspace.action";
+import { createTeam } from "@/app/(main)/teams/actions/teams.action";
+import { Role } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -21,7 +29,8 @@ export const authOptions: NextAuthOptions = {
       if (!profile?.email || !profile?.name) {
         throw new Error("No profile found");
       }
-      await db.user.upsert({
+
+      const user = await db.user.upsert({
         where: {
           email: profile.email,
         },
@@ -38,6 +47,11 @@ export const authOptions: NextAuthOptions = {
           avatar: (profile as any).picture,
         },
       });
+
+      // const checkWorkspace = await hasWorkspace(user.tenantId);
+      // if (!checkWorkspace) {
+      //   const workspace = await createWorkspace();
+      // }
 
       return true;
     },
@@ -76,6 +90,21 @@ export const authOptions: NextAuthOptions = {
         },
       };
       return session;
+    },
+  },
+  events: {
+    async signIn({ user, account, profile, isNewUser }) {
+      const check = await hasWorkspace(user?.email);
+      if (!check) {
+        const workspace = await createWorkspaceOnSignIn(user?.email);
+        localStorage.setItem("current", workspace?.id);
+      } else {
+        const workspaces = await getWorkspaces(user?.email);
+        console.log(workspaces);
+        if (workspaces) {
+          localStorage.setItem("current", workspaces.id);
+        }
+      }
     },
   },
 };

@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -27,49 +26,71 @@ import * as z from "zod";
 import Logo from "@/assets/logo.svg";
 import GoogleSignInButton from "../__components/GoogleSignInButton";
 
-const SigninSchema = z.object({
-  email: z.string().min(1, "Email is required").email("Invalid mail"),
-  password: z
-    .string()
-    .min(4, "Password must be min 4 character")
-    .max(20, "Password must be max 20 character"),
-});
-
-const SignIn = () => {
-  const router = useRouter();
-  const form = useForm<z.infer<typeof SigninSchema>>({
-    resolver: zodResolver(SigninSchema),
-    defaultValues: { email: "", password: "" },
+const SignupSchema = z
+  .object({
+    name: z.string().min(1, "Username is required").max(20),
+    email: z.string().min(1, "Email is required").email("Invalid mail"),
+    password: z
+      .string()
+      .min(4, "Password must be min 4 character")
+      .max(20, "Password must be max 20 character"),
+    confirmPassword: z
+      .string()
+      .min(4, "Password must be min 4 character")
+      .max(20, "Password must be max 20 character"),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Password do not match",
+    path: ["confirmPassword"],
   });
 
-  const onSubmit = async (value: z.infer<typeof SigninSchema>) => {
-    const signinData = await signIn("credentials", {
-      ...value,
-      redirect: false,
-    });
-    console.log(signinData);
+const SignUp = () => {
+  const router = useRouter();
+  const form = useForm<z.infer<typeof SignupSchema>>({
+    resolver: zodResolver(SignupSchema),
+    defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
+  });
 
-    if (signinData?.error) {
-      console.log(signinData.error);
-    } else {
-      router.push("/timer");
+  const onSubmit = async (value: z.infer<typeof SignupSchema>) => {
+    const res = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(value),
+    });
+
+    if (res.ok) {
+      router.push("/auth/sign-in");
     }
   };
-
   return (
     <Card className="border-2 border-primary rounded-xl w-[450px]">
       <CardHeader>
         <div className="flex items-center justify-center">
           <Image src={Logo} width={60} height={60} alt="logo" />
         </div>
-        <CardTitle className="mt-4 text-center">Sign in to Easy Sync</CardTitle>
+        <CardTitle className="mt-4 text-center">Create your account</CardTitle>
         <CardDescription className="mt-2 mb-6 text-center">
-          Welcome back! Please sign in to continue
+          Welcome! Please fill in the details to get started.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Your name" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="email"
@@ -100,8 +121,25 @@ const SignIn = () => {
                 </FormItem>
               )}
             />
+            <FormField
+              control={form.control}
+              name="confirmPassword"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Confirm password</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Confirm password"
+                      type="password"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button className="w-full" type="submit">
-              Sign in
+              Sign up
             </Button>
           </form>
         </Form>
@@ -116,9 +154,9 @@ const SignIn = () => {
       </CardContent>
       <CardFooter>
         <p>
-          Don{`'`}t have an account?{" "}
-          <Link className="text-primary" href="/auth/sign-up">
-            Sign up
+          Already have an account?{" "}
+          <Link className="text-primary" href="/auth/sign-in">
+            Sign in
           </Link>
         </p>
       </CardFooter>
@@ -126,4 +164,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default SignUp;

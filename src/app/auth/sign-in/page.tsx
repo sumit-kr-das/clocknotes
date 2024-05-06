@@ -47,10 +47,9 @@ const SignIn = () => {
       ...value,
       redirect: false,
     });
-    console.log(signinData);
 
     if (signinData?.error) {
-      console.log(signinData.error);
+      console.log("manual login", signinData.error);
     } else {
       router.push("/timer");
     }

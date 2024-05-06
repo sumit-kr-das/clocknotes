@@ -6,7 +6,7 @@ import { compare } from "bcrypt";
 import db from "./db";
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db),
+  // adapter: PrismaAdapter(db),
   session: {
     strategy: "jwt",
   },
@@ -19,6 +19,7 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      idToken: true,
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -59,9 +60,12 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, profile }) {
-      if (user?.name && user?.email) {
+      console.log("User is logging inside sign in", user);
+      if (user?.email && user?.tenantId) {
         return true;
       }
+
+      // google provider
       if (!profile?.email || !profile?.name) {
         throw new Error("No profile found");
       }
@@ -86,17 +90,21 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
     async jwt({ token, user, profile }) {
-      if (user) {
+      if (user?.tenantId) {
         return {
           ...token,
           username: user.name,
+          id: user.id,
+          tenantId: user.tenantId,
         };
       }
+      console.log("profile---------------------------", profile?.email);
 
+      // GoogleProvider
       if (profile) {
-        let user;
+        let newUser;
         try {
-          user = await db.user.findUnique({
+          newUser = await db.user.findUnique({
             where: {
               email: profile.email,
             },
@@ -104,13 +112,13 @@ export const authOptions: NextAuthOptions = {
         } catch (err) {
           throw new Error("User search error");
         }
-        if (!user) {
+        if (!newUser) {
           throw new Error("No user found");
         }
         return {
           ...token,
-          id: user.id,
-          tenantId: user.tenantId,
+          id: newUser.id,
+          tenantId: newUser.tenantId,
         };
       }
       return token;
@@ -124,7 +132,6 @@ export const authOptions: NextAuthOptions = {
           tenantId: token.tenantId,
         },
       };
-      return session;
     },
   },
 };

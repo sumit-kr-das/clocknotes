@@ -1,13 +1,11 @@
-import { Activity } from "@prisma/client";
-import getSession from "@/lib/get-session";
-import db from "@/lib/db";
-import { revalidatePath } from "next/cache";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { GanttChartSquare, Plus, Tag } from "lucide-react";
 import TimerActivity from "@/app/(main)/timer/__components/timer-activity";
-import React from "react";
 import "@/app/styles/play-pause-btn.css";
+import { Input } from "@/components/ui/input";
+import db from "@/lib/db";
+import getSession from "@/lib/get-session";
+import { Activity } from "@prisma/client";
+import { Plus } from "lucide-react";
+import { revalidatePath } from "next/cache";
 
 type NewActivityProps = {
   activity?: Activity | null;

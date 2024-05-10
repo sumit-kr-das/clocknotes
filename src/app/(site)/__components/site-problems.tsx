@@ -4,10 +4,10 @@ import DemoImg from "@/assets/site/demo.svg";
 
 const Problems = () => {
   return (
-    <section className="flex justify-center items-center gap-4 max-w-7xl mx-auto px-8 mt-40">
+    <section className="flex justify-center items-center max-w-7xl mx-auto mt-40">
       <div className="flex-1">
         <div className="w-fit rounded-full bg-secondary border border-primary px-3 py-1 text-xs text-zinc-200">
-          <p className="text-sm uppercase">Problem Showdown</p>
+          <p className="text-sm capitalize">Problem Showdown</p>
         </div>
         <h1 className="text-5xl font-semibold my-4">
           What problem Clocknotes solve?
@@ -24,7 +24,7 @@ const Problems = () => {
           the creative journey and elevating content creation to new heights.
         </p>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 flex justify-end pt-8">
         <Image src={DemoImg} width={550} height={200} alt={"logo activity"} />
       </div>
     </section>

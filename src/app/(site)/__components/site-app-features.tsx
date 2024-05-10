@@ -6,7 +6,7 @@ import SiteTitle from "./site-title";
 const Features = () => {
   return (
     <>
-      <div className="grid grid-cols-2 gap-4 mt-8">
+      <div className="grid grid-cols-2 gap-4">
         <div className="w-full flex">
           <Image src={DemoImg} width={550} height={200} alt={"logo activity"} />
         </div>
@@ -116,14 +116,14 @@ const Features = () => {
 
 const AppFeature = () => {
   return (
-    <section className="flex justify-center items-center flex-col gap-4 md:!mt-20 mt-[-60px]">
+    <section className="flex justify-center items-center flex-col gap-4 mt-20">
       <SiteTitle
         subtitle="Clocknotes Feature"
         title="Unveiling the Clocknotes Advantage"
         description="Clocknotes transforms content creation, offering a unified platform for
         creators"
       />
-      <div className="max-w-7xl w-full mx-auto px-8">
+      <div className="max-w-7xl w-full mx-auto mt-10">
         <Features />
       </div>
     </section>

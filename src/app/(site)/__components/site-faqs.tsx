@@ -24,13 +24,13 @@ const Faq = ({ item }: ItemProps) => {
 
 const Faqs = () => {
   return (
-    <section className="flex justify-center items-center flex-col gap-4 md:!mt-20 mt-[-60px]">
+    <section className="flex justify-center items-center flex-col gap-4 mt-20">
       <SiteTitle
         subtitle="FAQ"
         title="Everything you need to know"
         description="Here are the most questions people always ask about."
       />
-      <div className="max-w-7xl w-full mx-auto px-8 mt-20">
+      <div className="max-w-7xl w-full mx-auto mt-10">
         <Faq item={faqData} />
       </div>
     </section>

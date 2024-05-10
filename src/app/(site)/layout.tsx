@@ -1,4 +1,4 @@
-import Navigation from "@/app/(site)/__components/navigation";
+import Navigation from "@/app/(site)/__components/site-navigation";
 import { getServerSession } from "next-auth";
 import React from "react";
 import { redirect } from "next/navigation";

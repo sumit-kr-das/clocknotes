@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
         if (isExist.password) {
           const passwordMatch = await compare(
             credentials.password,
-            isExist.password
+            isExist.password,
           );
           if (!passwordMatch) {
             return null;
@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
         throw new Error("No profile found");
       }
 
-      const user = await db.user.upsert({
+      const userDetail = await db.user.upsert({
         where: {
           email: profile.email,
         },
@@ -118,9 +118,9 @@ export const authOptions: NextAuthOptions = {
         }
         return {
           ...token,
-          id: user.id,
-          tenantId: user.tenantId,
-          role: user?.role,
+          id: newUser.id,
+          tenantId: newUser.tenantId,
+          role: newUser?.role,
         };
       }
       return token;

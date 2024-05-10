@@ -128,4 +128,15 @@ export const faqData = [
     answer:
       "Effortlessly manage your content creation workflow with Clocknotes. If you find yourself grappling with scattered teams and disjointed platforms, YouTorus, with its AI-powered capabilities, streamlines your workflow into one cohesive platform. This acceleration ensures swift content delivery to your audience.",
   },
+  {
+    question:
+      "Is Clocknotes suitable for both beginners and experienced interviewees?",
+    answer:
+      "Effortlessly manage your content creation workflow with Clocknotes. If you find yourself grappling with scattered teams and disjointed platforms, YouTorus, with its AI-powered capabilities, streamlines your workflow into one cohesive platform. This acceleration ensures swift content delivery to your audience.",
+  },
+  {
+    question: "What resources are available on the platform?",
+    answer:
+      "Effortlessly manage your content creation workflow with Clocknotes. If you find yourself grappling with scattered teams and disjointed platforms, YouTorus, with its AI-powered capabilities, streamlines your workflow into one cohesive platform. This acceleration ensures swift content delivery to your audience.",
+  },
 ];

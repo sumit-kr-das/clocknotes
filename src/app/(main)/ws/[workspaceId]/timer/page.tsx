@@ -3,9 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import db from "@/lib/db";
 import getSession from "@/lib/get-session";
-import { Activity } from "@prisma/client";
-import { GanttChartSquare, Tag } from "lucide-react";
-import { revalidatePath } from "next/cache";
 import React from "react";
 import DailyActivities from "@/app/(main)/ws/[workspaceId]/timer/__components/timerActivity/timer-daily-activities";
 

@@ -15,7 +15,7 @@ const PushNotification = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon">
-          <Bell className="h-[1.2rem] w-[1.2rem] dark:-rotate-90 dark:scale-0" />
+          <Bell className="h-[1.2rem] w-[1.2rem] " />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>

@@ -6,8 +6,8 @@ import GoogelLogo from "@/assets/site/logo-google.svg";
 import {
   createWorkspace,
   hasWorkspace,
-} from "@/app/(main)/workspaces/actions/workspace.action";
-import { createTeam } from "@/app/(main)/teams/actions/teams.action";
+} from "@/app/(main)/ws/actions/workspace.action";
+import { createTeam } from "@/app/(main)/ws/[workspaceId]/teams/actions/teams.action";
 import { Role } from "@prisma/client";
 import { redirect } from "next/navigation";
 
@@ -16,14 +16,9 @@ const GoogleSignInButton = ({ children }: { children: React.ReactNode }) => {
   const handleClick = async () => {
     try {
       setLoading(true);
-      await signIn("google");
-      // console.log("working");
-      // if (!(await hasWorkspace())) {
-      //   const workspace = await createWorkspace({});
-      //   await createTeam({ workspaceId: workspace?.id, role: Role.ADMIN });
-      //   localStorage.setItem("w_id", workspace.id);
-      // }
-      redirect("http://localhost:3000/timer");
+      await signIn("google", {
+        callbackUrl: "http://localhost:3000/ws",
+      });
     } catch (err) {
       setLoading(false);
     } finally {

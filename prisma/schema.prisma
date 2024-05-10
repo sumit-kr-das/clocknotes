@@ -160,6 +160,7 @@ model Workspace {
   Team         Team[]
   inviteString String     @default(dbgenerated("concat('invite_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
   tenantId     String
+  type         String     @default("Default")
   tenant       Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt

@@ -5,6 +5,7 @@ import Features from "./__components/site-features";
 import WaitList from "./__components/site-waitlist";
 import Problems from "./__components/site-problems";
 import Wishlist from "./__components/site-wishlist";
+import Footer from "./__components/site-footer";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <Faqs />
       <WaitList />
       <Wishlist />
+      <Footer />
     </main>
   );
 }

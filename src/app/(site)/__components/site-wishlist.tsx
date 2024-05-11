@@ -34,7 +34,7 @@ const WishlistForm = () => {
         <h1 className="text-2xl font-semibold my-4">Find us</h1>
         <div>
           <h6 className="text-md font-medium mt-4">Email Address</h6>
-          <p className="text-sm">contact@clocknotes.cloud</p>
+          <p className="text-sm">support@clocknotes.cloud</p>
         </div>
       </div>
     </div>

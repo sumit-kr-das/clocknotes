@@ -11,7 +11,7 @@ const Navigation = () => {
         <Image src={Logo} width={40} height={40} alt="logo" />
         <span className="text-xl font-bold">Clocknotes</span>
         <div className="border border-primary bg-primary px-2 py-1 rounded-md">
-          <p className="text-xs">Beta release</p>
+          <p className="text-xs text-white">Beta release</p>
         </div>
       </aside>
       <nav className="hidden md:block absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%] bg-muted px-6 py-3 rounded-full border">

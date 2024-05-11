@@ -66,7 +66,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-64 w-full p-4 overflow-hidden bg-slate-800  backdrop-blur border border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
+        "rounded-2xl h-64 w-full p-4 overflow-hidden bg-white dark:bg-slate-800 backdrop-blur border dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
         className
       )}
     >
@@ -86,7 +86,7 @@ export const CardTitle = ({
   return (
     <h4
       className={cn(
-        "text-zinc-100 text-2xl font-bold tracking-wide mt-4",
+        "text-bkack dark:text-zinc-100 text-2xl font-bold tracking-wide mt-4",
         className
       )}
     >
@@ -112,5 +112,3 @@ export const CardDescription = ({
     </p>
   );
 };
-
-//  dark:bg-slate-900/70 dark:backdrop-blur dark:ring-1 dark:ring-inset dark:ring-white/10

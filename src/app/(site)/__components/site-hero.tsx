@@ -8,14 +8,14 @@ const Hero = () => {
     <header className="w-full h-full relative md:pt-44 mt-[-70px]">
       <div className="absolute top-0 left-0 bottom-0 right-0 dark:bg-[linear-gradient(to_right,#161616_1px,transparent_1px),linear-gradient(to_bottom,#161616_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_110%)] -z-10" />
       <div className="flex items-center justify-center mt-12">
-        <div className="w-fit flex items-center gap-1 rounded-full bg-secondary border border-primary pl-2 pr-3 py-1 text-xs text-zinc-200">
+        <div className="w-fit flex items-center gap-1 rounded-full bg-primary dark:bg-secondary border border-primary pl-2 pr-3 py-1 text-sm">
           <Image
             src={LogoActivity}
             width={20}
             height={20}
             alt={"logo activity"}
           />
-          <p>Clocknotes.cloud</p>
+          <p className="text-white dark:text-zinc-200">clocknotes.cloud</p>
         </div>
       </div>
       <div className="mb-20">

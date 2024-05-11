@@ -11,8 +11,10 @@ const Features = () => {
           <Image src={DemoImg} width={550} height={200} alt={"logo activity"} />
         </div>
         <div>
-          <div className="w-fit rounded-full bg-secondary border border-primary px-3 py-1 text-xs text-zinc-200">
-            <p className="text-sm">COLLABORATE SMARTER, PUBLISH FASTER</p>
+          <div className="w-fit rounded-full bg-primary dark:bg-secondary border border-primary px-3 py-1 text-xs">
+            <p className="text-sm capitalize text-white dark:text-zinc-200">
+              COLLABORATE SMARTER, PUBLISH FASTER
+            </p>
           </div>
           <h2 className="font-bold text-4xl my-4">
             A Complete Solution for Content Creators
@@ -60,8 +62,10 @@ const Features = () => {
       </div>
       <div className="grid grid-cols-2 gap-4 mt-8">
         <div>
-          <div className="w-fit rounded-full bg-secondary border border-primary px-3 py-1 text-xs text-zinc-200">
-            <p className="text-sm">COLLABORATE SMARTER, PUBLISH FASTER</p>
+          <div className="w-fit rounded-full bg-primary dark:bg-secondary border border-primary px-3 py-1 text-xs">
+            <p className="text-sm capitalize text-white dark:text-zinc-200">
+              COLLABORATE SMARTER, PUBLISH FASTER
+            </p>
           </div>
           <h2 className="font-bold text-4xl my-4">
             A Complete Solution for Content Creators

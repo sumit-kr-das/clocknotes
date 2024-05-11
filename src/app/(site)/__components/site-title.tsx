@@ -22,8 +22,10 @@ const SiteTitle = ({
       ></div>
       <div className="relative z-20">
         <div className="flex items-center justify-center">
-          <div className="w-fit rounded-full bg-secondary border border-primary px-3 py-1 text-xs text-zinc-200">
-            <p className="text-sm capitalize">{subtitle}</p>
+          <div className="w-fit rounded-full bg-primary dark:bg-secondary border border-primary px-3 py-1 text-sm">
+            <p className="text-sm capitalize text-white dark:text-zinc-200">
+              {subtitle}
+            </p>
           </div>
         </div>
         <h1 className="text-5xl text-center font-semibold my-4">{title}</h1>

@@ -6,8 +6,8 @@ const Problems = () => {
   return (
     <section className="flex justify-center items-center max-w-7xl mx-auto mt-40">
       <div className="flex-1">
-        <div className="w-fit rounded-full bg-secondary border border-primary px-3 py-1 text-xs text-zinc-200">
-          <p className="text-sm capitalize">Problem Showdown</p>
+        <div className="w-fit rounded-full bg-primary dark:bg-secondary border border-primary px-3 py-1 text-sm">
+          <p className="text-white dark:text-zinc-200">Problem Showdown</p>
         </div>
         <h1 className="text-5xl font-semibold my-4">
           What problem Clocknotes solve?

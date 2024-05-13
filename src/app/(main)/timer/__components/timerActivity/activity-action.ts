@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import db from "@/lib/db";
 
 export async function updateTitle(data: FormData) {
+  console.log("Data is", data);
+
   await db.activity.update({
     where: {
       id: data.get("id") as string,

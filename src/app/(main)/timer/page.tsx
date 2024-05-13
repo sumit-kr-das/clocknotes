@@ -28,6 +28,8 @@ const TimerPage = async () => {
     },
   });
 
+  console.log(currentActivity);
+
   return (
     <section className="w-full">
       <NewActivity activity={currentActivity} />

@@ -1,5 +1,9 @@
 "use client";
 import React from "react";
+import { Inter } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const inter = Inter({ subsets: ["latin"] });
 
 type props = {
   startAt: Date;
@@ -24,8 +28,13 @@ const TimerActivity = ({ startAt }: props) => {
   const seconds = Math.floor((elapsed / 1000) % 60);
 
   return (
-    <div className="flex justify-center items-center h-full">
-      <span className="slashed-zero tabular-nums text-9xl">
+    <div
+      className={cn(
+        "flex justify-center items-center h-full slashed-zero tabular-nums",
+        inter.className,
+      )}
+    >
+      <span className="slashed-zero tabular-nums text-2xl">
         {pad(hours)}:{pad(minutes)}
         <span className="text-gray-500">:{pad(seconds)}</span>
       </span>

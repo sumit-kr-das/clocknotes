@@ -11,13 +11,18 @@ export const startActivity = async ({
   newStartAt: Date;
 }) => {
   const user = await getSession();
-  await db.activity.create({
-    data: {
-      user: { connect: { id: user.id } },
-      tenant: { connect: { id: user.tenantId } },
-      name: name,
-      startAt: newStartAt,
-    },
-  });
-  revalidatePath("/timer");
+  try {
+    await db.activity.create({
+      data: {
+        user: { connect: { id: user.id } },
+        tenant: { connect: { id: user.tenantId } },
+        name: name,
+        startAt: newStartAt,
+      },
+    });
+  } catch (error: any) {
+    return { error: error?.message || "Failed start timer" };
+  } finally {
+    revalidatePath("/timer");
+  }
 };

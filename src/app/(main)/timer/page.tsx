@@ -3,6 +3,7 @@ import getSession from "@/lib/get-session";
 import React from "react";
 import DailyActivities from "@/app/(main)/timer/__components/timerActivity/timer-daily-activities";
 import NewActivity from "./__components/new-ativity";
+import { getProject } from "@/app/api/project/project.actions";
 
 const TimerPage = async () => {
   const user = await getSession();
@@ -28,9 +29,11 @@ const TimerPage = async () => {
     },
   });
 
+  const projects = await getProject();
+
   return (
     <section className="w-full">
-      <NewActivity activity={currentActivity} />
+      <NewActivity activity={currentActivity} projects={projects} />
       <DailyActivities activities={dailyActivities} />
     </section>
   );

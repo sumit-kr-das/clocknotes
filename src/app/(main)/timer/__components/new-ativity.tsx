@@ -7,9 +7,9 @@ import "@/app/styles/play-pause-btn.css";
 import { Input } from "@/components/ui/input";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { Activity } from "@prisma/client";
+import { Activity, Project } from "@prisma/client";
 import { Inter } from "next/font/google";
-import { useOptimistic } from "react";
+import { useOptimistic, useState } from "react";
 import toast from "react-hot-toast";
 import { startActivity } from "./actions/start-activity-action";
 import { stopActivity } from "./actions/stop-activity-action";
@@ -18,9 +18,30 @@ const inter = Inter({ subsets: ["latin"] });
 
 type NewActivityProps = {
   activity?: Activity | null;
+  projects?: Project[];
 };
 
-const NewActivity = ({ activity }: NewActivityProps) => {
+export type TimerStates = {
+  projectId?: string;
+  tags?: string;
+  isBillable?: boolean;
+};
+
+const NewActivity = ({ activity, projects }: NewActivityProps) => {
+  const [timerStates, setTimerStates] = useState<TimerStates>({
+    projectId: "",
+    tags: "",
+    isBillable: false,
+  });
+
+  const handleTimerStates = (props: TimerStates) => {
+    setTimerStates({
+      ...timerStates,
+      ...props,
+    });
+  };
+  console.log("project is", timerStates.projectId);
+
   const [startOptimisticActivity, addOptimisticActivity] = useOptimistic(
     activity || {
       id: null,
@@ -33,13 +54,20 @@ const NewActivity = ({ activity }: NewActivityProps) => {
 
   async function startAction(data: FormData) {
     const name = data.get("name") as string;
+    const project = data.get("project") as string;
+    console.log("project is", project);
     const newStartAt = new Date();
     const createActivity = {
       startAt: newStartAt,
     };
 
     addOptimisticActivity(createActivity);
-    const result = await startActivity({ name, newStartAt });
+    const result = await startActivity({
+      name,
+      newStartAt,
+      projectId: timerStates.projectId || "",
+      billable: timerStates.isBillable || false,
+    });
     if (result?.error) {
       toast.error(result?.error);
     }
@@ -68,9 +96,15 @@ const NewActivity = ({ activity }: NewActivityProps) => {
           className="w-[100%] block"
           type="hidden"
         />
-        <AddTimerProject />
+        <AddTimerProject
+          projects={projects}
+          handleTimerStates={handleTimerStates}
+        />
         <AddTags />
-        <Billable />
+        <Billable
+          timerStates={timerStates}
+          handleTimerStates={handleTimerStates}
+        />
         <div>
           {startOptimisticActivity?.startAt ? (
             <TimerActivity startAt={startOptimisticActivity.startAt} />
@@ -101,7 +135,6 @@ const NewActivity = ({ activity }: NewActivityProps) => {
               )}
             </>
           )}
-
           {!startOptimisticActivity?.startAt && (
             <button type="submit" className="play-btn"></button>
           )}

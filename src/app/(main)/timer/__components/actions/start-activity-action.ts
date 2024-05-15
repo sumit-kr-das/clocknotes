@@ -6,18 +6,24 @@ import { revalidatePath } from "next/cache";
 export const startActivity = async ({
   name,
   newStartAt,
+  projectId,
+  billable,
 }: {
   name: string;
   newStartAt: Date;
+  projectId: string;
+  billable: boolean;
 }) => {
   const user = await getSession();
   try {
     await db.activity.create({
       data: {
+        name: name,
+        isBillable: billable,
+        startAt: newStartAt,
         user: { connect: { id: user.id } },
         tenant: { connect: { id: user.tenantId } },
-        name: name,
-        startAt: newStartAt,
+        Project: { connect: { id: projectId } },
       },
     });
   } catch (error: any) {

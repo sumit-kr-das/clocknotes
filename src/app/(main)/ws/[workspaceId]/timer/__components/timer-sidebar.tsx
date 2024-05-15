@@ -28,7 +28,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useParams } from "next/navigation";
-import { TWorkspace } from "@/type/workspace/TWorkspace";
+import { TAllWorkspace, TWorkspace } from "@/type/workspace/TWorkspace";
 import AddWorkspace from "@/app/(main)/ws/_components/add-workspace";
 import { useRouter } from "next/navigation";
 
@@ -39,7 +39,7 @@ const TimerSidebar = ({
 }: {
   userName: string;
   workspaceName?: string;
-  workspaces: TWorkspace[];
+  workspaces: TAllWorkspace[];
 }) => {
   const [isCollapsed, setIsCollapsed] = React.useState(false);
   const { workspaceId } = useParams<{ workspaceId: string }>();
@@ -113,8 +113,10 @@ const TimerSidebar = ({
                 onClick={() => handleRedirect(ws?.id)}
               >
                 <div className="text-left">
-                  <p className="text-[#8a94a6] text-sm">{ws?.type}</p>
-                  <p className="text-sm font-semibold">{ws?.name}</p>
+                  <p className="text-[#8a94a6] text-sm">
+                    {ws?.workspace?.type}
+                  </p>
+                  <p className="text-sm font-semibold">{ws?.workspace?.name}</p>
                 </div>
               </DropdownMenuItem>
             ))}

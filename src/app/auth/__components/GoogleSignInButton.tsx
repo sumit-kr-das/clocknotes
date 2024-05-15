@@ -7,7 +7,7 @@ import {
   createWorkspace,
   hasWorkspace,
 } from "@/app/(main)/ws/actions/workspace.action";
-import { createTeam } from "@/app/(main)/ws/[workspaceId]/teams/actions/teams.action";
+import { createTeam } from "@/app/(main)/ws/[workspaceId]/teams/_components/actions/teams.action";
 import { Role } from "@prisma/client";
 import { redirect } from "next/navigation";
 

@@ -62,10 +62,10 @@ export const hasWorkspace = async () => {
     throw new Error("something went wrong");
   }
 };
-export const getUserAllWorkspaces = async () => {
+export const getUserWorkspaces = async () => {
   try {
     const user = await getSession();
-    const workspaces = await db.workspace.findMany({
+    const workspaces = await db.team.findMany({
       where: {
         tenantId: user.tenantId,
       },
@@ -87,5 +87,23 @@ export const getWorkspaceById = async ({ id }: { id: string }) => {
     return workspace;
   } catch (e: any) {
     throw new Error("something went wrong");
+  }
+};
+
+export const getUserAllWorkspaces = async () => {
+  try {
+    const user = await getSession();
+    const workspaces = await db.team.findMany({
+      where: {
+        tenantId: user.tenantId,
+      },
+      include: {
+        workspace: true,
+      },
+    });
+    console.log(workspaces);
+    return workspaces;
+  } catch (e: any) {
+    throw new Error(e.message);
   }
 };

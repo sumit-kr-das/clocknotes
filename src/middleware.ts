@@ -9,7 +9,7 @@ export default withAuth(
       request.nextUrl.pathname.startsWith("/dashboard") &&
       request.nextauth.token?.role !== UserRole.ADMIN
     ) {
-      url.pathname = "/timer";
+      url.pathname = "/ws";
       return NextResponse.redirect(url);
     }
   },

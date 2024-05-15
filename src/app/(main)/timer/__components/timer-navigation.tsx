@@ -20,7 +20,7 @@ const TimerNavigation = () => {
             className="bg-[#FEF5EA] flex items-center gap-2 py-2 px-4 rounded-sm"
           >
             <Image src={CrownIcn} width={20} height={20} alt="crown logo" />
-            <p className="text-[#f29a2e] text-sm">Unlock full</p>
+            <p className="text-[#f29a2e] text-sm">Unlocked</p>
           </Link>
           <ToggleFullScreen />
           <PushNotification />

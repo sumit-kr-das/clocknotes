@@ -23,11 +23,12 @@ type NewActivityProps = {
 const NewActivity = ({ activity }: NewActivityProps) => {
   const [startOptimisticActivity, addOptimisticActivity] = useOptimistic(
     activity || {
+      id: null,
       startAt: null,
     },
     (state, newOptimisticActivity: any) => {
       return newOptimisticActivity;
-    },
+    }
   );
 
   async function startAction(data: FormData) {
@@ -77,7 +78,7 @@ const NewActivity = ({ activity }: NewActivityProps) => {
             <p
               className={cn(
                 "slashed-zero tabular-nums font-bold text-2xl",
-                inter.className,
+                inter.className
               )}
             >
               00:00<span className="text-gray-500">:00</span>
@@ -85,12 +86,23 @@ const NewActivity = ({ activity }: NewActivityProps) => {
           )}
         </div>
         <div>
-          {startOptimisticActivity?.startAt ? (
-            <button type="submit" className={`pause-btn`}>
-              <div></div>
-              <div></div>
-            </button>
-          ) : (
+          {startOptimisticActivity?.startAt && (
+            <>
+              {startOptimisticActivity?.id ? (
+                <button type="submit" className={`pause-btn`}>
+                  <div></div>
+                  <div></div>
+                </button>
+              ) : (
+                <button type="button" className={`pause-btn-disable`}>
+                  <div></div>
+                  <div></div>
+                </button>
+              )}
+            </>
+          )}
+
+          {!startOptimisticActivity?.startAt && (
             <button type="submit" className="play-btn"></button>
           )}
         </div>

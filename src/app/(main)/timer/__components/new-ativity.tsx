@@ -1,18 +1,18 @@
 "use client";
 import TimerActivity from "@/app/(main)/timer/__components/timer-activity";
+import AddTimerProject from "@/app/(main)/timer/__components/timer-add-project";
+import AddTags from "@/app/(main)/timer/__components/timer-add-tags";
+import Billable from "@/app/(main)/timer/__components/timer-billable";
 import "@/app/styles/play-pause-btn.css";
 import { Input } from "@/components/ui/input";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import { Activity } from "@prisma/client";
+import { Inter } from "next/font/google";
 import { useOptimistic } from "react";
 import toast from "react-hot-toast";
 import { startActivity } from "./actions/start-activity-action";
 import { stopActivity } from "./actions/stop-activity-action";
-import { Inter } from "next/font/google";
-import { cn } from "@/lib/utils";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import AddProject from "@/app/(main)/timer/__components/timer-add-project";
-import AddTags from "@/app/(main)/timer/__components/timer-add-tags";
-import Billable from "@/app/(main)/timer/__components/timer-billable";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -68,7 +68,7 @@ const NewActivity = ({ activity }: NewActivityProps) => {
           className="w-[100%] block"
           type="hidden"
         />
-        <AddProject />
+        <AddTimerProject />
         <AddTags />
         <Billable />
         <div>

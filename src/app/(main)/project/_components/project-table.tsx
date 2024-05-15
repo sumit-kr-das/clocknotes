@@ -1,15 +1,7 @@
 "use client";
-import * as React from "react";
-import {
-  ColumnDef,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-  SortingState,
-  getSortedRowModel,
-  ColumnFiltersState,
-  getFilteredRowModel,
-} from "@tanstack/react-table";
+import AddProject from "@/app/(main)/project/_components/add-project";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -18,9 +10,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import AddProject from "@/app/(main)/project/_components/add-project";
 import { TProject } from "@/type/project/TProject";
+import {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import * as React from "react";
 
 interface DataTableProps {
   columns: ColumnDef<TProject, any>[];
@@ -29,7 +30,7 @@ interface DataTableProps {
 const ProjectTable = ({ data, columns }: DataTableProps) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    [],
+    []
   );
   const table = useReactTable({
     data,
@@ -55,7 +56,9 @@ const ProjectTable = ({ data, columns }: DataTableProps) => {
           }
           className="max-w-sm"
         />
-        <AddProject />
+        <AddProject>
+          <Button>Add a new project</Button>
+        </AddProject>
       </div>
       <div className="rounded-md border">
         <Table>
@@ -69,7 +72,7 @@ const ProjectTable = ({ data, columns }: DataTableProps) => {
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
                   );
@@ -88,7 +91,7 @@ const ProjectTable = ({ data, columns }: DataTableProps) => {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}

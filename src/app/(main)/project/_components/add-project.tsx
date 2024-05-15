@@ -9,20 +9,9 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Input } from "@/components/ui/input";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { getClients } from "@/app/(main)/client/_components/action/client.actions";
-import { cn } from "@/lib/utils";
+import { addProject } from "@/app/api/project/project.actions";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
 import {
   Command,
   CommandEmpty,
@@ -31,15 +20,26 @@ import {
   CommandItem,
 } from "@/components/ui/command";
 import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useEffect, useState } from "react";
+import { cn } from "@/lib/utils";
 import { TClient } from "@/type/client/TClient";
-import { addProject } from "@/app/api/project/project.actions";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import SubmitBtn from "@/components/global/customInputes/submit-btn";
+import * as z from "zod";
 
 const formSchema = z.object({
   name: z.string().min(4, {
@@ -49,7 +49,7 @@ const formSchema = z.object({
     required_error: "Client is required",
   }),
 });
-const AddProject = () => {
+const AddProject = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [clients, setClients] = useState<TClient[]>();
@@ -83,11 +83,7 @@ const AddProject = () => {
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button variant="outline" onClick={() => setOpen(true)}>
-            Create New Project
-          </Button>
-        </DialogTrigger>
+        <DialogTrigger asChild>{children}</DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>Add New Project</DialogTitle>
@@ -129,12 +125,12 @@ const AddProject = () => {
                             role="combobox"
                             className={cn(
                               "w-full justify-between",
-                              !field.value && "text-muted-foreground",
+                              !field.value && "text-muted-foreground"
                             )}
                           >
                             {field.value
                               ? clients?.find(
-                                  (language) => language.id === field.value,
+                                  (language) => language.id === field.value
                                 )?.name
                               : "Select Client"}
                             {/*<CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />*/}

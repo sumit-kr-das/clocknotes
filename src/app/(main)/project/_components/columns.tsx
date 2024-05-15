@@ -1,18 +1,10 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
-import { ArrowUpDown, MoreHorizontal, Pen, Trash } from "lucide-react";
-import { TProject } from "@/type/project/TProject";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import ProjectActions from "@/app/(main)/project/_components/project-actions";
+import { Button } from "@/components/ui/button";
+import { TProject } from "@/type/project/TProject";
+import { ColumnDef } from "@tanstack/react-table";
+import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<TProject>[] = [
   {

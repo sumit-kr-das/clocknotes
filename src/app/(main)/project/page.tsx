@@ -4,6 +4,7 @@ import { getProject } from "@/app/api/project/project.actions";
 
 const Project = async () => {
   const projects = await getProject();
+
   return <>{projects && <ProjectTable data={projects} columns={columns} />}</>;
 };
 

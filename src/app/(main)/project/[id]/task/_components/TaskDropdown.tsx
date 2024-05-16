@@ -1,22 +1,18 @@
+import DeleteTask from "@/app/(main)/project/[id]/task/_components/delete-task";
+import EditTask from "@/app/(main)/project/[id]/task/_components/edit-task";
+import { TTaskData } from "@/app/(main)/project/[id]/task/_components/task-card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreVertical, Trash2, Pencil } from "lucide-react";
+import { MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
-import EditTask from "@/app/(main)/project/[id]/task/_components/edit-task";
-import { TTaskData } from "@/app/(main)/project/[id]/task/_components/task-card";
-import DeleteTask from "@/app/(main)/project/[id]/task/_components/delete-task";
+
 const TaskDropdown = ({ task }: { task: TTaskData }) => {
   const [open, setOpen] = useState(false);
   const [delOpen, setDelOpen] = useState(false);

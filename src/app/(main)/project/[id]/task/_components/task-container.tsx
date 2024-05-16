@@ -1,14 +1,14 @@
 "use client";
-import { Separator } from "@/components/ui/separator";
+import { editTaskStatus } from "@/app/(main)/project/[id]/task/_components/action/task.actions";
+import AddTask from "@/app/(main)/project/[id]/task/_components/add-task";
 import TaskCard from "@/app/(main)/project/[id]/task/_components/task-card";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
 import TTask from "@/type/task/task";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { useEffect, useState } from "react";
-import { editTaskStatus } from "@/app/(main)/project/[id]/task/_components/action/task.actions";
-import toast from "react-hot-toast";
 import { Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import AddTask from "@/app/(main)/project/[id]/task/_components/add-task";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const reorder = (list: any, startIndex: number, endIndex: number) => {
   const result = Array.from(list);
@@ -25,7 +25,7 @@ const TaskContainer = ({ tasks }: { tasks: TTask[] }) => {
         return {
           status: statusGroup.status,
           data: statusGroup.data.filter((task) =>
-            task.name.toLowerCase().includes(search.toLowerCase()),
+            task.name.toLowerCase().includes(search.toLowerCase())
           ),
         };
       });
@@ -47,10 +47,10 @@ const TaskContainer = ({ tasks }: { tasks: TTask[] }) => {
     let newOrderedData = [...orderedList];
     console.log(newOrderedData, "ordered data");
     const sourceList = newOrderedData.find(
-      (list) => list.status === source.droppableId,
+      (list) => list.status === source.droppableId
     );
     const destList = newOrderedData.find(
-      (list) => list.status === destination.droppableId,
+      (list) => list.status === destination.droppableId
     );
     if (!sourceList || !destList) {
       return;

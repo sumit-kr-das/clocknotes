@@ -177,14 +177,16 @@ model Workspace {
 
 model Team {
   id          String     @id @default(dbgenerated("concat('team_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  tenantId    String
-  tenant      Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenantId    String?
+  tenant      Tenant?    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   role        Role       @default(MEMBER)
   workspaceId String?
   isActive    Boolean    @default(true)
   workspace   Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  userId      String
-  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  email       String?
+  userId      String?
+  user        User?      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  isJoined    Boolean    @default(false)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 }

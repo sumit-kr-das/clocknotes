@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import * as z from "zod";
-import { TClient } from "@/type/client/TClient";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -23,6 +22,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import SubmitBtn from "@/components/global/customInputes/submit-btn";
+import { sendTeamInvitation } from "@/app/(main)/ws/[workspaceId]/teams/_components/actions/teams.action";
+import { useParams } from "next/navigation";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   email: z.string().email().min(1, {
@@ -30,6 +32,7 @@ const formSchema = z.object({
   }),
 });
 const AddTeam = () => {
+  const params = useParams<{ workspaceId: string }>();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -39,7 +42,19 @@ const AddTeam = () => {
     },
   });
   const addMember = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+    try {
+      setIsLoading(true);
+      console.log(params);
+      await sendTeamInvitation({
+        ...data,
+        workspaceId: params.workspaceId,
+      });
+      toast.success("Member invitation sent");
+      setOpen(false);
+      setIsLoading(false);
+    } catch (e: any) {
+      toast.error(e?.message);
+    }
   };
   return (
     <Dialog open={open} onOpenChange={setOpen}>

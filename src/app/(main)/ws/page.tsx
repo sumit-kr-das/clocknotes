@@ -1,6 +1,7 @@
 "use server";
 import {
   createWorkspace,
+  getUserAllWorkspaces,
   getUserWorkspaces,
   hasWorkspace,
 } from "@/app/(main)/ws/actions/workspace.action";
@@ -19,8 +20,8 @@ const Workspace = async () => {
       });
       redirectUrl = `/ws/${workspace?.id}/timer`;
     } else {
-      const workspaces = await getUserWorkspaces();
-      redirectUrl = `/ws/${workspaces[0]?.id}/timer`;
+      const workspaces = await getUserAllWorkspaces();
+      redirectUrl = `/ws/${workspaces[0]?.workspaceId}/timer`;
     }
   } catch (e: any) {
     console.log(e.message);

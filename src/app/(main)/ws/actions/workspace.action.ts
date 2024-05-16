@@ -49,7 +49,7 @@ export const createWorkspace = async ({
 export const hasWorkspace = async () => {
   try {
     const user = await getSession();
-    const workspace = await db.workspace.findFirst({
+    const workspace = await db.team.findFirst({
       where: {
         tenantId: user.tenantId,
       },
@@ -65,7 +65,7 @@ export const hasWorkspace = async () => {
 export const getUserWorkspaces = async () => {
   try {
     const user = await getSession();
-    const workspaces = await db.team.findMany({
+    const workspaces = await db.workspace.findMany({
       where: {
         tenantId: user.tenantId,
       },

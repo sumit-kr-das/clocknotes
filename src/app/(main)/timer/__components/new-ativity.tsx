@@ -9,7 +9,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Activity, Project } from "@prisma/client";
 import { Inter } from "next/font/google";
-import { useOptimistic, useState } from "react";
+import { useOptimistic, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { startActivity } from "./actions/start-activity-action";
 import { stopActivity } from "./actions/stop-activity-action";
@@ -22,17 +22,23 @@ type NewActivityProps = {
 };
 
 export type TimerStates = {
+  projectName?: string;
   projectId?: string;
   tags?: string;
   isBillable?: boolean;
 };
 
+const INITIAL_TIMER_STATE = {
+  projectName: "",
+  projectId: "",
+  tags: "",
+  isBillable: false,
+};
+
 const NewActivity = ({ activity, projects }: NewActivityProps) => {
-  const [timerStates, setTimerStates] = useState<TimerStates>({
-    projectId: "",
-    tags: "",
-    isBillable: false,
-  });
+  const [timerStates, setTimerStates] =
+    useState<TimerStates>(INITIAL_TIMER_STATE);
+  const ref = useRef<HTMLFormElement>(null);
 
   const handleTimerStates = (props: TimerStates) => {
     setTimerStates({
@@ -76,11 +82,14 @@ const NewActivity = ({ activity, projects }: NewActivityProps) => {
   async function stopAction(data: FormData) {
     const id = data.get("id") as string;
     await stopActivity(id);
+    ref.current?.reset();
+    setTimerStates(INITIAL_TIMER_STATE);
   }
 
   return (
     <TooltipProvider>
       <form
+        ref={ref}
         action={startOptimisticActivity?.startAt ? stopAction : startAction}
         className="w-full flex items-center gap-8 bg-primary-foreground dark:bg-muted border rounded-lg p-8"
       >
@@ -98,6 +107,7 @@ const NewActivity = ({ activity, projects }: NewActivityProps) => {
         />
         <AddTimerProject
           projects={projects}
+          timerStates={timerStates}
           handleTimerStates={handleTimerStates}
         />
         <AddTags />

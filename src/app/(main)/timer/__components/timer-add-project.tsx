@@ -7,40 +7,30 @@ import {
 } from "@/components/ui/popover";
 import { Project } from "@prisma/client";
 import { Plus } from "lucide-react";
-import { useState } from "react";
 import AddProject from "../../project/_components/add-project";
 import { TimerStates } from "./new-ativity";
 
 const AddTimerProject = ({
   projects,
+  timerStates,
   handleTimerStates,
 }: {
   projects?: Project[];
+  timerStates: TimerStates;
   handleTimerStates: (timerStates: TimerStates) => void;
 }) => {
-  const [selectedProject, setSelectedProject] = useState<{
-    projectName: string | null;
-    projectId: string | null;
-  }>({
-    projectName: null,
-    projectId: null,
-  });
-
   const handleSelect = (projectName: string, projectId: string) => {
-    setSelectedProject({
+    handleTimerStates({
       projectName: projectName,
       projectId: projectId,
     });
-    if (selectedProject.projectId) {
-      handleTimerStates({ projectId: selectedProject.projectId });
-    }
   };
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button type="button" className="w-28">
-          {selectedProject?.projectName ? (
-            <span>{selectedProject?.projectName}</span>
+          {timerStates?.projectName ? (
+            <span>{timerStates?.projectName}</span>
           ) : (
             <>
               <Plus className="w-4 h-4 mr-1" />

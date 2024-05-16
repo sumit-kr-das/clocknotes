@@ -5,8 +5,15 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import { DollarSign, Plus } from "lucide-react";
+import { TimerStates } from "./new-ativity";
 
-const Billable = ({ handleTimerStates, timerStates }) => {
+const Billable = ({
+  handleTimerStates,
+  timerStates,
+}: {
+  handleTimerStates: (timerStates: TimerStates) => void;
+  timerStates: TimerStates;
+}) => {
   const handleBillable = () => {
     if (timerStates.isBillable) {
       handleTimerStates({ isBillable: false });

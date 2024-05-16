@@ -13,7 +13,7 @@ const Features = () => {
         <div>
           <div className="w-fit rounded-full bg-primary dark:bg-secondary border border-primary px-3 py-1 text-xs">
             <p className="text-sm capitalize text-white dark:text-zinc-200">
-              NEED DATA
+              Teams & workspace
             </p>
           </div>
           <h2 className="font-bold text-4xl my-4">
@@ -65,7 +65,7 @@ const Features = () => {
         <div>
           <div className="w-fit rounded-full bg-primary dark:bg-secondary border border-primary px-3 py-1 text-xs">
             <p className="text-sm capitalize text-white dark:text-zinc-200">
-              NEED DATA
+              Reports & Analytics
             </p>
           </div>
           <h2 className="font-bold text-4xl my-4">
@@ -128,7 +128,7 @@ const Features = () => {
         <div>
           <div className="w-fit rounded-full bg-primary dark:bg-secondary border border-primary px-3 py-1 text-xs">
             <p className="text-sm capitalize text-white dark:text-zinc-200">
-              NEED DATA
+              Billing & Invoice
             </p>
           </div>
           <h2 className="font-bold text-4xl my-4">
@@ -184,7 +184,7 @@ const Features = () => {
         <div>
           <div className="w-fit rounded-full bg-primary dark:bg-secondary border border-primary px-3 py-1 text-xs">
             <p className="text-sm capitalize text-white dark:text-zinc-200">
-              NEED DATA
+              Site Settings
             </p>
           </div>
           <h2 className="font-bold text-4xl my-4">
@@ -252,8 +252,7 @@ const AppFeature = () => {
       <SiteTitle
         subtitle="Clocknotes Feature"
         title="Unveiling the Clocknotes Advantage"
-        description="Clocknotes transforms content creation, offering a unified platform for
-        creators"
+        description="Clocknotes simplify time tracking and time management with it's user efficient features. All fetures are listed below."
       />
       <div className="max-w-7xl w-full mx-auto mt-10">
         <Features />

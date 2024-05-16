@@ -32,7 +32,7 @@ const formSchema = z.object({
   }),
 });
 const AddTeam = () => {
-  const params = useParams<{ workspaceId: string }>();
+  const { workspaceId } = useParams<{ workspaceId: string }>();
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -41,13 +41,13 @@ const AddTeam = () => {
       email: "",
     },
   });
-  const addMember = async (data: z.infer<typeof formSchema>) => {
+  async function addMember(data: z.infer<typeof formSchema>) {
     try {
       setIsLoading(true);
-      console.log(params);
+      console.log(workspaceId);
       await sendTeamInvitation({
         ...data,
-        workspaceId: params.workspaceId,
+        workspaceId: workspaceId,
       });
       toast.success("Member invitation sent");
       setOpen(false);
@@ -55,7 +55,7 @@ const AddTeam = () => {
     } catch (e: any) {
       toast.error(e?.message);
     }
-  };
+  }
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>

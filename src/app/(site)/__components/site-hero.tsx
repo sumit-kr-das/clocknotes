@@ -31,8 +31,10 @@ const Hero = () => {
             Free TimeTracking & Timesheet <br /> Management Software
           </h1>
           <p className="text-muted-foreground text-center">
-            Clocknotes is a time tracker and timesheet app that <br /> lets you
-            track work hours across projects. Unlimited users, free forever.
+            Clocknotes is a the latest teams friendly timesheet management
+            software which let you track times <br /> according to your
+            projects, workspaces and manage clients, tasks, notes, billings and
+            reports for free forever.
           </p>
           <Button className="mt-4">Join the waitlist</Button>
         </div>

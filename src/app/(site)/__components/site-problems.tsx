@@ -13,15 +13,14 @@ const Problems = () => {
           What problem Clocknotes solve?
         </h1>
         <p className="text-muted-foreground">
-          Clocknotes transforms content creation, offering a unified platform
-          for creators. It solves storage issues, streamlines collaboration, and
-          automates multi-platform publishing, ensuring efficient workflows and
-          maximizing content impact.
+          Clocknotes helps to track time and manage your projects with different
+          teams to boost your organisation productivity through a modern user
+          friendly time tracking software. It tracks time, manage teams, manage
+          projects, track tasks, create notes, manage clients record, generate
+          reports, billing and invoices, manage workspaces for free.
           <br /> <br />
-          With AI-driven capabilities, it empowers creators to overcome
-          challenges, from generating ideas to seamless distribution across
-          diverse platforms. YouTorus is the all-in-one solution, simplifying
-          the creative journey and elevating content creation to new heights.
+          Clocknotes provides various features in its platform which are not
+          available in other platforms for small startups and organisations.
         </p>
       </div>
       <div className="flex-1 flex justify-end pt-8">

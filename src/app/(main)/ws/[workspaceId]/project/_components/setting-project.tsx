@@ -1,15 +1,25 @@
 "use client";
-import { z } from "zod";
-import { TProject } from "@/type/project/TProject";
+import { getClients } from "@/app/(main)/client/_components/action/client.actions";
+import { editProject } from "@/app/api/project/project.actions";
+import BaseCombobox from "@/components/global/customInputes/base-combobox";
+import BaseInput from "@/components/global/customInputes/base-input";
+import BaseSelect from "@/components/global/customInputes/base-select";
+import BaseSwitch from "@/components/global/customInputes/base-switch";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
+import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Controller, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -18,34 +28,22 @@ import {
   FormLabel,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import solids from "@/constants/solids";
 import { cn } from "@/lib/utils";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import { useEffect, useState } from "react";
+import "@/style/style.css";
 import { TClient } from "@/type/client/TClient";
 import { getClients } from "@/app/(main)/ws/[workspaceId]/client/_components/action/client.actions";
 import { CheckIcon } from "lucide-react";
-import solids from "@/constants/solids";
+import { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import "@/style/style.css";
-import { editProject } from "@/app/api/project/project.actions";
-import BaseInput from "@/components/global/customInputes/base-input";
-import BaseSwitch from "@/components/global/customInputes/base-switch";
-import BaseSelect from "@/components/global/customInputes/base-select";
-import BaseCombobox from "@/components/global/customInputes/base-combobox";
-import ProjectEditSchema from "@/type/zod/ProjectEditSchema";
-import SubmitBtn from "@/components/global/customInputes/submit-btn";
+import { z } from "zod";
 
 const SettingProject = ({
   project,
@@ -152,13 +150,13 @@ const SettingProject = ({
                                 role="combobox"
                                 className={cn(
                                   "w-full justify-between",
-                                  !field.value && "text-muted-foreground",
+                                  !field.value && "text-muted-foreground"
                                 )}
                               >
                                 {field.value
                                   ? clients?.find(
-                                      (language) => language.id === field.value,
-                                    )?.name
+                                    (language) => language.id === field.value
+                                  )?.name
                                   : "Select Client"}
                                 {/*<CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />*/}
                               </Button>
@@ -186,7 +184,7 @@ const SettingProject = ({
                                         "ml-auto h-4 w-4",
                                         client.name === field.value
                                           ? "opacity-100"
-                                          : "opacity-0",
+                                          : "opacity-0"
                                       )}
                                     />
                                   </CommandItem>

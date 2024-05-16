@@ -1,3 +1,6 @@
+import SettingProject from "@/app/(main)/project/_components/setting-project";
+import { deleteProject } from "@/app/api/project/project.actions";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,8 +9,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { TProject } from "@/type/project/TProject";
 import { LayoutList, MoreHorizontal, Settings, Trash } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { TProject } from "@/type/project/TProject";

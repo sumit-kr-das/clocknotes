@@ -28,9 +28,11 @@ const TimerPage = async () => {
     },
   });
 
+  const projects = await getProject();
+
   return (
     <section className="w-full">
-      <NewActivity activity={currentActivity} />
+      <NewActivity activity={currentActivity} projects={projects} />
       <DailyActivities activities={dailyActivities} />
     </section>
   );

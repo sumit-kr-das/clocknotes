@@ -4,7 +4,8 @@ export const features = [
   {
     icon: "",
     title: "Track Time",
-    description: "Track time with clocknotes and increase productivity. ",
+    description:
+      "Track time with clocknotes and increase productivity to effortlessly monitor your time, ensuring you stay focused and make the most of every moment ",
   },
   {
     icon: "",

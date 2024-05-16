@@ -3,140 +3,84 @@ import DemoImg from "@/assets/site/demo.svg";
 export const features = [
   {
     icon: "",
-    title: "Centralized Secure File Storage",
-    description:
-      "All media assets in one secure hub. No more scattered files or storage worries.",
+    title: "Track Time",
+    description: "Track time with clocknotes and increase productivity. ",
   },
   {
     icon: "",
-    title: "Centralized Secure File Storage",
-    description:
-      "All media assets in one secure hub. No more scattered files or storage worries.",
+    title: "Track Projects",
+    description: "Track working hours on the projects of teams.",
   },
   {
     icon: "",
-    title: "Centralized Secure File Storage",
-    description:
-      "All media assets in one secure hub. No more scattered files or storage worries.",
+    title: "Manage Clients",
+    description: "Manage clients details and projects with clocknotes.",
   },
   {
     icon: "",
-    title: "Centralized Secure File Storage",
-    description:
-      "All media assets in one secure hub. No more scattered files or storage worries.",
+    title: "Manage Tasks",
+    description: "Manage and track tasks according to the projects.",
   },
   {
     icon: "",
-    title: "Centralized Secure File Storage",
-    description:
-      "All media assets in one secure hub. No more scattered files or storage worries.",
+    title: "Manage Teams",
+    description: "Create and manage different teams with different workspaces",
   },
   {
     icon: "",
-    title: "Centralized Secure File Storage",
+    title: "Keep Notes",
+    description: "Create and manage important notes according to projects.",
+  },
+  {
+    icon: "",
+    title: "Reports & Analytics",
+    description: "Generate Reports and insightful analytics of work.",
+  },
+  {
+    icon: "",
+    title: "Generate Invoices",
     description:
-      "All media assets in one secure hub. No more scattered files or storage worries.",
-  },
-];
-
-export const appFeatures = [
-  {
-    image: DemoImg,
-    subTitle: "COLLABORATE SMARTER, PUBLISH FASTER",
-    title: "A Complete Solution for Content Creators",
-    desc: "Elevate your project management experience with our collaboration platform. Seamlessly connect team members, foster efficient communication, and enhance productivity throughout your projects.",
-    flow: [
-      {
-        title: "Storage Worry-Free",
-        desc: "Enjoy peace of mind with our centralized storage solution, eliminating clutter and storage limitations for all your media assets.",
-      },
-      {
-        title: "Effortless Multi-Platform Publishing",
-        desc: "With automated multi-platform publishing, distribute your content seamlessly across various platforms, saving you time and effort while expanding your reach.",
-      },
-    ],
+      "Generate invoices and bills for clients based on work automatically.",
   },
   {
-    image: DemoImg,
-    subTitle: "COLLABORATE SMARTER, PUBLISH FASTER",
-    title: "A Complete Solution for Content Creators",
-    desc: "Elevate your project management experience with our collaboration platform. Seamlessly connect team members, foster efficient communication, and enhance productivity throughout your projects.",
-    flow: [
-      {
-        title: "Storage Worry-Free",
-        desc: "Enjoy peace of mind with our centralized storage solution, eliminating clutter and storage limitations for all your media assets.",
-      },
-      {
-        title: "Effortless Multi-Platform Publishing",
-        desc: "With automated multi-platform publishing, distribute your content seamlessly across various platforms, saving you time and effort while expanding your reach.",
-      },
-    ],
-  },
-  {
-    image: DemoImg,
-    subTitle: "COLLABORATE SMARTER, PUBLISH FASTER",
-    title: "A Complete Solution for Content Creators",
-    desc: "Elevate your project management experience with our collaboration platform. Seamlessly connect team members, foster efficient communication, and enhance productivity throughout your projects.",
-    flow: [
-      {
-        title: "Storage Worry-Free",
-        desc: "Enjoy peace of mind with our centralized storage solution, eliminating clutter and storage limitations for all your media assets.",
-      },
-      {
-        title: "Effortless Multi-Platform Publishing",
-        desc: "With automated multi-platform publishing, distribute your content seamlessly across various platforms, saving you time and effort while expanding your reach.",
-      },
-    ],
-  },
-  {
-    image: DemoImg,
-    subTitle: "COLLABORATE SMARTER, PUBLISH FASTER",
-    title: "A Complete Solution for Content Creators",
-    desc: "Elevate your project management experience with our collaboration platform. Seamlessly connect team members, foster efficient communication, and enhance productivity throughout your projects.",
-    flow: [
-      {
-        title: "Storage Worry-Free",
-        desc: "Enjoy peace of mind with our centralized storage solution, eliminating clutter and storage limitations for all your media assets.",
-      },
-      {
-        title: "Effortless Multi-Platform Publishing",
-        desc: "With automated multi-platform publishing, distribute your content seamlessly across various platforms, saving you time and effort while expanding your reach.",
-      },
-    ],
+    icon: "",
+    title: "User Friendly Timesheets",
+    description: "Manage user friendly and easy understandable timesheets.",
   },
 ];
 
 export const faqData = [
   {
-    question: "How does Clocknotes work?",
+    question: "What is time tracking tool?",
     answer:
-      "Effortlessly manage your content creation workflow with Clocknotes. If you find yourself grappling with scattered teams and disjointed platforms, YouTorus, with its AI-powered capabilities, streamlines your workflow into one cohesive platform. This acceleration ensures swift content delivery to your audience.",
+      "A time tracking tool is a software application or system used to monitor and record the amount of time spent on various activities, tasks, or projects. It allows individuals or teams to track their work hours accurately, providing insights into productivity, project progress, and resource allocation.",
   },
   {
     question:
-      "Is Clocknotes suitable for both beginners and experienced interviewees?",
+      "Is clocknotes suitable for both small businesses and large enterprises?",
     answer:
-      "Effortlessly manage your content creation workflow with Clocknotes. If you find yourself grappling with scattered teams and disjointed platforms, YouTorus, with its AI-powered capabilities, streamlines your workflow into one cohesive platform. This acceleration ensures swift content delivery to your audience.",
+      "Yes, our software is designed to meet the needs of businesses of all sizes. Whether you're a small startup or a large corporation, our flexible features and scalable solutions can accommodate your requirements.",
   },
   {
-    question: "What resources are available on the platform?",
+    question: "Can I integrate your software with other tools we use?",
     answer:
-      "Effortlessly manage your content creation workflow with Clocknotes. If you find yourself grappling with scattered teams and disjointed platforms, YouTorus, with its AI-powered capabilities, streamlines your workflow into one cohesive platform. This acceleration ensures swift content delivery to your audience.",
-  },
-  {
-    question: "Is my data secure with YouTorus?",
-    answer:
-      "Effortlessly manage your content creation workflow with Clocknotes. If you find yourself grappling with scattered teams and disjointed platforms, YouTorus, with its AI-powered capabilities, streamlines your workflow into one cohesive platform. This acceleration ensures swift content delivery to your audience.",
+      "Our software is currently beta release mode. We are working on integration with other platform like Jira. Very soon we will release the integrations. ",
   },
   {
     question:
-      "Is Clocknotes suitable for both beginners and experienced interviewees?",
+      "Can I customise reports and analytics to suit our specific requirements?",
     answer:
-      "Effortlessly manage your content creation workflow with Clocknotes. If you find yourself grappling with scattered teams and disjointed platforms, YouTorus, with its AI-powered capabilities, streamlines your workflow into one cohesive platform. This acceleration ensures swift content delivery to your audience.",
+      "Absolutely! Our software offers robust reporting and analytics tools that allow you to customise reports based on your unique preferences and metrics. From project timelines to employee productivity, you can generate insights tailored to your needs.",
   },
   {
-    question: "What resources are available on the platform?",
+    question: "Do you offer customer support?",
     answer:
-      "Effortlessly manage your content creation workflow with Clocknotes. If you find yourself grappling with scattered teams and disjointed platforms, YouTorus, with its AI-powered capabilities, streamlines your workflow into one cohesive platform. This acceleration ensures swift content delivery to your audience.",
+      "Yes, we provide dedicated customer support to assist you with any questions or issues you may encounter. Our support team is available via email during the business hours and you will get your issue solved within 24 hours. ",
+  },
+  {
+    question:
+      "Is there a limit to the number of users or projects we can manage?",
+    answer:
+      "Currently we have released out free beta mode. Where you can manage unlimited projects, tasks, clients. But your workspaces and teams are limited in free tier. When we will relase our paid subscriptions you will able to create multiple workspaces and access many premium features. ",
   },
 ];

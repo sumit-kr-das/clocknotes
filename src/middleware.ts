@@ -17,7 +17,7 @@ export default withAuth(
     callbacks: {
       authorized: ({ token }) => !!token,
     },
-  },
+  }
 );
 export const config = {
   matcher: ["/timer", "/project", "/client", "/dashboard"],

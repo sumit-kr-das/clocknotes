@@ -13,31 +13,6 @@ type DailyActivitiesProp = {
   activities: Activity[];
 };
 
-const TotalTime = ({
-  startTime,
-  endTime,
-}: {
-  startTime: Date;
-  endTime: Date;
-}) => {
-  const totalMilliseconds = differenceInMilliseconds(endTime, startTime);
-  const totalSeconds = Math.floor(totalMilliseconds / 1000);
-  const hoursDifference = Math.floor(totalSeconds / 3600)
-    .toString()
-    .padStart(2, "0");
-  const minutesDifference = Math.floor((totalSeconds % 3600) / 60)
-    .toString()
-    .padStart(2, "0");
-  const secondsDifference = (totalSeconds % 60).toString().padStart(2, "0");
-  return (
-    <div>
-      <p className="font-semibold">
-        {hoursDifference}:{minutesDifference}:{secondsDifference}
-      </p>
-    </div>
-  );
-};
-
 const DailyActivities = ({ activities }: DailyActivitiesProp) => {
   return (
     <div className="mt-10">
@@ -47,47 +22,31 @@ const DailyActivities = ({ activities }: DailyActivitiesProp) => {
       {activities?.map((activity) => (
         <Card
           key={activity.id}
-          className="w-full mt-4 p-4 flex items-center justify-between"
+          className="mt-4 p-4 flex items-center justify-between"
         >
-          {/* title */}
-          <div className="w-full">
+          <div className="w-1/2">
             <ActivityTitle id={activity.id} title={activity.name} />
           </div>
-          <div className=" flex items-center gap-8">
-            {/* start-end time */}
-            <div className="flex items-center">
-              <ActivityDate
-                name="startAt"
-                id={activity.id}
-                date={activity.startAt}
-              />
-              <p className="font-semibold mx-2">to</p>
-              <ActivityDate
-                name="endAt"
-                id={activity.id}
-                date={activity.endAt || new Date()}
-              />
-            </div>
-            {activity?.endAt ? (
-              <TotalTime
-                startTime={activity.startAt}
-                endTime={activity.endAt}
-              />
-            ) : (
-              <p className="font-semibold">00:00:00</p>
-            )}
-            <div className="cursor-pointer">
-              <Play className="w-5 h-5" />
-            </div>
-            <div className="flex items-center justify-center gap-2">
-              <Button
-                variant="destructive"
-                size="icon"
-                onClick={async () => deleteActivity(activity.id)}
-              >
-                <Trash2 />
-              </Button>
-            </div>
+
+          <ActivityDate
+            name="startAt"
+            id={activity.id}
+            date={activity.startAt}
+          />
+          <ArrowRight size={16} />
+          <ActivityDate
+            name="endAt"
+            id={activity.id}
+            date={activity.endAt || new Date()}
+          />
+          <div className="flex items-center justify-center gap-2">
+            <Button
+              variant="destructive"
+              size="icon"
+              onClick={async () => deleteActivity(activity.id)}
+            >
+              <Trash2 />
+            </Button>
           </div>
         </Card>
       ))}

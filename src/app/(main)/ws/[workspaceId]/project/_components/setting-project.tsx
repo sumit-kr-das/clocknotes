@@ -1,5 +1,4 @@
 "use client";
-import { getClients } from "@/app/(main)/client/_components/action/client.actions";
 import { editProject } from "@/app/api/project/project.actions";
 import BaseCombobox from "@/components/global/customInputes/base-combobox";
 import BaseInput from "@/components/global/customInputes/base-input";
@@ -44,6 +43,9 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
+import { TProject } from "@/type/project/TProject";
+import ProjectEditSchema from "@/type/zod/ProjectEditSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const SettingProject = ({
   project,
@@ -150,13 +152,13 @@ const SettingProject = ({
                                 role="combobox"
                                 className={cn(
                                   "w-full justify-between",
-                                  !field.value && "text-muted-foreground"
+                                  !field.value && "text-muted-foreground",
                                 )}
                               >
                                 {field.value
                                   ? clients?.find(
-                                    (language) => language.id === field.value
-                                  )?.name
+                                      (language) => language.id === field.value,
+                                    )?.name
                                   : "Select Client"}
                                 {/*<CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />*/}
                               </Button>
@@ -184,7 +186,7 @@ const SettingProject = ({
                                         "ml-auto h-4 w-4",
                                         client.name === field.value
                                           ? "opacity-100"
-                                          : "opacity-0"
+                                          : "opacity-0",
                                       )}
                                     />
                                   </CommandItem>

@@ -1,6 +1,4 @@
-import { Card } from "@/components/ui/card";
 import TaskDropdown from "@/app/(main)/ws/[workspaceId]/project/[id]/task/_components/TaskDropdown";
-import { Badge } from "@/components/ui/badge";
 import { convertDate } from "@/components/global/convert-date";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";

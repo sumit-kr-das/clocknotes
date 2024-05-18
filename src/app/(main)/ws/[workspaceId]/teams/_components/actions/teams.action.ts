@@ -67,15 +67,16 @@ export const sendTeamInvitation = async ({
         workspaceId: workspaceId,
       },
     });
+    console.log(newMember?.id, "new member id");
     await trainsporter.sendMail({
       from: '"Clocknotes" <support@clocknotes.cloud>', // sender address
       to: `${email}`, // list of receivers
       subject: `${user.name} is inviting you to join their team in Clocknotes ✔`, // Subject line
-      text: "${user.name} is inviting you to join their team in Clocknotes ✔ ", // plain text body
+      text: `${user.name} is inviting you to join their team in Clocknotes ✔ `, // plain text body
       html: `<b>Hello</b>
     <br/>
     <p>${user.name} is inviting you for joining their team. If you want to join please click on the following link.</p>
-    <a href="http://localhost:3000/ws?invite="${newMember?.id}>Join Team</a>
+    <a href='http://localhost:3000/ws?invite=${newMember?.id}'>Join Team</a>
     `, // html body
     });
     revalidatePath("/teams");

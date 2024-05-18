@@ -8,6 +8,7 @@ type TTeam = {
   userId: string | null;
   createdAt: Date;
   updatedAt: Date;
+  isJoined: boolean;
   user: {
     email: string;
     name: string;

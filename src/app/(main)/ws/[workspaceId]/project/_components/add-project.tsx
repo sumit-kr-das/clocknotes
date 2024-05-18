@@ -8,21 +8,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
-import { Input } from "@/components/ui/input";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
 import { getClients } from "@/app/(main)/ws/[workspaceId]/client/_components/action/client.actions";
-import { cn } from "@/lib/utils";
 import {
   Command,
   CommandEmpty,
@@ -51,6 +37,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as z from "zod";
+import { addProject } from "@/app/api/project/project.actions";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
 
 const formSchema = z.object({
   name: z.string().min(4, {
@@ -136,13 +124,13 @@ const AddProject = ({ children }: { children: React.ReactNode }) => {
                             role="combobox"
                             className={cn(
                               "w-full justify-between",
-                              !field.value && "text-muted-foreground"
+                              !field.value && "text-muted-foreground",
                             )}
                           >
                             {field.value
                               ? clients?.find(
-                                (language) => language.id === field.value
-                              )?.name
+                                  (language) => language.id === field.value,
+                                )?.name
                               : "Select Client"}
                             {/*<CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />*/}
                           </Button>

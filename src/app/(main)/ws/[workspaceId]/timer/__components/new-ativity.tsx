@@ -1,3 +1,4 @@
+"use client";
 import TimerActivity from "@/app/(main)/ws/[workspaceId]/timer/__components/timer-activity";
 import "@/app/styles/play-pause-btn.css";
 import { Input } from "@/components/ui/input";
@@ -9,6 +10,9 @@ import { useOptimistic, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import { startActivity } from "./actions/start-activity-action";
 import { stopActivity } from "./actions/stop-activity-action";
+import AddTimerProject from "@/app/(main)/ws/[workspaceId]/timer/__components/timer-add-project";
+import AddTags from "@/app/(main)/ws/[workspaceId]/timer/__components/timer-add-tags";
+import Billable from "@/app/(main)/ws/[workspaceId]/timer/__components/timer-billable";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,7 +55,7 @@ const NewActivity = ({ activity, projects }: NewActivityProps) => {
     },
     (state, newOptimisticActivity: any) => {
       return newOptimisticActivity;
-    }
+    },
   );
 
   async function startAction(data: FormData) {
@@ -118,7 +122,7 @@ const NewActivity = ({ activity, projects }: NewActivityProps) => {
             <p
               className={cn(
                 "slashed-zero tabular-nums font-bold text-2xl",
-                inter.className
+                inter.className,
               )}
             >
               00:00<span className="text-gray-500">:00</span>

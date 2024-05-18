@@ -33,7 +33,7 @@ const Pricing = () => {
         {" you're"} not <br />
         ready to commit you can get started for free.
       </p>
-      <div className="flex  justify-center gap-4 flex-wrap mt-6">
+      <div className="flex justify-center gap-4 flex-wrap mt-6">
         <Card
           className={
             "w-[300px] flex flex-col justify-between border-2 border-primary"

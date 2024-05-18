@@ -3,7 +3,6 @@ import { Separator } from "@/components/ui/separator";
 import TaskCard from "@/app/(main)/ws/[workspaceId]/project/[id]/task/_components/task-card";
 import TTask from "@/type/task/task";
 import { DragDropContext, Droppable, DropResult } from "@hello-pangea/dnd";
-import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { editTaskStatus } from "@/app/(main)/ws/[workspaceId]/project/[id]/task/_components/action/task.actions";
 import toast from "react-hot-toast";
@@ -26,7 +25,7 @@ const TaskContainer = ({ tasks }: { tasks: TTask[] }) => {
         return {
           status: statusGroup.status,
           data: statusGroup.data.filter((task) =>
-            task.name.toLowerCase().includes(search.toLowerCase())
+            task.name.toLowerCase().includes(search.toLowerCase()),
           ),
         };
       });
@@ -48,10 +47,10 @@ const TaskContainer = ({ tasks }: { tasks: TTask[] }) => {
     let newOrderedData = [...orderedList];
     console.log(newOrderedData, "ordered data");
     const sourceList = newOrderedData.find(
-      (list) => list.status === source.droppableId
+      (list) => list.status === source.droppableId,
     );
     const destList = newOrderedData.find(
-      (list) => list.status === destination.droppableId
+      (list) => list.status === destination.droppableId,
     );
     if (!sourceList || !destList) {
       return;

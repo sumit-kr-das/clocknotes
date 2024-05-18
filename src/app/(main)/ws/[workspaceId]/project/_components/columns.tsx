@@ -1,10 +1,10 @@
 "use client";
 
-import ProjectActions from "@/app/(main)/project/_components/project-actions";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { TProject } from "@/type/project/TProject";
 import ProjectActions from "@/app/(main)/ws/[workspaceId]/project/_components/project-actions";
+import { ColumnDef } from "@tanstack/react-table";
 
 export const columns: ColumnDef<TProject>[] = [
   {

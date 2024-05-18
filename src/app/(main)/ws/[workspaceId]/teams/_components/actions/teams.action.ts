@@ -64,7 +64,7 @@ export const sendTeamInvitation = async ({
     const newMember = await db.team.create({
       data: {
         email: email as string,
-        workspaceId: workspaceId,
+        workspaceId: workspaceId as string,
       },
     });
     console.log(newMember?.id, "new member id");

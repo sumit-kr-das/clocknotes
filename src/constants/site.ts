@@ -10,43 +10,50 @@ export const features = [
   {
     icon: "",
     title: "Track Projects",
-    description: "Track working hours on the projects of teams.",
+    description:
+      "Track working hours on the projects of teams and easily keep tabs on the progress of various project. ",
   },
   {
     icon: "",
     title: "Manage Clients",
-    description: "Manage clients details and projects with clocknotes.",
+    description:
+      "Manage and store client details with Clocknotes to maintain relation between project variables and customer.",
   },
   {
     icon: "",
     title: "Manage Tasks",
-    description: "Manage and track tasks according to the projects.",
+    description:
+      "Manage and track projects divided in mini tasks to track the growth of projects with Clocknotes.",
   },
   {
     icon: "",
     title: "Manage Teams",
-    description: "Create and manage different teams with different workspaces",
+    description:
+      "Create and manage different teams along with creating different workspace and track time according to it.",
   },
   {
     icon: "",
     title: "Keep Notes",
-    description: "Create and manage important notes according to projects.",
+    description:
+      "Create and manage important notes to Capture and organize important insights, ideas, and information related to your projects.",
   },
   {
     icon: "",
     title: "Reports & Analytics",
-    description: "Generate Reports and insightful analytics of work.",
+    description:
+      "Generate Reports and insightful analytics nto your work patterns and project progress through comprehensive reports and analytics.",
   },
   {
     icon: "",
     title: "Generate Invoices",
     description:
-      "Generate invoices and bills for clients based on work automatically.",
+      "Simplify the billing process by automatically generating accurate invoices and bills for clients based on the work completed, saving time.",
   },
   {
     icon: "",
     title: "User Friendly Timesheets",
-    description: "Manage user friendly and easy understandable timesheets.",
+    description:
+      "Utilize intuitive and easy-to-understand timesheets that enhance user experience and streamline time tracking.",
   },
 ];
 

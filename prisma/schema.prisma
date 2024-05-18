@@ -58,24 +58,24 @@ model User {
 }
 
 model Activity {
-  id           String           @id @default(dbgenerated("concat('act_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name         String?
-  startAt      DateTime
-  endAt        DateTime?
-  isBillable Boolean          @default(false)
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-  tenantId     String
-  tenant       Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  userId       String
-  user         User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Client       Client?          @relation(fields: [clientId], references: [id], onDelete: Cascade)
-  clientId     String?          @db.Text
-  Project      Project?         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  id          String           @id @default(dbgenerated("concat('act_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name        String?
+  startAt     DateTime
+  endAt       DateTime?
+  isBillable  Boolean          @default(false)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  tenantId    String
+  tenant      Tenant           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Client      Client?          @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  clientId    String?          @db.Text
+  Project     Project?         @relation(fields: [projectId], references: [id], onDelete: Cascade)
   workspaceId String?
   workspace   Workspace?       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  projectId    String?          @db.Text
-  tag          TagsOfActivity[]
+  projectId   String?          @db.Text
+  tag         TagsOfActivity[]
 }
 
 model Client {

@@ -8,7 +8,7 @@ const Features = () => {
       <SiteTitle
         subtitle="Feature Showdown"
         title="Why To Use Clocknotes?"
-        description=" Our straightforward pricing plans are tailored to meet your needs. If you're not ready to commit you can get started for free."
+        description=" Our all Clocknotes features are currently available to you at no cost. Enjoy limited access to our comprehensive suite of tools."
       />
       <div className="max-w-7xl mx-auto">
         <HoverEffect items={features} />

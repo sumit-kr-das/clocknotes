@@ -5,7 +5,7 @@ import React from "react";
 const AuthLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession();
   if (session) {
-    redirect("/");
+    redirect("/ws");
   }
   return (
     <div className="w-full h-full flex items-center justify-center">

@@ -2,11 +2,12 @@
 import { Card } from "@/components/ui/card";
 import React from "react";
 import { Activity } from "@prisma/client";
-import { ArrowRight, Trash2 } from "lucide-react";
+import { ArrowRight, Play, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { deleteActivity } from "@/app/(main)/ws/[workspaceId]/timer/__components/timerActivity/activity-action";
 import ActivityDate from "@/app/(main)/ws/[workspaceId]/timer/__components/timerActivity/timer-activity-date";
 import ActivityTitle from "@/app/(main)/ws/[workspaceId]/timer/__components/timerActivity/timer-activity-title";
+import { differenceInMilliseconds } from "date-fns";
 
 type DailyActivitiesProp = {
   activities: Activity[];

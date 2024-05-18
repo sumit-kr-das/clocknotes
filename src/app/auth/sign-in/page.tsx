@@ -51,7 +51,7 @@ const SignIn = () => {
     if (signinData?.error) {
       console.log("manual login", signinData.error);
     } else {
-      router.push("/timer");
+      router.push("/ws");
     }
   };
 

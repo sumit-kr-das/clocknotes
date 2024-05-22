@@ -183,7 +183,7 @@ const TimerSidebar = ({
             label: "",
             icon: Users2,
             variant: "ghost",
-            href: "/",
+            href: `/ws/${workspaceId}/teams`,
           },
           {
             title: "Projects",

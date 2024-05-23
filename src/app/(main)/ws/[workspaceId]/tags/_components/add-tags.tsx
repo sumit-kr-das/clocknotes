@@ -1,8 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
-
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Form,
   FormControl,
@@ -17,19 +14,24 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { addTags } from "@/app/(main)/ws/[workspaceId]/tags/_components/actions/tags.action";
 import toast from "react-hot-toast";
+import { useParams } from "next/navigation";
 
 const formSchema = z.object({
   name: z
     .string()
     .min(2, { message: "Tags minimum should be 2 characters" })
     .max(15, { message: "Tags should not be more than 15 characters" }),
+  workspaceId: z.string(),
 });
 const AddTags = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const params = useParams<{ workspaceId: string }>();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      workspaceId: params.workspaceId,
     },
   });
 

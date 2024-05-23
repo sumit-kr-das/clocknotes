@@ -39,6 +39,7 @@ import toast from "react-hot-toast";
 import * as z from "zod";
 import { addProject } from "@/app/api/project/project.actions";
 import SubmitBtn from "@/components/global/customInputes/submit-btn";
+import { useParams } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(4, {
@@ -47,16 +48,19 @@ const formSchema = z.object({
   client: z.string({
     required_error: "Client is required",
   }),
+  workspaceId: z.string(),
 });
 const AddProject = ({ children }: { children: React.ReactNode }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [clients, setClients] = useState<TClient[]>();
+  const params = useParams<{ workspaceId: string }>();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
       client: "",
+      workspaceId: params.workspaceId,
     },
   });
   async function submitProject(data: z.infer<typeof formSchema>) {
@@ -73,7 +77,7 @@ const AddProject = ({ children }: { children: React.ReactNode }) => {
   }
 
   async function getClientsData() {
-    const client = await getClients();
+    const client = await getClients({ workspaceId: params?.workspaceId });
     setClients(client);
   }
   useEffect(() => {
@@ -129,7 +133,7 @@ const AddProject = ({ children }: { children: React.ReactNode }) => {
                           >
                             {field.value
                               ? clients?.find(
-                                  (language) => language.id === field.value,
+                                  (client) => client.id === field.value,
                                 )?.name
                               : "Select Client"}
                             {/*<CaretSortIcon className="ml-2 h-4 w-4 shrink-0 opacity-50" />*/}

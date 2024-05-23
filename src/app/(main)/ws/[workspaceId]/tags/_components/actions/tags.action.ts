@@ -3,13 +3,16 @@ import getSession from "@/lib/get-session";
 import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
-export const addTags = async (data: { name: string }) => {
+export const addTags = async (data: { name: string; workspaceId: string }) => {
   try {
     const user = await getSession();
     await db.tag.create({
       data: {
         name: data.name as string,
-        tenantId: user.tenantId,
+        tenant: { connect: { id: user.tenantId } },
+        workspace: data.workspaceId
+          ? { connect: { id: data.workspaceId } }
+          : undefined,
       },
     });
     revalidatePath("/tags");
@@ -18,12 +21,11 @@ export const addTags = async (data: { name: string }) => {
   }
 };
 
-export const viewTags = async () => {
+export const viewTags = async ({ workspaceId }: { workspaceId: string }) => {
   try {
-    const user = await getSession();
     const tags = await db.tag.findMany({
       where: {
-        tenantId: user.tenantId,
+        workspaceId: workspaceId,
       },
     });
     return tags;

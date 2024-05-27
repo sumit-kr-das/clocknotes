@@ -13,6 +13,7 @@ import { stopActivity } from "./actions/stop-activity-action";
 import AddTimerProject from "@/app/(main)/ws/[workspaceId]/timer/__components/timer-add-project";
 import AddTags from "@/app/(main)/ws/[workspaceId]/timer/__components/timer-add-tags";
 import Billable from "@/app/(main)/ws/[workspaceId]/timer/__components/timer-billable";
+import { useParams } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,6 +40,7 @@ const NewActivity = ({ activity, projects }: NewActivityProps) => {
   const [timerStates, setTimerStates] =
     useState<TimerStates>(INITIAL_TIMER_STATE);
   const ref = useRef<HTMLFormElement>(null);
+  const params = useParams<{ workspaceId: string }>();
 
   const handleTimerStates = (props: TimerStates) => {
     setTimerStates({
@@ -73,6 +75,7 @@ const NewActivity = ({ activity, projects }: NewActivityProps) => {
       newStartAt,
       projectId: timerStates.projectId || "",
       billable: timerStates.isBillable || false,
+      workspaceId: params.workspaceId,
     });
     if (result?.error) {
       toast.error(result?.error);

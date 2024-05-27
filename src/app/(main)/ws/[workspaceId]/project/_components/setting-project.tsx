@@ -46,6 +46,7 @@ import { z } from "zod";
 import { TProject } from "@/type/project/TProject";
 import ProjectEditSchema from "@/type/zod/ProjectEditSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useParams } from "next/navigation";
 
 const SettingProject = ({
   project,
@@ -58,6 +59,7 @@ const SettingProject = ({
 }) => {
   const [clients, setClients] = useState<TClient[]>();
   const [isLoading, setIsLoading] = useState(false);
+  const params = useParams<{ workspaceId: string }>();
   const [color, setColor] = useState<string>(project?.color || "#ffff");
   const form = useForm<z.infer<typeof ProjectEditSchema>>({
     resolver: zodResolver(ProjectEditSchema),
@@ -81,7 +83,7 @@ const SettingProject = ({
     },
   ];
   async function getClientsData() {
-    const client = await getClients();
+    const client = await getClients({ workspaceId: params?.workspaceId });
     setClients(client);
   }
   const setColorButton = (color: string, field: any) => {

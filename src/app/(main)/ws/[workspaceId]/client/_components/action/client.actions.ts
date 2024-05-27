@@ -21,6 +21,7 @@ export const addClient = async ({
 }: {
   data: {
     name: string;
+    workspaceId: string;
   };
   path: string;
 }) => {
@@ -30,6 +31,7 @@ export const addClient = async ({
       data: {
         tenant: { connect: { id: user.tenantId } },
         name: data.name as string,
+        workspace: { connect: { id: data.workspaceId } },
       },
     });
     revalidatePath(path);
@@ -38,12 +40,11 @@ export const addClient = async ({
   }
 };
 
-export const getClients = async () => {
-  const user = await getSession();
+export const getClients = async ({ workspaceId }: { workspaceId: string }) => {
   try {
     const clients = await db.client.findMany({
       where: {
-        tenantId: user.tenantId,
+        workspaceId: workspaceId,
       },
     });
     return clients;

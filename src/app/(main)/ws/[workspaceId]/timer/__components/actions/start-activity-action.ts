@@ -8,11 +8,13 @@ export const startActivity = async ({
   newStartAt,
   projectId,
   billable,
+  workspaceId,
 }: {
   name: string;
   newStartAt: Date;
   projectId: string;
   billable: boolean;
+  workspaceId: string;
 }) => {
   const user = await getSession();
   try {
@@ -24,6 +26,7 @@ export const startActivity = async ({
         user: { connect: { id: user.id } },
         tenant: { connect: { id: user.tenantId } },
         Project: { connect: { id: projectId } },
+        workspace: { connect: { id: workspaceId } },
       },
     });
   } catch (error: any) {

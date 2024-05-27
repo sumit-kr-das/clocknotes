@@ -31,6 +31,7 @@ export const createTeam = async ({
 
 export const getTeams = async ({ workspaceId }: { workspaceId: string }) => {
   try {
+    console.log(workspaceId, "workspace id");
     const teams = await db.team.findMany({
       where: {
         workspaceId: workspaceId,
@@ -45,7 +46,6 @@ export const getTeams = async ({ workspaceId }: { workspaceId: string }) => {
         },
       },
     });
-    console.log(teams);
     return teams;
   } catch (e: any) {
     throw new Error(e.message);
@@ -76,10 +76,41 @@ export const sendTeamInvitation = async ({
       html: `<b>Hello</b>
     <br/>
     <p>${user.name} is inviting you for joining their team. If you want to join please click on the following link.</p>
-    <a href='http://localhost:3000/ws?invite=${newMember?.id}'>Join Team</a>
+    <a href='http://localhost:3000/invite/${newMember?.id}'>Join Team</a>
     `, // html body
     });
     revalidatePath("/teams");
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+};
+
+export const addMemberByInvite = async ({ teamId }: { teamId: string }) => {
+  try {
+    const user = await getSession();
+    const team = await db.team.update({
+      where: {
+        id: teamId,
+      },
+      data: {
+        userId: user.id as string,
+        tenantId: user.tenantId as string,
+      },
+    });
+    return team;
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+};
+
+export const viewTeam = async ({ id }: { id: string }) => {
+  try {
+    const teamDetails = await db.team.findFirst({
+      where: {
+        id: id,
+      },
+    });
+    return teamDetails;
   } catch (e: any) {
     throw new Error(e.message);
   }

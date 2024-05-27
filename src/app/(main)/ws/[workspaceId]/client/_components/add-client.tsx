@@ -11,22 +11,26 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { addClient } from "@/app/(main)/ws/[workspaceId]/client/_components/action/client.actions";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import { useParams } from "next/navigation";
+import SubmitBtn from "@/components/global/customInputes/submit-btn";
 const formSchema = z.object({
   name: z.string().min(1, {
     message: "Please enter a client",
   }),
+  workspaceId: z.string(),
 });
-import { addClient } from "@/app/(main)/ws/[workspaceId]/client/_components/action/client.actions";
-import toast from "react-hot-toast";
-import { useState } from "react";
-import SubmitBtn from "@/components/global/customInputes/submit-btn";
 
 const AddClient = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const params = useParams<{ workspaceId: string }>();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
+      workspaceId: params?.workspaceId,
     },
   });
   async function addNewClient(data: z.infer<typeof formSchema>) {

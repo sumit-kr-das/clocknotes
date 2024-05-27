@@ -46,5 +46,6 @@ const Workspace = async () => {
     console.log(e.message);
   }
   redirect(redirectUrl);
+  return <div></div>;
 };
 export default Workspace;

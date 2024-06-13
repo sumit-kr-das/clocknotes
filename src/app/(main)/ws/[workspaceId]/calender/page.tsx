@@ -1,12 +1,11 @@
 import React from "react";
-import ReactBigCalender from "@/app/(main)/ws/[workspaceId]/calender/__components/react-big-calender";
+import ReactBigCalender from "./__components/react-big-calender";
 
 const CalenderPage = () => {
   return (
-    <div>
-      <h1>Calender Page</h1>
+    <main>
       <ReactBigCalender />
-    </div>
+    </main>
   );
 };
 

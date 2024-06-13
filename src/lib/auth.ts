@@ -42,7 +42,7 @@ export const authOptions: NextAuthOptions = {
         if (isExist.password) {
           const passwordMatch = await compare(
             credentials.password,
-            isExist.password,
+            isExist.password
           );
           if (!passwordMatch) {
             return null;
@@ -60,7 +60,6 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, profile }) {
-      console.log("User is logging inside sign in", user);
       if (user?.email && user?.tenantId) {
         return true;
       }
@@ -99,7 +98,6 @@ export const authOptions: NextAuthOptions = {
           tenantId: user.tenantId,
         };
       }
-      console.log("profile---------------------------", profile?.email);
 
       // GoogleProvider
       if (profile) {

@@ -4,21 +4,23 @@ import React from "react";
 import NewActivity from "./__components/new-ativity";
 import DailyActivities from "@/app/(main)/ws/[workspaceId]/timer/__components/timerActivity/timer-daily-activities";
 import { getProject } from "@/app/api/project/project.actions";
-const TimerPage = async () => {
+const TimerPage = async ({ params }: any) => {
   const user = await getSession();
 
   const currentActivity = await db.activity.findFirst({
     where: {
-      tenantId: user.tenantId,
-      userId: user.id,
+      // tenantId: user.tenantId,
+      // userId: user.id,
+      workspaceId: params.workspaceId,
       endAt: null,
     },
   });
 
   const dailyActivities = await db.activity.findMany({
     where: {
-      tenantId: user.tenantId,
-      userId: user.id,
+      // tenantId: user.tenantId,
+      // userId: user.id,
+      workspaceId: params.workspaceId,
       endAt: {
         not: null,
       },
@@ -28,7 +30,7 @@ const TimerPage = async () => {
     },
   });
 
-  const projects = await getProject();
+  const projects = await getProject({ workspaceId: params.workspaceId });
 
   return (
     <section className="w-full">

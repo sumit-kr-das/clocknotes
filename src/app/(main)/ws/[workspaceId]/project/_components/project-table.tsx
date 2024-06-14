@@ -1,18 +1,5 @@
 "use client";
-import AddProject from "@/app/(main)/project/_components/add-project";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import * as React from "react";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
-} from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -43,7 +30,7 @@ interface DataTableProps {
 const ProjectTable = ({ data, columns }: DataTableProps) => {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    [],
   );
   const table = useReactTable({
     data,
@@ -84,9 +71,9 @@ const ProjectTable = ({ data, columns }: DataTableProps) => {
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
                     </TableHead>
                   );
                 })}
@@ -104,7 +91,7 @@ const ProjectTable = ({ data, columns }: DataTableProps) => {
                     <TableCell key={cell.id}>
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext()
+                        cell.getContext(),
                       )}
                     </TableCell>
                   ))}

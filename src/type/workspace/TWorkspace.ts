@@ -5,12 +5,12 @@ export type TWorkspace = {
   name: string;
   inviteString: string;
   type: string;
-  tenantId: string;
+  tenantId: string | null;
 };
 
 export type TAllWorkspace = {
   id: string;
-  tenantId: string;
+  tenantId: string | null;
   role: Role;
   workspaceId: string | null;
   createdAt: Date;

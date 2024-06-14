@@ -77,7 +77,6 @@ export const getUserWorkspaces = async () => {
 };
 
 export const getWorkspaceById = async ({ id }: { id: string }) => {
-  console.log(id);
   try {
     const workspace = await db.workspace.findUnique({
       where: {
@@ -101,7 +100,6 @@ export const getUserAllWorkspaces = async () => {
         workspace: true,
       },
     });
-    console.log(workspaces);
     return workspaces;
   } catch (e: any) {
     throw new Error(e.message);

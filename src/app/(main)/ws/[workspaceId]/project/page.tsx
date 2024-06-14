@@ -2,8 +2,8 @@ import ProjectTable from "@/app/(main)/ws/[workspaceId]/project/_components/proj
 import { columns } from "@/app/(main)/ws/[workspaceId]/project/_components/columns";
 import { getProject } from "@/app/api/project/project.actions";
 
-const Project = async () => {
-  const projects = await getProject();
+const Project = async ({ params }: any) => {
+  const projects = await getProject({ workspaceId: params.workspaceId });
 
   return <>{projects && <ProjectTable data={projects} columns={columns} />}</>;
 };

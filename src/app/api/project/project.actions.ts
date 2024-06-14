@@ -11,6 +11,7 @@ export const addProject = async ({
   data: {
     name: string;
     client: string | undefined;
+    workspaceId: string;
   };
   path: string;
 }) => {
@@ -21,6 +22,9 @@ export const addProject = async ({
         tenant: { connect: { id: user.tenantId } },
         client: data.client ? { connect: { id: data.client } } : undefined,
         name: data.name as string,
+        workspace: data.workspaceId
+          ? { connect: { id: data.workspaceId } }
+          : undefined,
       },
     });
     revalidatePath(path);
@@ -28,12 +32,11 @@ export const addProject = async ({
     console.log(e);
   }
 };
-export const getProject = async () => {
+export const getProject = async ({ workspaceId }: { workspaceId: string }) => {
   try {
-    const user = await getSession();
     const projects = await db.project.findMany({
       where: {
-        tenantId: user.tenantId,
+        workspaceId: workspaceId,
       },
       include: {
         client: true,

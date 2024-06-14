@@ -12,10 +12,11 @@ import CustomAppoitment from "./custom-appoitment";
 
 const components = {
   event: ({ event }) => {
-    const data = event?.data;
-    console.log("dsadsdsdsd", event.data);
-    if (data?.appointment)
-      return <CustomAppoitment appointment={data?.appointment} />;
+    console.log("dsadsdsdsd", event?.data);
+    if (event?.data) {
+      console.log("True");
+      return <CustomAppoitment appointment={event} />;
+    }
     // if (data?.blockout) return <CustomAppoitment blockout={data?.blockout} />;
 
     return null;

@@ -2,7 +2,6 @@
 import {
   createWorkspace,
   getUserAllWorkspaces,
-  getUserWorkspaces,
   hasWorkspace,
 } from "@/app/(main)/ws/actions/workspace.action";
 import { redirect } from "next/navigation";

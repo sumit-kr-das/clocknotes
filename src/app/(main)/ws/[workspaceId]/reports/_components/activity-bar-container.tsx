@@ -1,28 +1,67 @@
 "use client";
 import ActivityBar from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-bar";
-
-const ActivityBarContainer = ({ activity }: any) => {
+import formatActivityTime from "@/lib/format-activity-time";
+import ActivityFilter from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-filter";
+import { useState } from "react";
+import { Loader } from "lucide-react";
+import ActivityReportLoader from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-report-loader";
+const ActivityBarContainer = ({ activity }: { activity: any }) => {
+  const [filter, setFilter] = useState({
+    project: null,
+    client: null,
+    tags: null,
+    status: null,
+    users: null,
+  });
   const options = {
     series: [
       {
         name: "Total Activity",
-        data: activity.activities,
+        data: activity?.activities,
       },
     ],
     options: {
       chart: {
+        stacked: true,
+        toolbar: {
+          show: false,
+        },
         type: "bar",
         height: 350,
       },
+      responsive: [
+        {
+          breakpoint: 480,
+          options: {
+            legend: {
+              position: "bottom",
+              offsetX: -10,
+              offsetY: 0,
+            },
+          },
+        },
+      ],
       plotOptions: {
         bar: {
           horizontal: false,
-          columnWidth: "55%",
+          columnWidth: "100%",
           endingShape: "rounded",
+          dataLabels: {
+            total: {
+              enabled: true,
+              style: {
+                fontSize: "13px",
+                fontWeight: 900,
+              },
+            },
+          },
         },
       },
       dataLabels: {
         enabled: false,
+        formatter: (val: number) => {
+          return formatActivityTime(val);
+        },
       },
       stroke: {
         show: true,
@@ -30,99 +69,53 @@ const ActivityBarContainer = ({ activity }: any) => {
         colors: ["transparent"],
       },
       xaxis: {
-        categories: activity.dates,
+        type: "date",
+        categories: activity?.dates,
       },
       yaxis: {
+        labels: {
+          formatter: (val: string) => {
+            return val + " H";
+          },
+        },
         title: {
-          text: "$ (thousands)",
+          text: "Activity Time in Hours",
         },
       },
       fill: {
         opacity: 1,
       },
       tooltip: {
+        enabled: true,
+        theme: true,
         y: {
-          formatter: function (val: string) {
-            return val + "h";
+          formatter: function (val: number) {
+            return formatActivityTime(val);
           },
         },
       },
     },
-
-    // series: [
-    //   {
-    //     name: "Total Activity",
-    //     data: activity.activities,
-    //   },
-    // ],
-    // options: {
-    //   chart: {
-    //     type: "bar",
-    //     height: 350,
-    //     stacked: true,
-    //     toolbar: {
-    //       show: false,
-    //     },
-    //     zoom: {
-    //       enabled: false,
-    //     },
-    //   },
-    //   responsive: [
-    //     {
-    //       breakpoint: 480,
-    //       options: {
-    //         legend: {
-    //           position: "bottom",
-    //           offsetX: -10,
-    //           offsetY: 0,
-    //         },
-    //       },
-    //     },
-    //   ],
-    //   plotOptions: {
-    //     bar: {
-    //       horizontal: false,
-    //       dataLabels: {
-    //         total: {
-    //           enabled: true,
-    //           offsetY: -20,
-    //           formatter: function (val: string) {
-    //             return val + "h";
-    //           },
-    //           style: {
-    //             fontSize: "13px",
-    //             color: "#fff",
-    //             fontWeight: 500,
-    //           },
-    //         },
-    //       },
-    //     },
-    //   },
-    //   xaxis: {
-    //     type: "date",
-    //     categories: activity.dates,
-    //   },
-    //
-    //   legend: {
-    //     position: "right",
-    //     offsetY: 40,
-    //   },
-    //   fill: {
-    //     opacity: 1,
-    //   },
-    // },
   };
   return (
-    <div className="w-full rounded-sm border border-s  shadow">
-      <div className="w-full overflow-hidden border-s bg-white px-5 pb-5 pt-7.5 dark:bg-gray-800">
-        <p className="mt-2">
-          Total Time: <span className="font-bold text-2xl">00:00:00</span>
-        </p>
-      </div>
-      <div className="px-5 pb-5 pt-7.5">
-        <ActivityBar options={options} />
-      </div>
-    </div>
+    <>
+      {activity ? (
+        <div className="w-full rounded-sm border border-s  shadow">
+          <div className="w-full overflow-hidden border-s bg-white px-5 pb-5 pt-7.5 dark:bg-gray-800">
+            <p className="mt-2">
+              Total Time:{" "}
+              <span className="font-bold text-2xl">
+                {formatActivityTime(activity?.totalActivityTime)}
+              </span>
+            </p>
+          </div>
+          <div className="px-5 pb-5 pt-7.5">
+            <ActivityBar options={options} />
+          </div>
+        </div>
+      ) : (
+        <ActivityReportLoader />
+      )}
+    </>
   );
 };
 export default ActivityBarContainer;

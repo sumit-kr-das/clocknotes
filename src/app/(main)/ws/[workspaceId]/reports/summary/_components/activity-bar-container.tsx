@@ -1,10 +1,9 @@
 "use client";
-import ActivityBar from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-bar";
+import ActivityBar from "@/app/(main)/ws/[workspaceId]/reports/summary/_components/activity-bar";
 import formatActivityTime from "@/lib/format-activity-time";
-import ActivityFilter from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-filter";
 import { useState } from "react";
 import { Loader } from "lucide-react";
-import ActivityReportLoader from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-report-loader";
+import ActivityReportLoader from "@/app/(main)/ws/[workspaceId]/reports/summary/_components/activity-report-loader";
 const ActivityBarContainer = ({ activity }: { activity: any }) => {
   const options = {
     series: [

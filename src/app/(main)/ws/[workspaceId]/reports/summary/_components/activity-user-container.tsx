@@ -1,11 +1,12 @@
 "use client";
-import ActivityPie from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-pie";
-import { Loader } from "lucide-react";
 import formatActivityTime from "@/lib/format-activity-time";
-const ActivityProjectContainer = ({
+import ActivityPie from "@/app/(main)/ws/[workspaceId]/reports/summary/_components/activity-pie";
+import { Skeleton } from "@/components/ui/skeleton";
+
+const ActivityUserContainer = ({
   data,
 }: {
-  data: { projectsData: string[]; times: number[] };
+  data: { userData: string[]; times: number[] };
 }) => {
   const options = {
     series: data?.times,
@@ -14,13 +15,7 @@ const ActivityProjectContainer = ({
         width: 380,
         type: "pie",
       },
-      labels: data?.projectsData,
-      // dataLabels: {
-      //   formatter(val: any, opts: any) {
-      //     const name = opts.w.globals.labels[opts.seriesIndex];
-      //     return [name, formatActivityTime(val)];
-      //   },
-      // },
+      labels: data?.userData,
       tooltip: {
         enabled: true,
         y: {
@@ -44,12 +39,15 @@ const ActivityProjectContainer = ({
       ],
     },
   };
-
   return (
     <div className="mt-2 p-4 rounded-sm border border-s  shadow">
-      <h2 className="text-center pb-6 font-bold">Group By Project Data</h2>
-      {data ? <ActivityPie options={options} /> : <Loader />}
+      <h2 className="text-center pb-6 font-bold">Group By User Data</h2>
+      {data ? (
+        <ActivityPie options={options} />
+      ) : (
+        <Skeleton className="h-[350px] w-[450px] rounded-sm" />
+      )}
     </div>
   );
 };
-export default ActivityProjectContainer;
+export default ActivityUserContainer;

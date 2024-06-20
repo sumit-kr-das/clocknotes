@@ -228,7 +228,6 @@ export const getActivityReportByProjects = async ({
   const times = projectsData.map(
     (projectName) => projectActivityTime[projectName],
   );
-  console.log({ projectsData, times }, "project data");
   return { projectsData, times };
 };
 

@@ -1,16 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import ActivityBarContainer from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-bar-container";
-import ActivityUserContainer from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-user-container";
+import ActivityBarContainer from "@/app/(main)/ws/[workspaceId]/reports/summary/_components/activity-bar-container";
+import ActivityUserContainer from "@/app/(main)/ws/[workspaceId]/reports/summary/_components/activity-user-container";
 import { useParams } from "next/navigation";
 import toast from "react-hot-toast";
 import {
   getWeeklyActivityReport,
   getActivityReportByProjects,
   getActivityReportByUsers,
-} from "@/app/(main)/ws/[workspaceId]/reports/_components/actions/report.actions";
-import ActivityFilter from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-filter";
-import ActivityProjectContainer from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-project-container";
+} from "@/app/(main)/ws/[workspaceId]/reports/summary/_components/actions/report.actions";
+import ActivityFilter from "@/app/(main)/ws/[workspaceId]/reports/summary/_components/activity-filter";
+import ActivityProjectContainer from "@/app/(main)/ws/[workspaceId]/reports/summary/_components/activity-project-container";
 const ActivityReportContainer = () => {
   const [report, setReport] = useState<any>();
   const [projectReport, setProjectReport] = useState<any>();
@@ -37,8 +37,6 @@ const ActivityReportContainer = () => {
         workspaceId: params?.workspaceId,
         ...filter,
       });
-      console.log(projectData, "project data");
-      console.log(userData, "userdata");
       setReport(report);
       setProjectReport(projectData);
       setUserReport(userData);

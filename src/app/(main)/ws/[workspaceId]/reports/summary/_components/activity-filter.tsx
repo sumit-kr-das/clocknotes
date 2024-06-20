@@ -22,7 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getFilterReportData } from "@/app/(main)/ws/[workspaceId]/reports/_components/actions/report.actions";
+import { getFilterReportData } from "@/app/(main)/ws/[workspaceId]/reports/summary/_components/actions/report.actions";
 const FilterSchema = z.object({
   projects: z.array(z.string()),
   tags: z.array(z.string()),

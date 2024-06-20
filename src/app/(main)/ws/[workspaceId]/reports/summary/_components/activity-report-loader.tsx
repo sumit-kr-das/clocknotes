@@ -1,5 +1,3 @@
-import formatActivityTime from "@/lib/format-activity-time";
-import ActivityBar from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-bar";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const ActivityReportLoader = () => {

@@ -71,7 +71,6 @@ const ActivityFilter = ({ setFilter }: { setFilter: Function }) => {
 
   useEffect(() => {
     getProjects();
-    console.log("console ");
   }, []);
 
   return (

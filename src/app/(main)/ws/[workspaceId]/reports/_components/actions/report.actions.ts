@@ -67,6 +67,9 @@ export const getWeeklyActivityReport = async ({
     const date = sevenDaysAgo.add(i, "day");
     dates.push(date.format("YYYY-MM-DD"));
   }
+  let groupActivityTime: { [key: string]: number } = {};
+
+  // let projectActivityTime: { [projectId: string]: number } = {};
 
   activities.forEach((activity) => {
     const startAt = dayjs(activity.startAt);
@@ -77,55 +80,12 @@ export const getWeeklyActivityReport = async ({
     totalActivityTime += durationMinutes;
   });
 
-  return { activities: activityTimeByDay, dates, totalActivityTime };
+  return {
+    activities: activityTimeByDay,
+    dates,
+    totalActivityTime,
+  };
 };
-// export const getActivityReport = async ({
-//   workspaceId,
-// }: {
-//   workspaceId: string;
-// }) => {
-//   try {
-//     const now = new Date();
-//     const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-//     const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-//
-//     const activities = await db.activity.findMany({
-//       where: {
-//         workspaceId: workspaceId,
-//         endAt: {
-//           gte: firstDayOfMonth,
-//           lte: lastDayOfMonth,
-//         },
-//       },
-//     });
-//
-//     // Get the number of days in the current month
-//     const daysInMonth = new Date(
-//       now.getFullYear(),
-//       now.getMonth() + 1,
-//       0,
-//     ).getDate();
-//
-//     // Initialize an array to hold the total activity time for each day
-//     const activityTimeByDay = Array(daysInMonth).fill(0);
-//
-//     activities.forEach((activity) => {
-//       // Calculate the difference in milliseconds and convert to minutes
-//       const endAt = new Date(activity.endAt || "");
-//
-//       const durationMinutes = getActivityTime(activity.startAt, activity.endAt);
-//       // Get the day of the month (1-31) and adjust for zero-based index
-//       const day = endAt.getDate() - 1;
-//
-//       // Accumulate the total activity time for the corresponding day
-//       activityTimeByDay[day] += durationMinutes;
-//     });
-//
-//     return activityTimeByDay;
-//   } catch (e: any) {
-//     throw new Error(e?.message);
-//   }
-// };
 
 export const getFilterReportData = async ({
   workspaceId,
@@ -186,4 +146,163 @@ export const getFilterReportData = async ({
   } catch (e: any) {
     throw new Error(e.message);
   }
+};
+
+export const getActivityReportByProjects = async ({
+  workspaceId,
+  users,
+  projects,
+  tags,
+  status,
+  clients,
+}: {
+  workspaceId: string;
+  users?: string[];
+  projects?: string[];
+  tags?: string[];
+  status?: boolean[];
+  clients?: string[];
+}) => {
+  const now = dayjs().endOf("day");
+  const sevenDaysAgo = dayjs().startOf("day").subtract(6, "day");
+
+  let query: any = {
+    where: {
+      workspaceId: workspaceId,
+      startAt: {
+        gte: sevenDaysAgo.toDate(),
+        lte: now.toDate(),
+      },
+    },
+
+    include: {
+      project: true,
+    },
+  };
+
+  if (projects && projects.length > 0) {
+    query.where.projectId = {
+      in: projects,
+    };
+  }
+  if (users && users.length > 0) {
+    query.where.userId = {
+      in: users,
+    };
+  }
+  if (clients && clients.length > 0) {
+    query.where.clientId = {
+      in: clients,
+    };
+  }
+  if (status && status.length > 0) {
+    if (status.includes(true) && status.includes(false)) {
+      // If both true and false are included, no filter is needed
+    } else if (status.includes(true)) {
+      query.where.isBillable = true;
+    } else if (status.includes(false)) {
+      query.where.isBillable = false;
+    }
+  }
+  if (tags && tags.length > 0) {
+    query.where.tagId = {
+      in: tags,
+    };
+  }
+
+  const activities: any = await db.activity.findMany(query);
+
+  let projectActivityTime: { [projectName: string]: number } = {};
+
+  activities.forEach((activity: any) => {
+    const projectName = activity?.project?.name || "Unknown Project";
+    const durationMinutes = getActivityTime(activity.startAt, activity.endAt);
+
+    if (!projectActivityTime[projectName]) {
+      projectActivityTime[projectName] = 0;
+    }
+    projectActivityTime[projectName] += durationMinutes; // Convert minutes to hours
+  });
+
+  const projectsData = Object.keys(projectActivityTime);
+  const times = projectsData.map(
+    (projectName) => projectActivityTime[projectName],
+  );
+  console.log({ projectsData, times }, "project data");
+  return { projectsData, times };
+};
+
+export const getActivityReportByUsers = async ({
+  workspaceId,
+  users,
+  projects,
+  tags,
+  status,
+  clients,
+}: {
+  workspaceId: string;
+  users?: string[];
+  projects?: string[];
+  tags?: string[];
+  status?: boolean[];
+  clients?: string[];
+}) => {
+  const now = dayjs().endOf("day");
+  const sevenDaysAgo = dayjs().startOf("day").subtract(6, "day");
+  const query: any = {
+    where: {
+      workspaceId: workspaceId,
+      startAt: {
+        gte: sevenDaysAgo.toDate(),
+        lte: now.toDate(),
+      },
+    },
+    include: {
+      user: true,
+    },
+  };
+
+  if (projects && projects.length > 0) {
+    query.where.projectId = {
+      in: projects,
+    };
+  }
+  if (users && users.length > 0) {
+    query.where.userId = {
+      in: users,
+    };
+  }
+  if (clients && clients.length > 0) {
+    query.where.clientId = {
+      in: clients,
+    };
+  }
+  if (status && status.length > 0) {
+    if (status.includes(true) && status.includes(false)) {
+      // If both true and false are included, no filter is needed
+    } else if (status.includes(true)) {
+      query.where.isBillable = true;
+    } else if (status.includes(false)) {
+      query.where.isBillable = false;
+    }
+  }
+
+  const activities = await db.activity.findMany(query);
+
+  const userActivityTime: { [userId: string]: number } = {};
+
+  activities.forEach((activity: any) => {
+    const userName = activity?.user?.name || "Unknown Project";
+    const durationMinutes = getActivityTime(activity.startAt, activity.endAt);
+
+    if (!userActivityTime[userName]) {
+      userActivityTime[userName] = 0;
+    }
+    userActivityTime[userName] += durationMinutes / 60; // Convert minutes to hours
+  });
+
+  const userData = Object.keys(userActivityTime);
+  const times = userData.map((name) => userActivityTime[name]);
+
+  return { userData, times };
 };

@@ -6,13 +6,6 @@ import { useState } from "react";
 import { Loader } from "lucide-react";
 import ActivityReportLoader from "@/app/(main)/ws/[workspaceId]/reports/_components/activity-report-loader";
 const ActivityBarContainer = ({ activity }: { activity: any }) => {
-  const [filter, setFilter] = useState({
-    project: null,
-    client: null,
-    tags: null,
-    status: null,
-    users: null,
-  });
   const options = {
     series: [
       {
@@ -98,7 +91,7 @@ const ActivityBarContainer = ({ activity }: { activity: any }) => {
   };
   return (
     <>
-      {activity ? (
+      {activity?.activities ? (
         <div className="w-full rounded-sm border border-s  shadow">
           <div className="w-full overflow-hidden border-s bg-white px-5 pb-5 pt-7.5 dark:bg-gray-800">
             <p className="mt-2">

@@ -25,7 +25,7 @@ export const startActivity = async ({
         startAt: newStartAt,
         user: { connect: { id: user.id } },
         tenant: { connect: { id: user.tenantId } },
-        Project: { connect: { id: projectId } },
+        project: { connect: { id: projectId } },
         workspace: { connect: { id: workspaceId } },
       },
     });

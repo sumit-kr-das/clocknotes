@@ -160,20 +160,29 @@ model Task {
 }
 
 model Workspace {
-  id           String     @id @default(dbgenerated("concat('workspace_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  name         String
-  Team         Team[]
-  inviteString String     @default(dbgenerated("concat('invite_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
-  tenantId     String
-  type         String     @default("Default")
-  tenant       Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  Task         Task[]
-  Activity     Activity[]
-  Client       Client[]
-  Project      Project[]
-  tag          Tag[]
+  id                  String     @id @default(dbgenerated("concat('workspace_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  name                String
+  Team                Team[]
+  inviteString        String     @default(dbgenerated("concat('invite_', replace(cast(gen_random_uuid() as text), '-', ''))")) @db.Text
+  tenantId            String
+  type                String     @default("Default")
+  tenant              Tenant     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt           DateTime   @default(now())
+  updatedAt           DateTime   @updatedAt
+  Task                Task[]
+  Activity            Activity[]
+  Client              Client[]
+  Project             Project[]
+  tag                 Tag[]
+  companyName         String?
+  companyLogo         String?
+  currency            String     @default("USD")
+  defaultRate         Int?
+  projectPermission   Role       @default(MEMBER)
+  clientPermission    Role       @default(MEMBER)
+  tagPermission       Role       @default(MEMBER)
+  timeSheetPermission Role       @default(MEMBER)
+  billingPermission   Role       @default(MEMBER)
 }
 
 model Team {

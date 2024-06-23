@@ -43,7 +43,7 @@ export const updateWorkspaceSetting = async ({
   projectPermission,
   clientPermission,
   tagPermission,
-  timesheetPermission,
+  timeSheetPermission,
   billingPermission,
 }: {
   id: string;
@@ -55,7 +55,7 @@ export const updateWorkspaceSetting = async ({
   projectPermission?: Role;
   clientPermission?: Role;
   tagPermission?: Role;
-  timesheetPermission?: Role;
+  timeSheetPermission?: Role;
   billingPermission?: Role;
 }) => {
   try {
@@ -73,6 +73,7 @@ export const updateWorkspaceSetting = async ({
         clientPermission,
         tagPermission,
         billingPermission,
+        timeSheetPermission,
       },
     });
     revalidatePath(`/ws/${id}/settings`);

@@ -47,31 +47,31 @@ const GeneralSettings = ({ settings }: { settings: TWSettings }) => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const data = new FormData();
-    if (image) {
-      data.append("file", image);
-      data.append("upload_preset", process.env.UPLOAD_PRESET!);
-      data.append("cloud_name", process.env.CLOUD_NAME!);
-      try {
-        const upload = await fetch(
-          "https://api.cloudinary.com/v1_1/de6exldlb/image/upload",
+    const query: any = {
+      ...values,
+      id: settings?.id || "",
+    };
+    try {
+      if (image) {
+        const data = new FormData();
+        data.append("file", image);
+        data.append("upload_preset", "clocknotes");
+        data.append("cloud_name", "clocknotes");
+        const response = await fetch(
+          "https://api.cloudinary.com/v1_1/clocknotes/image/upload",
           {
             method: "POST",
             body: data,
           },
         );
-        console.log(upload);
-        await updateWorkspaceSetting({
-          ...values,
-          companyLogo: upload?.url,
-          id: settings?.id || "",
-        });
-      } catch (e: any) {
-        toast.error(e?.message);
+        const result = await response.json();
+        query.companyLogo = result?.url;
       }
+      await updateWorkspaceSetting(query);
+      toast.success("General setting updated");
+    } catch (e: any) {
+      toast.error(e?.message);
     }
-
-    console.log({ ...values, image: image });
   }
   return (
     <Card>
@@ -80,7 +80,11 @@ const GeneralSettings = ({ settings }: { settings: TWSettings }) => {
       </CardHeader>
       <CardContent className="space-y-2">
         <div className="space-y-1">
-          <ImageSettings image={image} setImage={setImage} />
+          <ImageSettings
+            image={image}
+            setImage={setImage}
+            companyLogo={settings?.companyLogo || ""}
+          />
         </div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

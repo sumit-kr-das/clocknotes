@@ -4,6 +4,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import GeneralSettings from "@/app/(main)/ws/[workspaceId]/settings/_components/general-settings";
 import { TWSettings } from "@/type/settings/workspace-settings";
 import PermissionSettings from "@/app/(main)/ws/[workspaceId]/settings/_components/permission-settings";
+
 const SettingForm = ({ settings }: { settings: TWSettings }) => {
   return (
     <div>

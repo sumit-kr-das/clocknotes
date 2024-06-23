@@ -204,7 +204,7 @@ const TimerSidebar = ({
             label: "",
             icon: Settings2,
             variant: "ghost",
-            href: `/ws/${workspaceId}/timer`,
+            href: `/ws/${workspaceId}/settings`,
           },
         ]}
       />

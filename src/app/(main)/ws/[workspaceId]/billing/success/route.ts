@@ -3,9 +3,10 @@ import { NextRequest } from "next/server";
 import { redirect } from "next/navigation";
 import { stripe } from "@/lib/stripe";
 import db from "@/lib/db";
-
+import { useRouter } from "next/navigation";
 export async function GET(req: NextRequest) {
   const user = await getSession();
+  const router = useRouter();
   const session_id = req.nextUrl.searchParams.get("session_id");
   if (!session_id) {
     redirect("/billing");

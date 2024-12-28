@@ -9,7 +9,9 @@ const stripe = new Stripe(String(process.env.STRIPE_SECRET_KEY), {
   apiVersion: "2023-10-16",
 });
 
-export const createCheckoutSession = async () => {
+export const createCheckoutSession = async (formData: any) => {
+  const workspaceId = formData.get("workspaceId");
+  console.log(workspaceId, "wid");
   const user = await getSession();
   const tenant = await db.tenant.findUnique({
     where: {

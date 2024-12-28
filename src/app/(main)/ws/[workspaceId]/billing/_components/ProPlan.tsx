@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   CardContent,
@@ -9,6 +10,7 @@ import {
 import { CheckCheck, CreditCard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { createCheckoutSession } from "@/app/(main)/ws/[workspaceId]/billing/_components/actions/billing.actions";
+import { useParams } from "next/navigation";
 
 const proPlan = [
   "All Free Plan Items",
@@ -21,6 +23,7 @@ const proPlan = [
 ];
 
 const ProPlan = () => {
+  const params = useParams<{ workspaceId: string }>();
   return (
     <Card className="w-[380px]">
       <CardHeader>
@@ -48,6 +51,7 @@ const ProPlan = () => {
       <CardFooter>
         <form action={createCheckoutSession}>
           <input type="hidden" name="lookup_key" value="pro-monthly" />
+          <input type="hidden" name="workspaceId" value={params.workspaceId} />
           <Button className="w-full" type="submit">
             <CreditCard className="mr-2 h-4 w-4" /> 15 Days Free Trail
           </Button>
